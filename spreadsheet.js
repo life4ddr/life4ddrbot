@@ -11,6 +11,18 @@
 //TODO: Get discord sync
 //TODO: Add discord messaging
 
+//TODO: Fix channel checks for announcements
+
+
+//Discord plan ????
+// Create command
+// Have command message player in #rankups
+/*
+    const badboy = bot.users.fetch("<275626417629298691>")
+    .then(badboy => console.log(badboy))
+    .catch(() => "error");
+*/
+
 const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
@@ -24,8 +36,9 @@ var Twitter = new twit(config);
 
 //discord
 var Discord = require('discord.js');
+//var Discord = require('discord.js.old');
 var bot = new Discord.Client();
-var guild = new Discord.Guild();
+var adminchannel;
 
 //waitfor
 var wait = require('wait.for');
@@ -35,6 +48,12 @@ bot.login(process.env.DISCORD_BOT_TOKEN);
 
 bot.on('ready', () => {
     console.log(`Logged in as ${bot.user.tag}!`);
+    adminchannel = bot.channels.cache.get('596168285477666832');
+
+
+
+    wait.launchFiber(LIFE4sequence);
+
   });
 
 
@@ -1063,7 +1082,7 @@ function trialCheckForExistingTrial(playerName,trialName, callback){
       });
 
 
-}, 100);
+}, 75);
 
 }
 
@@ -1116,7 +1135,7 @@ function checkForExistingPlayer(playerName, callback){
       });
 
 
-}, 100);
+}, 75);
 
 }
 
@@ -2511,24 +2530,75 @@ function announcePlayerRankupDiscord(playerName, playerRank,callback)
 }
 
 
+function changeAppStatus(status,callback){
+
+  setTimeout( function(){
+
+    var appStatus = "UPDATE life4Controls set varValue = '"+status+"' where varName='appStatus'";
+    connection.query(appStatus, function (error, results) {
+      if (error) throw error;
+      callback(null,results)
+
+    });
+    
+}, 25);
+
+}
+
+function discordAdminAnnouncePlayerDone(numberofrecords, callback)
+{
+    var discordpost = "Check for Players is complete! " + numberofrecords + " were added to the queue!";
+
+  adminchannel.send(discordpost)
+  .then(message => console.log(discordpost))
+  .catch(console.error);
+
+  callback(null,"done");
+
+
+}
+
+function discordAdminAnnounceTrialsDone(numberofrecords, callback)
+{
+    var discordpost = "Check for Trials is complete! " + numberofrecords + " were added to the queue!";
+
+  adminchannel.send(discordpost)
+  .then(message => console.log(discordpost))
+  .catch(console.error);
+
+  callback(null,"done");
+
+
+}
+
+function discordAdminAnnounceError(callback)
+{
+    var discordpost = "Uh oh, something went wrong! Disabling bot for now...";
+
+  adminchannel.send(discordpost)
+  .then(message => console.log(discordpost))
+  .catch(console.error);
+
+  callback(null,"done");
+
+
+}
+
+
+
 //TODO: Test discord announce
 //TODO: Re-enable twitter
 function announceNewPlayerDiscord(playerName, playerRank,playerDiscordHandle,callback)
 {
   setTimeout( function(){
 
+    /*
+    //test new
     var discordpost="";
-    var updatedhandle = "'"+playerDiscordHandle+"'";
     
     if (playerDiscordHandle != "" && playerDiscordHandle != "undefined")
     {
-      console.log(playerDiscordHandle);
-      console.log(bot.users.cache.find(u => u.tag === 'stevesefchick#7960'));
-      console.log(bot.users.cache.find(u => u.tag === 'LIFE4DDRBOT#5086'));
-      console.log(bot.users.cache.get(u => u.tag === 'stevesefchick#7960'));
-      console.log(bot.users.cache.get("tag","stevesefchick#7960"));
-      
-      var userid = bot.users.cache.find(u => u.tag === playerDiscordHandle).id;
+      var userid = bot.users.find(u => u.tag === playerDiscordHandle).id;
       var id = "<@" + userid + ">";
 
       discordpost = "Player " + playerName + " (" + id + ") has joined LIFE4! Their current rank is " + playerRank + "! Welcome! "+ getDiscordIcon(playerRank);
@@ -2544,11 +2614,10 @@ function announceNewPlayerDiscord(playerName, playerRank,playerDiscordHandle,cal
     .catch(console.error);
 
     callback(null,"done");
-
+*/
 
 
     //old
-    /*
     var discordpost = "Player " + playerName + " has joined LIFE4! Their current rank is " + playerRank + "! Welcome! " + getDiscordIcon(playerRank);
 
     const channel = bot.channels.find('name', 'rankups')
@@ -2558,7 +2627,7 @@ function announceNewPlayerDiscord(playerName, playerRank,playerDiscordHandle,cal
 
     callback(null,"done");
 
-    */
+    
 
 }, 750);
 
@@ -2665,14 +2734,297 @@ function LIFE4sequence()
   botStatus = wait.for(getBotStatus);
   botStatus = botStatus[0].varValue;
 
+  //OFF
+  //
+  //
   if (botStatus =="OFF")
   {
     console.log("Bot is off! Nothing will run!");
   }
+  //ERROR
+  //
+  //
   else if (botStatus == "ERROR")
   {
     console.log("Bot is having issues! Bot will not run!");
   }
+  //PLAYERS
+  //
+  //
+  else if (botStatus == "PLAYERS")
+  {
+    try
+    {
+      var numberofrecords=0;
+      console.log("Bot is checking for new players!");
+
+      //TODO: Add error catching for player retrieval
+      var playerSpreadsheetList = wait.for(newGetPlayersFromSheets, getauth);
+      console.log("Player list retrieved!");
+
+
+        if (playerSpreadsheetList.length)
+        {
+          playerSpreadsheetList.map((row) => {
+            var playerName = wait.for(playerGetSpreadsheetRowNameValue,row);
+            var playerRank = wait.for(playerGetSpreadsheetRowRankValue,row);
+            var playerTwitter = wait.for(playerGetSpreadsheetRowTwitterValue,row);
+            var playerRival = wait.for(playerGetSpreadsheetRowRivalValue,row);
+            var playerDiscord = wait.for(playerGetSpreadsheetRowDiscordValue,row);
+            var playerLIFE4ID = wait.for(playerGetSpreadsheetRowIDValue,row);
+
+
+            if ((playerName != null && playerName != undefined) &&
+            (playerRank != null && playerRank != undefined))
+          {
+            //check for existing player
+            var playerresults = wait.for(checkForExistingPlayer, playerName);
+
+
+
+            //exists
+            if (playerresults && playerresults.length)
+            {
+              console.log("Player "+playerName + " exists!");
+
+              if (playerRank == playerresults[0].playerRank)
+              {
+                console.log("Same rank!");
+              }
+              else
+              {
+                
+                console.log("New rank!");
+                var updateplayerresults = wait.for(updatePlayerRecord, playerName,playerRank,playerRival,playerTwitter,playerDiscord,playerLIFE4ID);
+                console.log("Player updated!");
+                var insertresults = wait.for(insertNewPlayerAuditRecord, playerresults[0].playerID, playerRank);
+                console.log("Player Audit History complete!");
+                var insertPlayerIntoQueue = wait.for(insertPlayerInQueue,playerName,"UPDATE",playerresults[0].playerID);
+                console.log("Queue updated!");
+                numberofrecords+=1;
+              }
+
+            }
+            //does not exist!
+            else
+            {
+              console.log("Player " + playerName + " does not exist!");
+              //insert if new
+              var playerinsert = wait.for(insertNewPlayerRecord,playerName,playerRank,playerRival,playerTwitter,playerDiscord,playerLIFE4ID);
+              console.log("Player " + playerName + " added!");
+              //re-retrieve player
+              playerresults = wait.for(checkForExistingPlayer, playerName);
+              var insertresults = wait.for(insertNewPlayerAuditRecord, playerresults[0].playerID, playerRank);
+              console.log("Player Audit History complete!");
+              var insertPlayerIntoQueue = wait.for(insertPlayerInQueue,playerName,"NEW",playerresults[0].playerID);
+              console.log("Queue updated!");
+              numberofrecords+=1;
+
+            }
+          }
+          });
+        }
+      
+
+      console.log("Players complete!");
+
+
+      var discordannounce = wait.for(discordAdminAnnouncePlayerDone, numberofrecords);
+      var changeappstatus = wait.for(changeAppStatus, "OFF");
+      //complete!
+
+    }
+    catch(error)
+    {
+      console.log("ERROR!");
+
+      var discordannounce = wait.for(discordAdminAnnounceError);
+      var changeappstatus = wait.for(changeAppStatus, "OFF");
+
+    }
+  }
+  //TRIALS
+  //
+  //
+  //
+  else if (botStatus == "TRIALS")
+  {
+    try
+    {
+      var numberofrecords=0;
+      console.log("Bot is checking for new trials!");
+
+      var listOfTrials = [
+  
+        "HEARTBREAK (12)",
+        "CELESTIAL (13)",
+        "DAYBREAK (14)",
+        "HELLSCAPE (15)",
+        "CLOCKWORK (15)",
+        "PHARAOH (15)",
+        "PARADOX (16)",
+        "INHUMAN (16)",
+        "CHEMICAL (17)",
+        "ORIGIN (18)",
+        "MAINFRAME (13)",
+        "COUNTDOWN (14)",
+        "HEATWAVE (15)",
+        "SNOWDRIFT (16)",
+        "ASCENSION (17)",
+        "PRIMAL (13)",
+        "WANDERLUST (15)",
+        "SPECIES (13)",
+        "UPHEAVAL (14)",
+        "TEMPEST (15)",
+        "CIRCADIA (16)",
+        "QUANTUM (18)",
+        "DEVOTION (12)",
+        "BELIEVE (12)",
+        "PASSPORT (13)",
+        "SPECTACLE (16)",
+        "GOSPEL (13)",
+        "SUPERSTAR (14)",
+        "MYTHOS (15)",
+        "RENDITION (15)"
+      ];
+      
+      var trialRanges = [
+        
+        'HEARTBREAK (12)!B2:F',
+        'CELESTIAL (13)!B2:F',
+        'DAYBREAK (14)!B2:F',
+        'HELLSCAPE (14)!B2:F',
+        'CLOCKWORK (15)!B2:F',
+        'PHARAOH (15)!B2:F',
+        'PARADOX (16)!B2:F',
+        'INHUMAN (16)!B2:F',
+        'CHEMICAL (17)!B2:F',
+        'ORIGIN (18)!B2:F',
+        "MAINFRAME (13)!B2:F",
+        "COUNTDOWN (14)!B2:F",
+        "HEATWAVE (15)!B2:F",
+        "SNOWDRIFT (16)!B2:F",
+        "ASCENSION (17)!B2:F",
+        "PRIMAL (13)!B2:F",
+        "WANDERLUST (15)!B2:F",
+        "SPECIES (13)!B2:F",
+        "UPHEAVAL (14)!B2:F",
+        "TEMPEST (15)!B2:F",
+        "CIRCADIA (16)!B2:F",
+        "QUANTUM (18)!B2:F",
+        "DEVOTION (12)!B2:F",
+        "BELIEVE (12)!B2:F",
+        "PASSPORT (13)!B2:F",
+        "SPECTACLE (16)!B2:F",
+        "GOSPEL (13)!B2:F",
+        "SUPERSTAR (14)!B2:F",
+        "MYTHOS (15)!B2:F",
+        "RENDITION (15)!B2:F"
+      ];
+      
+        for (var i = 0; i < listOfTrials.length;i++)
+        {
+        console.log("Beginning " + listOfTrials[i]);
+      
+        //get the list of players
+        var trialPlayerList = wait.for(newGetTrials, getauth, trialRanges[i]);
+      
+      
+        console.log(listOfTrials[i] +" LIST RETRIEVED!");
+        //for each player
+        if (trialPlayerList && trialPlayerList.length)
+        {
+          console.log("Retrieving " + listOfTrials[i] + " player info...");
+          trialPlayerList.map((row) => {
+            var playerName = wait.for(trialGetSpreadsheetRowNameValue,row);
+            var playerRank = wait.for(trialGetSpreadsheetRowRankValue,row);
+            var playerScore = wait.for(trialGetSpreadsheetRowScoreValue,row);
+            var playerDiff = wait.for(trialGetSpreadsheetRowDiffValue,row);
+            var playerTwitter = wait.for(trialGetSpreadsheetRowTwitterHandleValue,row);
+            //TODO: Add discord tag
+            var playerRival = wait.for(trialGetSpreadsheetRowRivalCodeValue,row);
+      
+      
+            if ((playerName != "" && playerName != undefined) &&
+                (playerRank != "" && playerRank != undefined) &&
+                (playerScore != "" && playerScore != undefined) )
+            {
+              
+                //check for player in trials DB
+                var trialresults = wait.for(trialCheckForExistingTrial, playerName, listOfTrials[i]);
+                if (trialresults && trialresults.length)
+                {
+                  console.log("Player " + playerName + " exists! Check for update!");
+                  if (playerScore <= trialresults[0].playerScore &&
+                    playerRank == trialresults[0].playerRank)
+                  {
+                    console.log("Player has same score!");
+                  }
+                  else
+                  {
+                    
+                    console.log("Player score update!");
+                    var updateresults = wait.for(updateTrialRecord, trialresults[0].playerTrialRankID, playerName, playerRival,playerRank, playerScore, playerDiff,playerTwitter);
+                    console.log("Player trial insert complete!");
+                    trialresults = wait.for(trialCheckForExistingTrial, playerName, listOfTrials[i]);
+                    insertresults = wait.for(insertNewTrialAuditRecord, trialresults[0].playerTrialRankID,playerRank, playerScore, playerDiff);
+                    console.log("Audit update complete!");
+                    var inserttrial = wait.for(insertTrialInQueue,playerName,"UPDATE",trialresults[0].playerTrialRankID);
+                    console.log("Queue updated!");
+                    numberofrecords+=1;
+      
+                  }
+                }
+                else
+                {
+                  console.log("Player does not exist! Inserting new record!");
+                  var insertresults = wait.for(insertNewTrialRecord, playerName, playerRival, listOfTrials[i],playerRank, playerScore, playerDiff,playerTwitter);
+                  trialresults = wait.for(trialCheckForExistingTrial, playerName, listOfTrials[i]);
+                  console.log("Insert complete! Preparing audit update");
+                  insertresults = wait.for(insertNewTrialAuditRecord, trialresults[0].playerTrialRankID,playerRank, playerScore, playerDiff);
+                  console.log("Insert complete!");
+                  //var playerNumberRanking = wait.for(getranks, listOfTrials[i],playerName);
+                  //console.log("Numerical rank retrieved!");
+                  var inserttrial = wait.for(insertTrialInQueue,playerName,"NEW",trialresults[0].playerTrialRankID);
+                  console.log("Queue updated!");
+                  numberofrecords+=1;
+                }
+            }
+      
+          });
+        }
+      
+        console.log(listOfTrials[i] + " complete!");
+      
+      }
+      
+      console.log("Trials are complete!");
+      var discordannounce = wait.for(discordAdminAnnounceTrialsDone, numberofrecords);
+      var changeappstatus = wait.for(changeAppStatus, "OFF");
+      //complete!
+    }
+    catch(error)
+    {
+      console.log("ERROR!");
+
+      var discordannounce = wait.for(discordAdminAnnounceError);
+      var changeappstatus = wait.for(changeAppStatus, "OFF");
+
+    }
+
+  }
+  //QUEUE
+  //
+  //
+  else if (botStatus == "QUEUE")
+  {
+    console.log("Bot is checking the queue!");
+
+  }
+  //ON
+  //OLD - DO NOT USE
+  //
+  //
   else if (botStatus == "ON")
 {
   console.log("Bot is on!");
@@ -2787,6 +3139,7 @@ var queueDone = wait.for(setQueueItemToProcessed,queueResults[0].playerQueueID);
   }
   else
   {
+
     console.log("Queue is empty!");
   }
 
@@ -2794,14 +3147,13 @@ var queueDone = wait.for(setQueueItemToProcessed,queueResults[0].playerQueueID);
 catch(error)
 {
   console.log("ERROR!");
-  console.log(console.error);
 
-  const channel = bot.channels.find('name', 'admin-bot')
-  channel.send("Uh oh! Something went wrong when posting an update! \n PlayerQueueID = "+queueResults[0].playerQueueID +"\n Logs: \n" + error)
-  .then(message => console.log("Uh oh! Something went wrong when posting an update! \n PlayerQueueID = "+queueResults[0].playerQueueID +"\n Logs: \n" + error))
-  .catch(console.error);
+  //const channel = bot.channels.find('name', 'admin-bot')
+  //channel.send("Uh oh! Something went wrong when posting an update! \n PlayerQueueID = "+queueResults[0].playerQueueID +"\n Logs: \n" + error)
+  //.then(message => console.log("Uh oh! Something went wrong when posting an update! \n PlayerQueueID = "+queueResults[0].playerQueueID +"\n Logs: \n" + error))
+  //.catch(console.error);
 
-  var queueDone = wait.for(setQueueItemToError,queueResults[0].playerQueueID);
+  //var queueDone = wait.for(setQueueItemToError,queueResults[0].playerQueueID);
 
 }
 
@@ -2882,7 +3234,6 @@ console.log("Players complete!");
 //TODO: Add ' name check for TRIALS
 console.log("Trials starting!");
 
-//TODO: Add new trials!
 var listOfTrials = [
   
   "HEARTBREAK (12)",
@@ -2950,42 +3301,6 @@ var trialRanges = [
   "MYTHOS (15)!B2:F",
   "RENDITION (15)!B2:F"
 ];
-
-/*
-var trialSpreadsheetID = [
-  
-  '1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4',
-  '1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4',
-  '1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4',
-  '1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4',
-  '1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4',
-  '1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4',
-  '1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4',
-  '1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4',
-  '1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4',
-  '1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4',
-  "1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4",
-  "1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4",
-  "1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4",
-  "1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4",
-  "1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4",
-  "1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4",
-  "1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4",
-  "1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4",
-  "1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4",
-  "1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4",
-  "1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4",
-  "1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4",
-  "1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4",
-  "1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4",
-  "1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4",
-  "1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4",
-  "1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4",
-  "1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4",
-  "1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4",
-  "1RfhOYUMcFoqfvaNG153YfE-bfeItMP0-ziGco5H-Gz4"
-];
-*/
 
   for (var i = 0; i < listOfTrials.length;i++)
   {
@@ -3280,4 +3595,4 @@ function newGetLimitedTrials(auth,trialRange, spreadsheetID,callback)
 }
 
 
-wait.launchFiber(LIFE4sequence);
+//wait.launchFiber(LIFE4sequence);
