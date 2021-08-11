@@ -2546,8 +2546,11 @@ function changeAppStatus(status,callback){
 
 }
 
+
 function discordAdminAnnouncePlayerDone(numberofrecords, callback)
 {
+  setTimeout( function(){
+
     var discordpost = "Check for Players is complete! " + numberofrecords + " were added to the queue!";
 
   adminchannel.send(discordpost)
@@ -2555,12 +2558,14 @@ function discordAdminAnnouncePlayerDone(numberofrecords, callback)
   .catch(console.error);
 
   callback(null,"done");
-
+}, 25);
 
 }
 
 function discordAdminAnnounceTrialsDone(numberofrecords, callback)
 {
+  setTimeout( function(){
+
     var discordpost = "Check for Trials is complete! " + numberofrecords + " were added to the queue!";
 
   adminchannel.send(discordpost)
@@ -2568,12 +2573,14 @@ function discordAdminAnnounceTrialsDone(numberofrecords, callback)
   .catch(console.error);
 
   callback(null,"done");
-
+}, 25);
 
 }
 
-function discordAdminAnnounceQueueDone(numberofrecords, callback)
+function discordAdminAnnounceQueueDone(callback)
 {
+  setTimeout( function(){
+
     var discordpost = "The queue is now empty and all new updates have been announced!";
 
   adminchannel.send(discordpost)
@@ -2581,12 +2588,14 @@ function discordAdminAnnounceQueueDone(numberofrecords, callback)
   .catch(console.error);
 
   callback(null,"done");
-
+}, 25);
 
 }
 
 function discordAdminAnnounceError(callback)
 {
+  setTimeout( function(){
+
     var discordpost = "Uh oh, something went wrong! Disabling bot for now...";
 
   adminchannel.send(discordpost)
@@ -2594,7 +2603,7 @@ function discordAdminAnnounceError(callback)
   .catch(console.error);
 
   callback(null,"done");
-
+}, 25);
 
 }
 
@@ -3117,7 +3126,7 @@ function LIFE4sequence()
               
               if (queueResults[0].updateType == "NEW")
               {
-                //var twitterannounce = wait.for(announceNewPlayerTwitter, playerName, playerInfo[0].playerRank, playerInfo[0].twitterHandle);
+                var twitterannounce = wait.for(announceNewPlayerTwitter, playerName, playerInfo[0].playerRank, playerInfo[0].twitterHandle);
                 //console.log("Twitter announcement complete!");
                 var discordannounce = wait.for(announceNewPlayerDiscord, playerName, playerInfo[0].playerRank, playerInfo[0].discordHandle);
                 console.log("Discord announcement complete!");
