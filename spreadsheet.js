@@ -9,8 +9,8 @@
 //TODO: Get userID sync
 //TODO: Get discord sync
 //TODO: Add discord messaging
+//TODO: Update discord message formatting
 
-//TODO: Fix channel checks for announcements
 
 
 //Discord plan ????
@@ -3065,7 +3065,7 @@ function LIFE4sequence()
                 var twitterannounce = wait.for(announceNewPlayerTrialTwitter, trialInfo[0].playerName, trialInfo[0].playerRank,trialInfo[0].playerScore,trialInfo[0].playerDiff, trialInfo[0].playerTwitterHandle, trialInfo[0].trialName,playerNumberRanking);
                 console.log("Twitter announcement complete!");
                 //TODO: Add discord handle
-                var discordannounce = wait.for(announceNewPlayerTrialDiscord, trialInfo[0].playerName, trialInfo[0].playerRank,trialInfo[0].playerScore,trialInfo[0].playerDiff, trialInfo[0].trialName,playerNumberRanking);
+                //var discordannounce = wait.for(announceNewPlayerTrialDiscord, trialInfo[0].playerName, trialInfo[0].playerRank,trialInfo[0].playerScore,trialInfo[0].playerDiff, trialInfo[0].trialName,playerNumberRanking);
                 console.log("Discord announcement complete!");
               }
               else if (queueResults[0].updateType == "UPDATE")
@@ -3073,7 +3073,7 @@ function LIFE4sequence()
                 var twitterannounce = wait.for(announceUpdatePlayerTrialTwitter, trialInfo[0].playerName, trialInfo[0].playerRank,trialInfo[0].playerScore,trialInfo[0].playerDiff, trialInfo[0].playerTwitterHandle, trialInfo[0].trialName,playerNumberRanking);
                 console.log("Twitter announcement complete!");
                 //TODO: Add discord handle
-                var discordannounce = wait.for(announceUpdatePlayerTrialDiscord, trialInfo[0].playerName, trialInfo[0].playerRank,trialInfo[0].playerScore,trialInfo[0].playerDiff, trialInfo[0].trialName,playerNumberRanking);
+                //var discordannounce = wait.for(announceUpdatePlayerTrialDiscord, trialInfo[0].playerName, trialInfo[0].playerRank,trialInfo[0].playerScore,trialInfo[0].playerDiff, trialInfo[0].trialName,playerNumberRanking);
                 console.log("Discord announcement complete!");
 
               }
@@ -3101,7 +3101,7 @@ function LIFE4sequence()
                 var twitterannounce = wait.for(announceNewPlayerTrialTwitter, trialInfo[0].playerName, trialInfo[0].playerRank,trialInfo[0].playerScore,trialInfo[0].playerDiff, trialInfo[0].playerTwitterHandle, trialInfo[0].trialName,playerNumberRanking);
                 console.log("Twitter announcement complete!");
                 //TODO: Add discord handle to this
-                var discordannounce = wait.for(announceNewPlayerTrialDiscord, trialInfo[0].playerName, trialInfo[0].playerRank,trialInfo[0].playerScore,trialInfo[0].playerDiff, trialInfo[0].trialName,playerNumberRanking);
+                //var discordannounce = wait.for(announceNewPlayerTrialDiscord, trialInfo[0].playerName, trialInfo[0].playerRank,trialInfo[0].playerScore,trialInfo[0].playerDiff, trialInfo[0].trialName,playerNumberRanking);
                 console.log("Discord announcement complete!");
               }
               else if (queueResults[0].updateType == "UPDATE")
@@ -3109,7 +3109,7 @@ function LIFE4sequence()
                 var twitterannounce = wait.for(announceUpdatePlayerTrialTwitter, trialInfo[0].playerName, trialInfo[0].playerRank,trialInfo[0].playerScore,trialInfo[0].playerDiff, trialInfo[0].playerTwitterHandle, trialInfo[0].trialName,playerNumberRanking);
                 console.log("Twitter announcement complete!");
                 //TODO: Add Discord handle to this
-                var discordannounce = wait.for(announceUpdatePlayerTrialDiscord, trialInfo[0].playerName, trialInfo[0].playerRank,trialInfo[0].playerScore,trialInfo[0].playerDiff, trialInfo[0].trialName,playerNumberRanking);
+                //var discordannounce = wait.for(announceUpdatePlayerTrialDiscord, trialInfo[0].playerName, trialInfo[0].playerRank,trialInfo[0].playerScore,trialInfo[0].playerDiff, trialInfo[0].trialName,playerNumberRanking);
                 console.log("Discord announcement complete!");
 
               }
@@ -3128,7 +3128,7 @@ function LIFE4sequence()
               {
                 var twitterannounce = wait.for(announceNewPlayerTwitter, playerName, playerInfo[0].playerRank, playerInfo[0].twitterHandle);
                 //console.log("Twitter announcement complete!");
-                var discordannounce = wait.for(announceNewPlayerDiscord, playerName, playerInfo[0].playerRank, playerInfo[0].discordHandle);
+                //var discordannounce = wait.for(announceNewPlayerDiscord, playerName, playerInfo[0].playerRank, playerInfo[0].discordHandle);
                 console.log("Discord announcement complete!");
               }
               else if (queueResults[0].updateType == "UPDATE")
@@ -3136,7 +3136,7 @@ function LIFE4sequence()
                 var twitterannounce = wait.for(announcePlayerRankupTwitter, playerName, playerInfo[0].playerRank, playerInfo[0].twitterHandle);
                 console.log("Twitter announcement complete!");
                 //TODO: Add discord handle
-                var discordannounce = wait.for(announcePlayerRankupDiscord, playerName, playerInfo[0].playerRank);
+                //var discordannounce = wait.for(announcePlayerRankupDiscord, playerName, playerInfo[0].playerRank);
                 console.log("Discord announcement complete!");
               }
           } 
