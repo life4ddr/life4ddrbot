@@ -9,8 +9,8 @@
 //TODO: Get userID sync
 //TODO: Get discord sync
 //TODO: Add discord messaging
-//TODO: Update discord message formatting
-
+//TODO: Add auto reactionining to discord messages
+//TODO: Add timestamp to queue
 
 
 //Discord plan ????
@@ -2674,7 +2674,11 @@ function announceNewPlayerTrialDiscord(playerName, playerRank,playerScore,player
     //}
     //else if (isEvent == false)
     //{
-      discordpost = "Player " + playerName + " has earned the " + playerRank + " " + getTrialDiscordIcon(playerRank) + " Trial Rank for " + trialName + " with " + playerScore + " EX " + playerDiff + " for a Trial Ranking of #"+numberRank+"!";
+
+      //old
+      //discordpost = "Player " + playerName + " has earned the " + playerRank + " " + getTrialDiscordIcon(playerRank) + " Trial Rank for " + trialName + " with " + playerScore + " EX " + playerDiff + " for a Trial Ranking of #"+numberRank+"!";
+      discordpost = playerName + "\n" + trialName + " - " + playerRank + " " + getTrialDiscordIcon(playerRank) +"\nScore: " + playerScore + " EX " + playerDiff + "\nTrial Rank: #"+numberRank;
+      
     //}
 
     
@@ -2709,7 +2713,10 @@ function announceUpdatePlayerTrialDiscord(playerName, playerRank,playerScore,pla
     //}
     //else if (isEvent == false)
     //{
-      var discordpost = "Player " + playerName + " has earned the " + playerRank + " " + getTrialDiscordIcon(playerRank) + " Trial Rank for " + trialName + " with " + playerScore + " EX " + playerDiff + " for a Trial Ranking of #"+numberRank+"!";
+      //old
+      //var discordpost = "Player " + playerName + " has earned the " + playerRank + " " + getTrialDiscordIcon(playerRank) + " Trial Rank for " + trialName + " with " + playerScore + " EX " + playerDiff + " for a Trial Ranking of #"+numberRank+"!";
+      discordpost = playerName + "\n" + trialName + " - " + playerRank + " " + getTrialDiscordIcon(playerRank) +"\nScore: " + playerScore + " EX " + playerDiff + "\nTrial Rank: #"+numberRank;
+
     //}
 
 
