@@ -9,7 +9,6 @@
 //TODO: Get userID sync
 //TODO: Get discord sync
 //TODO: Add discord messaging
-//TODO: Add auto reactionining to discord messages
 //TODO: Add timestamp to queue
 
 
@@ -2520,7 +2519,8 @@ function announcePlayerRankupDiscord(playerName, playerRank,callback)
     var discordpost = "Player " + playerName + " has earned a new rank! They are now " + playerRank +"! Congratulations! "  + getDiscordIcon(playerRank);
 
     playerrankupchannel.send(discordpost)
-    .then(message => console.log(discordpost))
+    //.then(message => console.log(discordpost))
+    .then(msg => { msg.react(getDiscordIcon(playerRank))})
     .catch(console.error);
 
     callback(null,"done");
@@ -2555,6 +2555,22 @@ function discordAdminAnnouncePlayerDone(numberofrecords, callback)
 
   adminchannel.send(discordpost)
   .then(message => console.log(discordpost))
+  .catch(console.error);
+
+  callback(null,"done");
+}, 25);
+
+}
+
+function discordAdminAutoReact(callback)
+{
+  setTimeout( function(){
+
+    var discordpost = "test";
+
+  adminchannel.send(discordpost)
+  //.then(message => console.log(discordpost))
+  .then(msg => { msg.react("<:g5:825469581481082940>") })
   .catch(console.error);
 
   callback(null,"done");
@@ -2644,7 +2660,8 @@ function announceNewPlayerDiscord(playerName, playerRank,playerDiscordHandle,cal
     var discordpost = "Player " + playerName + " has joined LIFE4! Their current rank is " + playerRank + "! Welcome! " + getDiscordIcon(playerRank);
 
     playerrankupchannel.send(discordpost)
-    .then(message => console.log(discordpost))
+    //.then(message => console.log(discordpost))
+    .then(msg => { msg.react(getDiscordIcon(playerRank)) })
     .catch(console.error);
 
     callback(null,"done");
@@ -2683,7 +2700,8 @@ function announceNewPlayerTrialDiscord(playerName, playerRank,playerScore,player
 
     
     trialrankupchannel.send(discordpost)
-    .then(message => console.log(discordpost))
+    //.then(message => console.log(discordpost))
+    .then(msg => { msg.react(getTrialDiscordIcon(playerRank)) })
     .catch(console.error);
 
 
@@ -2721,7 +2739,8 @@ function announceUpdatePlayerTrialDiscord(playerName, playerRank,playerScore,pla
 
 
     trialrankupchannel.send(discordpost)
-    .then(message => console.log(discordpost))
+    //.then(message => console.log(discordpost))
+    .then(msg => { msg.react(getTrialDiscordIcon(playerRank)) })
     .catch(console.error);
 
 
@@ -2767,6 +2786,7 @@ function LIFE4sequence()
   if (botStatus =="OFF")
   {
     console.log("Bot is off! Nothing will run!");
+
   }
   //ERROR
   //
