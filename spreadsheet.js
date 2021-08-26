@@ -9,7 +9,6 @@
 //TODO: Get userID sync
 //TODO: Get discord sync
 //TODO: Add discord messaging
-//TODO: Add timestamp to queue
 
 
 //Discord plan ????
@@ -834,7 +833,7 @@ function insertPlayerInQueue(playerName,updateType,playerID,callback){
 
   setTimeout( function(){
 
-    var insertQuery = "INSERT INTO playerQueue (playerName,updateType,updateCategory,playerID,trialID,queueStatus) VALUES ('"+playerName+"','"+updateType+"','PLAYER',"+ playerID+",null,'ACTIVE')";
+    var insertQuery = "INSERT INTO playerQueue (playerName,updateType,updateCategory,playerID,trialID,queueStatus,playerQueueTimestamp) VALUES ('"+playerName+"','"+updateType+"','PLAYER',"+ playerID+",null,'ACTIVE',now())";
 
 
     connection.query(insertQuery, function (error, results) {
@@ -887,7 +886,7 @@ function setQueueItemToProcessed(playerQueueID,callback){
 
   setTimeout( function(){
 
-    var updateQuery = "UPDATE playerQueue SET queueStatus = 'DONE' WHERE playerQueueID = " + playerQueueID; 
+    var updateQuery = "UPDATE playerQueue SET queueStatus = 'DONE',playerQueueTimestamp=now() WHERE playerQueueID = " + playerQueueID; 
 
     connection.query(updateQuery, function (error, results) {
       if (error) throw error;
@@ -903,7 +902,7 @@ function setQueueItemToError(playerQueueID,callback){
 
   setTimeout( function(){
 
-    var updateQuery = "UPDATE playerQueue SET queueStatus = 'ERROR' WHERE playerQueueID = " + playerQueueID; 
+    var updateQuery = "UPDATE playerQueue SET queueStatus = 'ERROR',playerQueueTimestamp=now() WHERE playerQueueID = " + playerQueueID; 
 
     connection.query(updateQuery, function (error, results) {
       if (error) throw error;
