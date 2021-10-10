@@ -47,9 +47,9 @@ bot.login(process.env.DISCORD_BOT_TOKEN);
 
 bot.on('ready', () => {
     console.log(`Logged in as ${bot.user.tag}!`);
-    //adminchannel = bot.channels.cache.get('596168285477666832');
-    //playerrankupchannel= bot.channels.cache.get('530616617571319809');
-    //trialrankupchannel= bot.channels.cache.get('556390024938258433');
+    adminchannel = bot.channels.cache.get('596168285477666832');
+    playerrankupchannel= bot.channels.cache.get('530616617571319809');
+    trialrankupchannel= bot.channels.cache.get('556390024938258433');
 
     
     wait.launchFiber(LIFE4sequence);
