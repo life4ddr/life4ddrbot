@@ -710,6 +710,51 @@ function getBotStatus(callback){
 
 }; 
 
+function tournamentQualGetPlayerIsVerified(row, callback){
+  setTimeout( function(){
+
+            var returnedVer = `${row[0]}`;
+              callback(null,returnedVer);
+        
+  }, 25);
+}; 
+
+function tournamentQualGetTimestamp(row, callback){
+  setTimeout( function(){
+
+            var returnedTimestamp = `${row[1]}`;
+              callback(null,returnedTimestamp);
+        
+  }, 25);
+}; 
+
+function tournamentQualGetName(row, callback){
+  setTimeout( function(){
+
+            var returnedName = `${row[2]}`;
+              callback(null,returnedName);
+        
+  }, 25);
+}; 
+
+function tournamentQualGetID(row, callback){
+  setTimeout( function(){
+
+            var returnedID = `${row[3]}`;
+              callback(null,returnedID);
+        
+  }, 25);
+}; 
+
+function tournamentQualGetSongEX(row,songNumber, callback){
+  setTimeout( function(){
+
+            var returnedID = `${row[3 + songNumber]}`;
+              callback(null,returnedID);
+        
+  }, 25);
+}; 
+
 function playerGetSpreadsheetRowNameValue(row, callback){
   setTimeout( function(){
 
@@ -2876,6 +2921,85 @@ function LIFE4sequence()
 
     }
   }
+  //TOURNAMENT SYNC
+  //
+  //
+  //
+  else if (botStatus == "TOURNEYSYNC")
+  {
+    try
+    {
+      console.log("Running the tournament sync!");
+      //get list from spreadsheet
+      var playerSubmissionSheet = wait.for(getFullPlayerTournamentListFromSheets, getauth);
+      //if verification = true
+      
+      //compare against other tab to see if score exists or is new
+      console.log(playerSubmissionSheet);
+      //if new, add to PLAYER SCORES
+
+      //if updated, update PLAYER SCORES
+
+      //else, do nothing
+    }
+    catch(error)
+    {
+      console.log("ERROR!");
+
+      var discordannounce = wait.for(discordAdminAnnounceError);
+      var changeappstatus = wait.for(changeAppStatus, "OFF");
+
+    }
+  }
+    //TOURNAMENT QUALIFYING SYNC
+  //
+  //
+  //
+  else if (botStatus == "TOURNEYQUALSYNC")
+  {
+    try
+    {
+      console.log("Running the tournament sync!");
+      //get list from spreadsheet
+      var playerSubmissionSheet = wait.for(getFullPlayerTournamentListFromSheets, getauth);
+      console.log("List of players retrieved!");
+      //if verification = true
+      if (playerSubmissionSheet.length)
+      {
+        //map each row
+        playerSubmissionSheet.map((row) => {
+          console.log(row);
+          var playerIsVerified=wait.for(tournamentQualGetPlayerIsVerified,row);
+          var playerTimestamp=wait.for(tournamentQualGetTimestamp,row);
+          var playerName = wait.for(tournamentQualGetName,row);
+          var playerLIFE4ID = wait.for(tournamentQualGetID,row);
+          var song1EX=wait.for(tournamentQualGetSongEX,1,row);
+          var song2EX=wait.for(tournamentQualGetSongEX,2,row);
+          var song3EX=wait.for(tournamentQualGetSongEX,3,row);
+
+          //compare against other tab to see if score exists or is new
+          console.log(playerSubmissionSheet);
+          //if new, add to PLAYER SCORES
+
+          //if updated, update PLAYER SCORES
+
+          //else, do nothing
+
+        });
+      }
+
+
+
+    }
+    catch(error)
+    {
+      console.log("ERROR!");
+
+      var discordannounce = wait.for(discordAdminAnnounceError);
+      var changeappstatus = wait.for(changeAppStatus, "OFF");
+
+    }
+  }
   //TRIALS
   //
   //
@@ -3255,6 +3379,19 @@ function newGetPlayersFromSheets(auth,callback)
   sheets.spreadsheets.values.get({
     spreadsheetId: '1FPiO1h9XDSeTB6tWmRi7ursSqFOBYitiVweu3eOQ8tg',
     range: 'User List!A2:G',
+  }, (err, res) => {
+    if (err) return console.log('The API returned an error: ' + err);
+    const rows = res.data.values;
+    callback(null,rows);
+  });
+}
+
+function getFullPlayerTournamentListFromSheets(auth,callback)
+{
+  const sheets = google.sheets({version: 'v4', auth});
+  sheets.spreadsheets.values.get({
+    spreadsheetId: '1qJ1-hor3dHw8w89mBOG6DNHfaAGmrVFnerq8x6xCCfw',
+    range: 'Scores!A2:M',
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const rows = res.data.values;
