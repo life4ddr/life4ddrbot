@@ -748,12 +748,30 @@ function tournamentQualGetID(row, callback){
 
 function tournamentQualGetSongEX(row,songNumber, callback){
   setTimeout( function(){
-
-            var returnedID = `${row[3 + songNumber]}`;
+    
+            var returnedID = `${row[3+songNumber]}`;
               callback(null,returnedID);
         
   }, 25);
 }; 
+
+function tournamentQualTestWriteToRow(auth,callback)
+{
+  const sheets = google.sheets({version: 'v4', auth});
+
+  var data = [[1,2],[3,4]];
+
+  sheets.spreadsheets.values.append({
+    spreadsheetId: '1qJ1-hor3dHw8w89mBOG6DNHfaAGmrVFnerq8x6xCCfw',
+    range: 'QualifierScores!A2:E',
+    valueInputOption:'RAW',
+    data
+  }, (err, res) => {
+    if (err) return console.log('The API returned an error: ' + err);
+    const rows = res.data.values;
+    callback(null,rows);
+  });
+}
 
 function playerGetSpreadsheetRowNameValue(row, callback){
   setTimeout( function(){
@@ -2961,24 +2979,36 @@ function LIFE4sequence()
     {
       console.log("Running the tournament sync!");
       //get list from spreadsheet
-      var playerSubmissionSheet = wait.for(getFullPlayerTournamentListFromSheets, getauth);
+      var playerSubmissionSheet = wait.for(getFullPlayerQualifierListFromSheets, getauth);
       console.log("List of players retrieved!");
       //if verification = true
       if (playerSubmissionSheet.length)
       {
         //map each row
         playerSubmissionSheet.map((row) => {
-          console.log(row);
+          //console.log(row);
           var playerIsVerified=wait.for(tournamentQualGetPlayerIsVerified,row);
           var playerTimestamp=wait.for(tournamentQualGetTimestamp,row);
           var playerName = wait.for(tournamentQualGetName,row);
           var playerLIFE4ID = wait.for(tournamentQualGetID,row);
-          var song1EX=wait.for(tournamentQualGetSongEX,1,row);
-          var song2EX=wait.for(tournamentQualGetSongEX,2,row);
-          var song3EX=wait.for(tournamentQualGetSongEX,3,row);
+          var song1EX=wait.for(tournamentQualGetSongEX,row,1);
+          var song2EX=wait.for(tournamentQualGetSongEX,row,2);
+          var song3EX=wait.for(tournamentQualGetSongEX,row,3);
+
+          //console.log(playerIsVerified + " " + playerTimestamp + " " + playerName + " " + playerLIFE4ID + " " + song1EX + " " + song2EX + " " + song3EX);
+
+          //check that player is verified
+          if (playerIsVerified=="V")
+          {
+            console.log("Player is verified!");
+            console.log(row);
+            var submissionwrite = wait.for(tournamentQualTestWriteToRow, getauth);
+
+          }
 
           //compare against other tab to see if score exists or is new
-          console.log(playerSubmissionSheet);
+          //console.log(playerSubmissionSheet);
+
           //if new, add to PLAYER SCORES
 
           //if updated, update PLAYER SCORES
@@ -3386,12 +3416,12 @@ function newGetPlayersFromSheets(auth,callback)
   });
 }
 
-function getFullPlayerTournamentListFromSheets(auth,callback)
+function getFullPlayerQualifierListFromSheets(auth,callback)
 {
   const sheets = google.sheets({version: 'v4', auth});
   sheets.spreadsheets.values.get({
     spreadsheetId: '1qJ1-hor3dHw8w89mBOG6DNHfaAGmrVFnerq8x6xCCfw',
-    range: 'Scores!A2:M',
+    range: 'QualifierForm!A2:G',
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const rows = res.data.values;
