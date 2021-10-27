@@ -6,19 +6,13 @@
 //built using NodeJS
 
 //TODO: Dependabot updates
-//TODO: Get userID sync
 //TODO: Get discord sync
 //TODO: Add discord messaging
 
+//TODO: Gut sheets
+//TODO: Update trials to include playerID link and LIFE4ID
+//TODO: Create git data dictionary
 
-//Discord plan ????
-// Create command
-// Have command message player in #rankups
-/*
-    const badboy = bot.users.fetch("<275626417629298691>")
-    .then(badboy => console.log(badboy))
-    .catch(() => "error");
-*/
 
 const fs = require('fs');
 const readline = require('readline');
@@ -666,14 +660,15 @@ var getTrialDiscordIcon = function(rank)
   return discordemoji;
 }
 
-const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
+//TODO: Update this to be not readonly
+const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 const TOKEN_PATH = 'token.json';
 
 /*
 let tokenjson = {
   "access_token": process.env.G_ACCESS_TOKEN,
   "refresh_token": process.env.DISCORD_BOT_TOKEN,
-  "scope":"https://www.googleapis.com/auth/spreadsheets.readonly",
+  "scope":"https://www.googleapis.com/auth/spreadsheets",
   "token_type":"Bearer",
   "expiry_date":1547324367365
 }
@@ -3337,8 +3332,8 @@ connection.end();
 }
 
 //uncomment these when you need a new token
-//function newauthorize(credentials, callback) {
-  function newauthorize(callback) {
+function newauthorize(credentials, callback) {
+  //function newauthorize(callback) {
 
   //const {client_secret, client_id, redirect_uris} = credentials.installed;
   
@@ -3361,6 +3356,7 @@ connection.end();
 
 
 //authorize the app
+/*
 function authorize(credentials, callback) {
 
   const {client_secret, client_id, redirect_uris} = credentials.installed;
@@ -3376,6 +3372,7 @@ function authorize(credentials, callback) {
 
 
 };
+*/
 
 //get google token
 function getNewToken(oAuth2Client, callback) {
