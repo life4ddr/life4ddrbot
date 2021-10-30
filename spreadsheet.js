@@ -1199,13 +1199,13 @@ function playerUpdateName(playerName, callback){
 
 }
 
-function checkForExistingPlayer(playerName, callback){
+function checkForExistingPlayer(playerName, playerLIFE4ID, callback){
 
   setTimeout( function(){
 
     var checkforplayerquery = "SELECT playerID,playerName,playerRank FROM playerList where playerName = '" + playerName + "'";
     //
-    //var checkforplayerquery = "SELECT playerID,playerName,playerRank FROM life4_playerlist where playerName = '" + playerName + "'";
+    //var checkforplayerquery = "SELECT playerID,playerName,playerRank,playerLIFE4ID FROM life4_playerlist where playerLIFE4ID = '" + playerLIFE4ID + "'";
 
     
     connection.query(checkforplayerquery, function (error, results) {
@@ -1283,7 +1283,7 @@ function updatePlayerRecord(playerName, playerRank, playerRival, playerTwitter, 
 
     var updateplayerquery = "UPDATE playerList set playerRank='" + playerRank + "', playerRivalCode='"+playerRival+"', twitterHandle='"+ playerTwitter + "', playerDateEarned=now(), discordHandle='" + playerDiscord + "', playerLIFE4ID='"+ playerLIFE4ID + "' where playerName = '" + playerName +"'";
     //new
-    //var updateplayerquery = "UPDATE life4_playerlist set playerRank='" + playerRank + "', playerRivalCode='"+playerRival+"', twitterHandle='"+ playerTwitter + "', playerDateEarned=now(), discordHandle='" + playerDiscord + "', playerLIFE4ID='"+ playerLIFE4ID + "' where playerName = '" + playerName +"'";
+    //var updateplayerquery = "UPDATE life4_playerlist set playerRank='" + playerRank + "', playerRivalCode='"+playerRival+"', twitterHandle='"+ playerTwitter + "', playerDateEarned=now(), discordHandle='" + playerDiscord + "', playerLIFE4ID='"+ playerLIFE4ID + "' where playerLIFE4ID = '" + playerLIFE4ID +"'";
 
     
     connection.query(updateplayerquery, function (error, results) {
@@ -2935,10 +2935,11 @@ function LIFE4sequence()
 
 
             if ((playerName != null && playerName != undefined) &&
-            (playerRank != null && playerRank != undefined))
+            (playerRank != null && playerRank != undefined) &&
+            (playerLIFE4ID != null && playerLIFE4ID != undefined))
           {
             //check for existing player
-            var playerresults = wait.for(checkForExistingPlayer, playerName);
+            var playerresults = wait.for(checkForExistingPlayer, playerName,playerLIFE4ID);
 
 
 
@@ -2973,7 +2974,7 @@ function LIFE4sequence()
               var playerinsert = wait.for(insertNewPlayerRecord,playerName,playerRank,playerRival,playerTwitter,playerDiscord,playerLIFE4ID);
               console.log("Player " + playerName + " added!");
               //re-retrieve player
-              playerresults = wait.for(checkForExistingPlayer, playerName);
+              playerresults = wait.for(checkForExistingPlayer, playerName, playerLIFE4ID);
               var insertresults = wait.for(insertNewPlayerAuditRecord, playerresults[0].playerID, playerRank);
               console.log("Player Audit History complete!");
               var insertPlayerIntoQueue = wait.for(insertPlayerInQueue,playerName,"NEW",playerresults[0].playerID);
