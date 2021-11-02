@@ -690,7 +690,7 @@ function getCredentials(callback){
 function getBotStatus(callback){
   setTimeout( function(){
 
-    var appStatus = "SELECT varValue from life4Controls where varName='appStatus'";
+    var appStatus = "SELECT varValue from life4controls where varName='appStatus'";
 
 
     connection.query(appStatus, function (error, results) {
@@ -704,6 +704,18 @@ function getBotStatus(callback){
 
 
 }; 
+
+//NEW WORDPRESS TABLES
+//
+function checkWPsubmissions(callback){
+  setTimeout( function(){
+
+    var returnedVer = 'ok';
+      callback(null,returnedVer);
+
+}, 25);
+
+};
 
 function tournamentQualGetPlayerIsVerified(row, callback){
   setTimeout( function(){
@@ -878,9 +890,9 @@ function insertPlayerInQueue(playerName,updateType,playerID,callback){
 
   setTimeout( function(){
 
-    var insertQuery = "INSERT INTO playerQueue (playerName,updateType,updateCategory,playerID,trialID,queueStatus,playerQueueTimestamp) VALUES ('"+playerName+"','"+updateType+"','PLAYER',"+ playerID+",null,'ACTIVE',now())";
-    //new
-    //var insertQuery = "INSERT INTO life4_playerqueue (playerName,updateType,updateCategory,playerID,trialID,queueStatus,playerQueueTimestamp) VALUES ('"+playerName+"','"+updateType+"','PLAYER',"+ playerID+",null,'ACTIVE',now())";
+    //old
+    //var insertQuery = "INSERT INTO playerQueue (playerName,updateType,updateCategory,playerID,trialID,queueStatus,playerQueueTimestamp) VALUES ('"+playerName+"','"+updateType+"','PLAYER',"+ playerID+",null,'ACTIVE',now())";
+    var insertQuery = "INSERT INTO life4_playerqueue (playerName,updateType,updateCategory,playerID,trialID,queueStatus,playerQueueTimestamp) VALUES ('"+playerName+"','"+updateType+"','PLAYER',"+ playerID+",null,'ACTIVE',now())";
 
 
     connection.query(insertQuery, function (error, results) {
@@ -898,9 +910,10 @@ function insertTrialEventInQueue(playerName,updateType, trialID,callback){
 
   setTimeout( function(){
 
-    var insertQuery = "INSERT INTO playerQueue (playerName,updateType,updateCategory,playerID,trialID,queueStatus) VALUES ('"+playerName+"','"+updateType+"','TRIALEVENT', null,"+trialID+",'ACTIVE')";
-    //new
-    //var insertQuery = "INSERT INTO life4_playerqueue (playerName,updateType,updateCategory,playerID,trialID,queueStatus) VALUES ('"+playerName+"','"+updateType+"','TRIALEVENT', null,"+trialID+",'ACTIVE')";
+    //old
+    //var insertQuery = "INSERT INTO playerQueue (playerName,updateType,updateCategory,playerID,trialID,queueStatus) VALUES ('"+playerName+"','"+updateType+"','TRIALEVENT', null,"+trialID+",'ACTIVE')";
+
+    var insertQuery = "INSERT INTO life4_playerqueue (playerName,updateType,updateCategory,playerID,trialID,queueStatus) VALUES ('"+playerName+"','"+updateType+"','TRIALEVENT', null,"+trialID+",'ACTIVE')";
 
 
     connection.query(insertQuery, function (error, results) {
@@ -918,9 +931,10 @@ function insertTrialInQueue(playerName,updateType, trialID,callback){
 
   setTimeout( function(){
 
-    var insertQuery = "INSERT INTO playerQueue (playerName,updateType,updateCategory,playerID,trialID,queueStatus) VALUES ('"+playerName+"','"+updateType+"','TRIAL', null,"+trialID+",'ACTIVE')";
-    //new
-    //var insertQuery = "INSERT INTO life4_playerqueue (playerName,updateType,updateCategory,playerID,trialID,queueStatus) VALUES ('"+playerName+"','"+updateType+"','TRIAL', null,"+trialID+",'ACTIVE')";
+    //old
+    //var insertQuery = "INSERT INTO playerQueue (playerName,updateType,updateCategory,playerID,trialID,queueStatus) VALUES ('"+playerName+"','"+updateType+"','TRIAL', null,"+trialID+",'ACTIVE')";
+
+    var insertQuery = "INSERT INTO life4_playerqueue (playerName,updateType,updateCategory,playerID,trialID,queueStatus) VALUES ('"+playerName+"','"+updateType+"','TRIAL', null,"+trialID+",'ACTIVE')";
 
 
     connection.query(insertQuery, function (error, results) {
@@ -937,9 +951,10 @@ function setQueueItemToProcessed(playerQueueID,callback){
 
   setTimeout( function(){
 
-    var updateQuery = "UPDATE playerQueue SET queueStatus = 'DONE',playerQueueTimestamp=now() WHERE playerQueueID = " + playerQueueID; 
-    //new
-    //var updateQuery = "UPDATE life4_playerqueue SET queueStatus = 'DONE',playerQueueTimestamp=now() WHERE playerQueueID = " + playerQueueID; 
+    //old
+    //var updateQuery = "UPDATE playerQueue SET queueStatus = 'DONE',playerQueueTimestamp=now() WHERE playerQueueID = " + playerQueueID; 
+
+    var updateQuery = "UPDATE life4_playerqueue SET queueStatus = 'DONE',playerQueueTimestamp=now() WHERE playerQueueID = " + playerQueueID; 
 
 
 
@@ -957,9 +972,10 @@ function setQueueItemToError(playerQueueID,callback){
 
   setTimeout( function(){
 
-    var updateQuery = "UPDATE playerQueue SET queueStatus = 'ERROR',playerQueueTimestamp=now() WHERE playerQueueID = " + playerQueueID; 
-    //new
-    //var updateQuery = "UPDATE life4_playerqueue SET queueStatus = 'ERROR',playerQueueTimestamp=now() WHERE playerQueueID = " + playerQueueID; 
+    //old
+    //var updateQuery = "UPDATE playerQueue SET queueStatus = 'ERROR',playerQueueTimestamp=now() WHERE playerQueueID = " + playerQueueID; 
+
+    var updateQuery = "UPDATE life4_playerqueue SET queueStatus = 'ERROR',playerQueueTimestamp=now() WHERE playerQueueID = " + playerQueueID; 
 
 
     connection.query(updateQuery, function (error, results) {
@@ -976,9 +992,10 @@ function getReadyFromQueue(callback){
 
   setTimeout( function(){
 
-    var getQuery = "select playerQueueID, playerName, updateType, updateCategory, playerID, trialID, queueStatus from playerQueue where queueStatus = 'ACTIVE' limit 1";
-    //new
-    //var getQuery = "select playerQueueID, playerName, updateType, updateCategory, playerID, trialID, queueStatus from life4_playerqueue where queueStatus = 'ACTIVE' limit 1";
+    //old
+    //var getQuery = "select playerQueueID, playerName, updateType, updateCategory, playerID, trialID, queueStatus from playerQueue where queueStatus = 'ACTIVE' limit 1";
+
+    var getQuery = "select playerQueueID, playerName, updateType, updateCategory, playerID, trialID, queueStatus from life4_playerqueue where queueStatus = 'ACTIVE' limit 1";
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
@@ -994,9 +1011,10 @@ function getTrialQueueInfo(trialID,callback){
 
   setTimeout( function(){
 
-    var trialQueueQuery = "SELECT * from playertrialrank WHERE playerTrialRankID = " + trialID;
-    //new
-    //var trialQueueQuery = "SELECT * from life4_playertrialrank WHERE playerTrialRankID = " + trialID;
+    //old
+    //var trialQueueQuery = "SELECT * from playertrialrank WHERE playerTrialRankID = " + trialID;
+
+    var trialQueueQuery = "SELECT * from life4_playertrialrank WHERE playerTrialRankID = " + trialID;
 
 
     connection.query(trialQueueQuery, function (error, results) {
@@ -1014,9 +1032,10 @@ function getPlayerQueueInfo(playerID,callback){
 
   setTimeout( function(){
 
-    var playerQueueQuery = "SELECT * from playerList WHERE playerID = " + playerID;
-    //new
-    //var playerQueueQuery = "SELECT * from life4_playerlist WHERE playerID = " + playerID;
+    //old
+    //var playerQueueQuery = "SELECT * from playerList WHERE playerID = " + playerID;
+
+    var playerQueueQuery = "SELECT * from life4_playerlist WHERE playerID = " + playerID;
 
 
     connection.query(playerQueueQuery, function (error, results) {
@@ -1142,9 +1161,10 @@ function trialEventGetSpreadsheetRowDiffValue(row, callback){
 function trialCheckForExistingTrial(playerName,trialName, callback){
 
   setTimeout( function(){
-    var checkfortrialquery = "SELECT playerTrialRankID, playerRank, playerScore FROM playertrialrank where playerName = '" + playerName + "' and trialName = '" + trialName + "'";
-    //new
-    //var checkfortrialquery = "SELECT playerTrialRankID, playerRank, playerScore FROM life4_playertrialrank where playerName = '" + playerName + "' and trialName = '" + trialName + "'";
+    //old
+    //var checkfortrialquery = "SELECT playerTrialRankID, playerRank, playerScore FROM playertrialrank where playerName = '" + playerName + "' and trialName = '" + trialName + "'";
+    
+    var checkfortrialquery = "SELECT playerTrialRankID, playerRank, playerScore FROM life4_playertrialrank where playerName = '" + playerName + "' and trialName = '" + trialName + "'";
 
     
     connection.query(checkfortrialquery, function (error, results) {
@@ -1162,9 +1182,10 @@ function getAllPlayerIDPlayerName(callback)
 {
   setTimeout( function(){
 
-    var getquery = "SELECT playerID, playerName from playerList WHERE activeStatus = 'ACTIVE'";
-    //new
-    //    var getquery = "SELECT playerID, playerName from life4_playerlist WHERE activeStatus = 'ACTIVE'";
+    //old
+    //var getquery = "SELECT playerID, playerName from playerList WHERE activeStatus = 'ACTIVE'";
+    
+    var getquery = "SELECT playerID, playerName from life4_playerlist WHERE activeStatus = 'ACTIVE'";
 
 
     connection.query(getquery, function (error, results) {
@@ -1203,9 +1224,10 @@ function checkForExistingPlayer(playerName, playerLIFE4ID, callback){
 
   setTimeout( function(){
 
-    var checkforplayerquery = "SELECT playerID,playerName,playerRank FROM playerList where playerName = '" + playerName + "'";
-    //
-    //var checkforplayerquery = "SELECT playerID,playerName,playerRank,playerLIFE4ID FROM life4_playerlist where playerLIFE4ID = '" + playerLIFE4ID + "'";
+    //old
+    //var checkforplayerquery = "SELECT playerID,playerName,playerRank FROM playerList where playerName = '" + playerName + "'";
+    
+    var checkforplayerquery = "SELECT playerID,playerName,playerRank,playerLIFE4ID FROM life4_playerlist where playerLIFE4ID = '" + playerLIFE4ID + "'";
 
     
     connection.query(checkforplayerquery, function (error, results) {
@@ -1222,10 +1244,10 @@ function checkForExistingPlayer(playerName, playerLIFE4ID, callback){
 function getranks(trialname, playerName, callback){
 
   setTimeout( function(){
-
+    //old
     var checkrankquery = "SELECT playerName, playerScore from playertrialrank WHERE trialName = '"+trialname+"' order by playerScore DESC";
-    //new
-    //var checkrankquery = "SELECT playerName, playerScore from life4_playertrialrank WHERE trialName = '"+trialname+"' order by playerScore DESC";
+    
+    var checkrankquery = "SELECT playerName, playerScore from life4_playertrialrank WHERE trialName = '"+trialname+"' order by playerScore DESC";
 
     
     var theRank = 0;
@@ -1252,9 +1274,10 @@ function getranksevent(trialname, playerName, playerRank, callback){
 
   setTimeout( function(){
 
-    var checkrankquery = "SELECT playerName, playerScore from playertrialrank WHERE trialName = '"+trialname+"' AND playerRank = '"+ playerRank +"' order by playerScore DESC";
-    //new
-    //var checkrankquery = "SELECT playerName, playerScore from life4_playertrialrank WHERE trialName = '"+trialname+"' AND playerRank = '"+ playerRank +"' order by playerScore DESC";
+    //old
+    //var checkrankquery = "SELECT playerName, playerScore from playertrialrank WHERE trialName = '"+trialname+"' AND playerRank = '"+ playerRank +"' order by playerScore DESC";
+    
+    var checkrankquery = "SELECT playerName, playerScore from life4_playertrialrank WHERE trialName = '"+trialname+"' AND playerRank = '"+ playerRank +"' order by playerScore DESC";
 
     
     var theRank = 0;
@@ -1281,9 +1304,10 @@ function updatePlayerRecord(playerName, playerRank, playerRival, playerTwitter, 
 
   setTimeout( function(){
 
-    var updateplayerquery = "UPDATE playerList set playerRank='" + playerRank + "', playerRivalCode='"+playerRival+"', twitterHandle='"+ playerTwitter + "', playerDateEarned=now(), discordHandle='" + playerDiscord + "', playerLIFE4ID='"+ playerLIFE4ID + "' where playerName = '" + playerName +"'";
-    //new
-    //var updateplayerquery = "UPDATE life4_playerlist set playerRank='" + playerRank + "', playerRivalCode='"+playerRival+"', twitterHandle='"+ playerTwitter + "', playerDateEarned=now(), discordHandle='" + playerDiscord + "', playerLIFE4ID='"+ playerLIFE4ID + "' where playerLIFE4ID = '" + playerLIFE4ID +"'";
+    //old
+    //var updateplayerquery = "UPDATE playerList set playerRank='" + playerRank + "', playerRivalCode='"+playerRival+"', twitterHandle='"+ playerTwitter + "', playerDateEarned=now(), discordHandle='" + playerDiscord + "', playerLIFE4ID='"+ playerLIFE4ID + "' where playerName = '" + playerName +"'";
+    
+    var updateplayerquery = "UPDATE life4_playerlist set playerRank='" + playerRank + "', playerRivalCode='"+playerRival+"', twitterHandle='"+ playerTwitter + "', playerDateEarned=now(), discordHandle='" + playerDiscord + "', playerLIFE4ID='"+ playerLIFE4ID + "' where playerLIFE4ID = '" + playerLIFE4ID +"'";
 
     
     connection.query(updateplayerquery, function (error, results) {
@@ -1301,9 +1325,10 @@ function insertNewPlayerRecord(playerName, playerRank, playerRival, playerTwitte
 
   setTimeout( function(){
 
-    var insertplayerquery = "INSERT INTO playerList (playerName, playerRank, playerRivalCode, twitterHandle, discordHandle, playerLIFE4ID, playerDateEarned) VALUES ('" + playerName + "','" + playerRank + "','" + playerRival + "','"+playerTwitter+"', '"+playerDiscord+"', '"+playerLIFE4ID+"', now())";
-    //new
-    //var insertplayerquery = "INSERT INTO life4_playerlist (playerName, playerRank, playerRivalCode, twitterHandle, discordHandle, playerLIFE4ID, playerDateEarned) VALUES ('" + playerName + "','" + playerRank + "','" + playerRival + "','"+playerTwitter+"', '"+playerDiscord+"', '"+playerLIFE4ID+"', now())";
+    //old
+    //var insertplayerquery = "INSERT INTO playerList (playerName, playerRank, playerRivalCode, twitterHandle, discordHandle, playerLIFE4ID, playerDateEarned) VALUES ('" + playerName + "','" + playerRank + "','" + playerRival + "','"+playerTwitter+"', '"+playerDiscord+"', '"+playerLIFE4ID+"', now())";
+    
+    var insertplayerquery = "INSERT INTO life4_playerlist (playerName, playerRank, playerRivalCode, twitterHandle, discordHandle, playerLIFE4ID, playerDateEarned) VALUES ('" + playerName + "','" + playerRank + "','" + playerRival + "','"+playerTwitter+"', '"+playerDiscord+"', '"+playerLIFE4ID+"', now())";
 
     
     connection.query(insertplayerquery, function (error, results) {
@@ -1322,9 +1347,10 @@ function insertNewTrialRecord(playerName,playerRivalCode,trialName,playerRank,pl
 
   setTimeout( function(){
 
-    var insertquery = "INSERT INTO playertrialrank (playerName, playerRivalCode, trialName, playerRank, playerScore, playerDiff, playerTwitterHandle, playerUpdateDate) VALUES ('"+playerName+"','"+playerRivalCode+"','"+trialName+"','"+playerRank+"','"+playerScore+"','"+playerDiff+"','"+playerTwitterHandle+"',now())";
-    //new
-    //var insertquery = "INSERT INTO life4_playertrialrank (playerName, playerRivalCode, trialName, playerRank, playerScore, playerDiff, playerTwitterHandle, playerUpdateDate) VALUES ('"+playerName+"','"+playerRivalCode+"','"+trialName+"','"+playerRank+"','"+playerScore+"','"+playerDiff+"','"+playerTwitterHandle+"',now())";
+    //old
+    //var insertquery = "INSERT INTO playertrialrank (playerName, playerRivalCode, trialName, playerRank, playerScore, playerDiff, playerTwitterHandle, playerUpdateDate) VALUES ('"+playerName+"','"+playerRivalCode+"','"+trialName+"','"+playerRank+"','"+playerScore+"','"+playerDiff+"','"+playerTwitterHandle+"',now())";
+
+    var insertquery = "INSERT INTO life4_playertrialrank (playerName, playerRivalCode, trialName, playerRank, playerScore, playerDiff, playerTwitterHandle, playerUpdateDate) VALUES ('"+playerName+"','"+playerRivalCode+"','"+trialName+"','"+playerRank+"','"+playerScore+"','"+playerDiff+"','"+playerTwitterHandle+"',now())";
 
     connection.query(insertquery, function (error, results) {
         if (error) throw error;
@@ -1342,9 +1368,11 @@ function updateTrialRecord(trialrecordID,playerName,playerRivalCode,playerRank,p
 
   setTimeout( function(){
 
-    var updatequery = "UPDATE playertrialrank set playerName = '"+playerName+"', playerRivalCode='"+playerRivalCode+"',playerRank='"+playerRank+"',playerScore="+playerScore+",playerDiff='"+playerDiff+"',playerTwitterHandle='"+playerTwitterHandle+"' where playerTrialRankID = " +trialrecordID;
-    //new
-    //var updatequery = "UPDATE life4_playertrialrank set playerName = '"+playerName+"', playerRivalCode='"+playerRivalCode+"',playerRank='"+playerRank+"',playerScore="+playerScore+",playerDiff='"+playerDiff+"',playerTwitterHandle='"+playerTwitterHandle+"' where playerTrialRankID = " +trialrecordID;
+    //old
+    //var updatequery = "UPDATE playertrialrank set playerName = '"+playerName+"', playerRivalCode='"+playerRivalCode+"',playerRank='"+playerRank+"',playerScore="+playerScore+",playerDiff='"+playerDiff+"',playerTwitterHandle='"+playerTwitterHandle+"' where playerTrialRankID = " +trialrecordID;
+
+
+    var updatequery = "UPDATE life4_playertrialrank set playerName = '"+playerName+"', playerRivalCode='"+playerRivalCode+"',playerRank='"+playerRank+"',playerScore="+playerScore+",playerDiff='"+playerDiff+"',playerTwitterHandle='"+playerTwitterHandle+"' where playerTrialRankID = " +trialrecordID;
 
     
     connection.query(updatequery, function (error, results) {
@@ -1362,9 +1390,10 @@ function insertNewTrialAuditRecord(playerTrialID,playerRank,playerScore,playerDi
 {
   setTimeout( function(){
 
-    var insertquery = "INSERT INTO playertrialrankhistory (playerTrialRankID, playerRank, playerScore, playerDiff, playerUpdateDate) VALUES ('"+playerTrialID+"','"+playerRank+"','"+playerScore+"','"+playerDiff+"',now())";
-    //new
-    //var insertquery = "INSERT INTO life4_playertrialrankhistory (playerTrialRankID, playerRank, playerScore, playerDiff, playerUpdateDate) VALUES ('"+playerTrialID+"','"+playerRank+"','"+playerScore+"','"+playerDiff+"',now())";
+    //old
+    //var insertquery = "INSERT INTO playertrialrankhistory (playerTrialRankID, playerRank, playerScore, playerDiff, playerUpdateDate) VALUES ('"+playerTrialID+"','"+playerRank+"','"+playerScore+"','"+playerDiff+"',now())";
+
+    var insertquery = "INSERT INTO life4_playertrialrankhistory (playerTrialRankID, playerRank, playerScore, playerDiff, playerUpdateDate) VALUES ('"+playerTrialID+"','"+playerRank+"','"+playerScore+"','"+playerDiff+"',now())";
 
     
     connection.query(insertquery, function (error, results) {
@@ -1382,9 +1411,9 @@ function insertNewPlayerAuditRecord(playerID,playerRank,callback)
 {
   setTimeout( function(){
 
-    var insertquery = "INSERT INTO playerHistory (playerID,playerRank,playerUpdate) VALUES ("+playerID+",'"+playerRank+"',now())";
-    //new
-    //var insertquery = "INSERT INTO life4_playerhistory (playerID,playerRank,playerUpdate) VALUES ("+playerID+",'"+playerRank+"',now())";
+    //old
+    //var insertquery = "INSERT INTO playerHistory (playerID,playerRank,playerUpdate) VALUES ("+playerID+",'"+playerRank+"',now())";
+    var insertquery = "INSERT INTO life4_playerhistory (playerID,playerRank,playerUpdate) VALUES ("+playerID+",'"+playerRank+"',now())";
 
 
     connection.query(insertquery, function (error, results) {
@@ -2645,9 +2674,9 @@ function changeAppStatus(status,callback){
 
   setTimeout( function(){
 
-    var appStatus = "UPDATE life4Controls set varValue = '"+status+"' where varName='appStatus'";
-    //new
-    //var appStatus = "UPDATE life4controls set varValue = '"+status+"' where varName='appStatus'";
+    //old
+    //var appStatus = "UPDATE life4Controls set varValue = '"+status+"' where varName='appStatus'";
+    var appStatus = "UPDATE life4controls set varValue = '"+status+"' where varName='appStatus'";
 
     connection.query(appStatus, function (error, results) {
       if (error) throw error;
@@ -3402,8 +3431,8 @@ connection.end();
 }
 
 //uncomment these when you need a new token
-function newauthorize(credentials, callback) {
-  //function newauthorize(callback) {
+//function newauthorize(credentials, callback) {
+function newauthorize(callback) {
 
   //const {client_secret, client_id, redirect_uris} = credentials.installed;
   
