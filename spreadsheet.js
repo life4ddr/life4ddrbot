@@ -1031,11 +1031,135 @@ function checkforNewID(latestid,callback){
   setTimeout( function(){
 
     var getQuery = "select post_id from life4_devel.wp_kikf_postmeta where post_id>"+latestid+" order by post_id desc limit 1";
-    console.log(getQuery);
+    //console.log(getQuery);
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
-      callback(null,results[0].post_id)
+      
+      if (results.length)
+      {
+        console.log("new posts found");
+        callback(null,results[0].post_id);
+      }
+      else
+      {
+        console.log("no new posts");
+        callback(null,results);
+      }
+
+    });
+    
+}, 25);
+
+};
+
+//gets all latest posts
+//use form_id to retrieve the form type from the form meta table
+function getAllNewPosts(latestid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "select DISTINCT(pm.post_id),fm.title from life4_devel.wp_kikf_postmeta pm,wp_kikf_nf3_forms fm where pm.meta_key='_form_id' and pm.post_id>"+latestid+" and pm.meta_value=fm.id";
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      callback(null,results)
+
+    });
+    
+}, 25);
+
+};
+
+//get player name
+//meta value 42 = name
+function getPostPlayerName(postid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_42'";
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      //console.log(results);
+      callback(null,results[0].meta_value)
+
+    });
+    
+}, 25);
+
+};
+
+//get player rank
+//meta value 5 = rank
+function getPostPlayerRank(postid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_5'";
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      //console.log(results);
+      callback(null,results[0].meta_value)
+
+    });
+    
+}, 25);
+
+};
+
+//get player subrank
+//meta value 6 = subrank
+function getPostPlayerSubRank(postid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_6'";
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      //console.log(results);
+      callback(null,results[0].meta_value)
+
+    });
+    
+}, 25);
+
+};
+
+//get player player_id
+//meta value 41 = user_fk
+function getPostPlayerID(postid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_41'";
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      //console.log(results);
+      callback(null,results[0].meta_value)
+
+    });
+    
+}, 25);
+
+};
+
+
+//get player twitter handle
+//meta value 6 = subrank
+function getProfileTwitterHandle(playerid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "SELECT meta_value FROM life4_devel.wp_kikf_usermeta where meta_key='twitter_handle' and user_id="+playerid+"";
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      //console.log(results);
+      callback(null,results[0].meta_value)
 
     });
     
@@ -3374,17 +3498,56 @@ function LIFE4sequence()
     //check if there are new submissions
     var latestinqueue=wait.for(checkforNewID,lastSeenID);
     console.log("check for new submissions complete");
-    
-    if (latestinqueue > lastSeenID)
+
+    if (latestinqueue != "" &&
+      latestinqueue > lastSeenID)
     {
       console.log("new value seen! === " + latestinqueue);
 
+      //get list of new posts
+      var allnewposts=wait.for(getAllNewPosts,lastSeenID);
+      console.log("New posts list:\n");
+      console.log(allnewposts);
+
+      //foreach post
+      //determine if player or trial post
+      //TODO:Check for approval
+      for (var i = 0; i < allnewposts.length;i++)
+      {
+          //console.log(allnewposts[i]);
+          if (allnewposts[i].title == "Rankup")
+          {
+            console.log("Rankup!");
+            //get player player_id
+            var playerid=wait.for(getPostPlayerID,allnewposts[i].post_id);
+            console.log("Player ID: " + playerid);
+            //get player name
+            var playername=wait.for(getPostPlayerName,allnewposts[i].post_id);
+            console.log("Player Name: " + playername);
+            //get player rank
+            var playerrank=wait.for(getPostPlayerRank,allnewposts[i].post_id);
+            console.log("Player Rank: " + playerrank);
+            //get player subrank
+            var playersubrank=wait.for(getPostPlayerSubRank,allnewposts[i].post_id);
+            console.log("Player Rank Number: " + playersubrank);
+            //TODO: Handle no twitter twitter
+            //get player twitter handle
+            var playertwitter=wait.for(getProfileTwitterHandle,playerid);
+            console.log("Player Twitter Handle: " + playertwitter);
+
+
+            console.log("Done retrieving record!\n\n");
+
+          }
+          
+      }
+
       //announce on discord
-      var discordannounce=wait.for(discordAnnounceSubmissionReady);
+      //var discordannounce=wait.for(discordAnnounceSubmissionReady);
 
       //update lastID
-      var newIDGet=wait.for(updateLastSeenID,latestinqueue);
-      console.log("latest ID updated");
+      //var newIDGet=wait.for(updateLastSeenID,latestinqueue);
+      //console.log("latest ID updated");
     }
   }
   //QUEUE
