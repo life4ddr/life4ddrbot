@@ -1007,6 +1007,59 @@ function getReadyFromQueue(callback){
 
 };
 
+function getLastSeenID(callback){
+
+  setTimeout( function(){
+
+    var getQuery = "select varValue from life4controls where varName='lastPostID'";
+
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      //var lastidseen=results;
+      //console.log(lastidseen[0].varValue);
+      callback(null,results[0].varValue)
+
+    });
+    
+}, 25);
+
+};
+
+function checkforNewID(latestid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "select post_id from life4_devel.wp_kikf_postmeta where post_id>"+latestid+" order by post_id desc limit 1";
+    console.log(getQuery);
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      callback(null,results[0].post_id)
+
+    });
+    
+}, 25);
+
+};
+
+function updateLastSeenID(newID, callback){
+
+  setTimeout( function(){
+
+    var getQuery = "update life4controls set varValue="+newID+" where varName='lastPostID'";
+
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      callback(null,results)
+
+    });
+    
+}, 25);
+
+};
+
 function getTrialQueueInfo(trialID,callback){
 
   setTimeout( function(){
@@ -1245,7 +1298,7 @@ function getranks(trialname, playerName, callback){
 
   setTimeout( function(){
     //old
-    var checkrankquery = "SELECT playerName, playerScore from playertrialrank WHERE trialName = '"+trialname+"' order by playerScore DESC";
+    //var checkrankquery = "SELECT playerName, playerScore from playertrialrank WHERE trialName = '"+trialname+"' order by playerScore DESC";
     
     var checkrankquery = "SELECT playerName, playerScore from life4_playertrialrank WHERE trialName = '"+trialname+"' order by playerScore DESC";
 
@@ -2735,6 +2788,21 @@ function discordAdminAnnounceTrialsDone(numberofrecords, callback)
 
 }
 
+function discordAnnounceSubmissionReady( callback)
+{
+  setTimeout( function(){
+
+    var discordpost = "This is a test! A new submission is ready!";
+
+  adminchannel.send(discordpost)
+  .then(message => console.log(discordpost))
+  .catch(console.error);
+
+  callback(null,"done");
+}, 25);
+
+}
+
 function discordAdminAnnounceQueueDone(callback)
 {
   setTimeout( function(){
@@ -3293,6 +3361,31 @@ function LIFE4sequence()
 
     }
 
+  }
+  //NEWQUEUE
+  //
+  //
+  else if (botStatus == "NEWQUEUE")
+  {
+    console.log("Bot is checking the new postID queue");
+    //get last seen ID
+    var lastSeenID=wait.for(getLastSeenID);
+    console.log("retrieved last seen ID===" + lastSeenID);
+    //check if there are new submissions
+    var latestinqueue=wait.for(checkforNewID,lastSeenID);
+    console.log("check for new submissions complete");
+    
+    if (latestinqueue > lastSeenID)
+    {
+      console.log("new value seen! === " + latestinqueue);
+
+      //announce on discord
+      var discordannounce=wait.for(discordAnnounceSubmissionReady);
+
+      //update lastID
+      var newIDGet=wait.for(updateLastSeenID,latestinqueue);
+      console.log("latest ID updated");
+    }
   }
   //QUEUE
   //
