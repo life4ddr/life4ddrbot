@@ -1071,6 +1071,46 @@ function getAllNewPosts(latestid,callback){
 
 };
 
+//gets only latest post
+//use form_id to retrieve the form type from the form meta table
+function getNextApprovedQueue(latestid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "select post_id,meta_value from life4_devel.wp_kikf_postmeta pm where post_id>"+latestid+" && meta_key='state' and meta_value='approved' limit 1";
+
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      console.log(results);
+      callback(null,results)
+
+    });
+    
+}, 25);
+
+};
+
+//gets type based on next id
+function getNextApprovedType(postid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "select fm.title from life4_devel.wp_kikf_postmeta pm,wp_kikf_nf3_forms fm where pm.post_id="+postid+" && pm.meta_key='_form_id' and pm.meta_value=fm.id";
+
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      callback(null,results[0].title)
+
+    });
+    
+}, 25);
+
+};
+
+
+
 //get player name
 //meta value 42 = name
 function getPostPlayerName(postid,callback){
@@ -3504,6 +3544,14 @@ function LIFE4sequence()
     {
       console.log("new value seen! === " + latestinqueue);
 
+      //get nextid
+      var nextapprovedpost=wait.for(getNextApprovedQueue,lastSeenID);
+      console.log("next value seen!\n"+nextapprovedpost[0].post_id);
+      //get next type
+      var nextapprovedtype=wait.for(getNextApprovedType,nextapprovedpost[0].post_id);
+      console.log("next value type!\n"+nextapprovedtype);
+
+
       //get list of new posts
       var allnewposts=wait.for(getAllNewPosts,lastSeenID);
       console.log("New posts list:\n");
@@ -3530,7 +3578,7 @@ function LIFE4sequence()
             //get player subrank
             var playersubrank=wait.for(getPostPlayerSubRank,allnewposts[i].post_id);
             console.log("Player Rank Number: " + playersubrank);
-            //TODO: Handle no twitter twitter
+            //TODO: Handle no twitter
             //get player twitter handle
             var playertwitter=wait.for(getProfileTwitterHandle,playerid);
             console.log("Player Twitter Handle: " + playertwitter);
@@ -3538,6 +3586,34 @@ function LIFE4sequence()
 
             console.log("Done retrieving record!\n\n");
 
+          }
+          //TODO: update based on workflow
+          else if (allnewposts[i].title == "Register")
+          {
+            console.log("New Player Register!");
+            console.log(allnewposts[i].post_id);
+            //get player player_id
+            var playerid=wait.for(getPostPlayerID,allnewposts[i].post_id);
+            console.log("Player ID: " + playerid);
+            //get player name
+            var playername=wait.for(getPostPlayerName,allnewposts[i].post_id);
+            console.log("Player Name: " + playername);
+            //get player rank
+            var playerrank=wait.for(getPostPlayerRank,allnewposts[i].post_id);
+            console.log("Player Rank: " + playerrank);
+            //get player subrank
+            var playersubrank=wait.for(getPostPlayerSubRank,allnewposts[i].post_id);
+            console.log("Player Rank Number: " + playersubrank);
+            //TODO: Handle no twitter
+            //get player twitter handle
+            var playertwitter=wait.for(getProfileTwitterHandle,playerid);
+            console.log("Player Twitter Handle: " + playertwitter);
+
+          }
+          //TODO: Add Trial
+          else if (allnewposts[i].title == "Trial Submission")
+          {
+            console.log("Trials! Not yet!");
           }
           
       }
