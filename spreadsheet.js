@@ -9,10 +9,7 @@
 //TODO: Get discord sync
 //TODO: Add discord messaging
 
-//TODO: Gut sheets
-//TODO: Update trials to include playerID link and LIFE4ID
-//TODO: Create git data dictionary
-
+//TODO: Code cleanup, create another .js for functions
 
 const fs = require('fs');
 const readline = require('readline');
@@ -1007,63 +1004,19 @@ function getReadyFromQueue(callback){
 
 };
 
-function getLastSeenID(callback){
+
+
+//gets COUNT of approved forms
+function getNumberOfApprovedForms(callback){
 
   setTimeout( function(){
 
-    var getQuery = "select varValue from life4controls where varName='lastPostID'";
+    var getQuery = "select COUNT(0) as 'approvedcount' from life4_devel.wp_kikf_postmeta where meta_key='state' and meta_value='approved'";
 
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
-      //var lastidseen=results;
-      //console.log(lastidseen[0].varValue);
-      callback(null,results[0].varValue)
-
-    });
-    
-}, 25);
-
-};
-
-function checkforNewID(latestid,callback){
-
-  setTimeout( function(){
-
-    var getQuery = "select post_id from life4_devel.wp_kikf_postmeta where post_id>"+latestid+" order by post_id desc limit 1";
-    //console.log(getQuery);
-
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      
-      if (results.length)
-      {
-        console.log("new posts found");
-        callback(null,results[0].post_id);
-      }
-      else
-      {
-        console.log("no new posts");
-        callback(null,results);
-      }
-
-    });
-    
-}, 25);
-
-};
-
-//gets all latest posts
-//use form_id to retrieve the form type from the form meta table
-function getAllNewPosts(latestid,callback){
-
-  setTimeout( function(){
-
-    var getQuery = "select DISTINCT(pm.post_id),fm.title from life4_devel.wp_kikf_postmeta pm,wp_kikf_nf3_forms fm where pm.meta_key='_form_id' and pm.post_id>"+latestid+" and pm.meta_value=fm.id";
-
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      callback(null,results)
+      callback(null,results[0].approvedcount)
 
     });
     
@@ -1073,11 +1026,11 @@ function getAllNewPosts(latestid,callback){
 
 //gets only latest post
 //use form_id to retrieve the form type from the form meta table
-function getNextApprovedQueue(latestid,callback){
+function getNextApprovedQueue(callback){
 
   setTimeout( function(){
 
-    var getQuery = "select post_id,meta_value from life4_devel.wp_kikf_postmeta pm where post_id>"+latestid+" && meta_key='state' and meta_value='approved' limit 1";
+    var getQuery = "select pm.post_id as 'post_id',(SELECT fm.title from wp_kikf_postmeta pm2, wp_kikf_nf3_forms fm where pm2.meta_key='_form_id' and pm.post_id=pm2.post_id and pm2.meta_value=fm.id) as 'formtype' from life4_devel.wp_kikf_postmeta pm where pm.meta_key='state' and pm.meta_value='approved' limit 1";
 
 
     connection.query(getQuery, function (error, results) {
@@ -1091,23 +1044,6 @@ function getNextApprovedQueue(latestid,callback){
 
 };
 
-//gets type based on next id
-function getNextApprovedType(postid,callback){
-
-  setTimeout( function(){
-
-    var getQuery = "select fm.title from life4_devel.wp_kikf_postmeta pm,wp_kikf_nf3_forms fm where pm.post_id="+postid+" && pm.meta_key='_form_id' and pm.meta_value=fm.id";
-
-
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      callback(null,results[0].title)
-
-    });
-    
-}, 25);
-
-};
 
 
 
@@ -2822,6 +2758,23 @@ function announceNewPlayerTwitter(playerName, playerRank,playerTwitterHandle,cal
 
 }
 
+function updatedSubmissionToBotAnnounced(post_id,callback){
+
+  setTimeout( function(){
+
+    console.log("updating");
+    var appStatus = "update life4_devel.wp_kikf_postmeta set meta_value='bot_announced' where meta_key='state' and meta_value='submitted' and post_id="+post_id+"";
+    connection.query(appStatus, function (error, results) {
+      if (error) throw error;
+      console.log("gonna update");
+      callback(null,results)
+
+    });
+    
+}, 25);
+
+}
+
 
 function announcePlayerRankupTwitter(playerName, playerRank,playerTwitterHandle,callback)
 {
@@ -3532,99 +3485,89 @@ function LIFE4sequence()
   else if (botStatus == "NEWQUEUE")
   {
     console.log("Bot is checking the new postID queue");
-    //get last seen ID
-    var lastSeenID=wait.for(getLastSeenID);
-    console.log("retrieved last seen ID===" + lastSeenID);
-    //check if there are new submissions
-    var latestinqueue=wait.for(checkforNewID,lastSeenID);
-    console.log("check for new submissions complete");
 
-    if (latestinqueue != "" &&
-      latestinqueue > lastSeenID)
+    //pull count of approved records
+    console.log("checking for new approved records")
+    var queuecount=wait.for(getNumberOfApprovedForms);
+    console.log(queuecount + " records found");
+
+
+
+    if (queuecount>0)
     {
-      console.log("new value seen! === " + latestinqueue);
+      //get new record
+      console.log("Starting check for new records!");
+      var nextapprovedvalues=wait.for(getNextApprovedQueue);
+      //sort into vars
+      var post_id = nextapprovedvalues[0].post_id;
+      var queuetype = nextapprovedvalues[0].formtype;
 
-      //get nextid
-      var nextapprovedpost=wait.for(getNextApprovedQueue,lastSeenID);
-      console.log("next value seen!\n"+nextapprovedpost[0].post_id);
-      //get next type
-      var nextapprovedtype=wait.for(getNextApprovedType,nextapprovedpost[0].post_id);
-      console.log("next value type!\n"+nextapprovedtype);
-
-
-      //get list of new posts
-      var allnewposts=wait.for(getAllNewPosts,lastSeenID);
-      console.log("New posts list:\n");
-      console.log(allnewposts);
-
-      //foreach post
-      //determine if player or trial post
-      //TODO:Check for approval
-      for (var i = 0; i < allnewposts.length;i++)
+      if (queuetype=="Rankup")
       {
-          //console.log(allnewposts[i]);
-          if (allnewposts[i].title == "Rankup")
-          {
-            console.log("Rankup!");
+        console.log("Player Rankup!");
             //get player player_id
-            var playerid=wait.for(getPostPlayerID,allnewposts[i].post_id);
+            var playerid=wait.for(getPostPlayerID,post_id);
             console.log("Player ID: " + playerid);
             //get player name
-            var playername=wait.for(getPostPlayerName,allnewposts[i].post_id);
+            var playername=wait.for(getPostPlayerName,post_id);
             console.log("Player Name: " + playername);
             //get player rank
-            var playerrank=wait.for(getPostPlayerRank,allnewposts[i].post_id);
+            var playerrank=wait.for(getPostPlayerRank,post_id);
             console.log("Player Rank: " + playerrank);
             //get player subrank
-            var playersubrank=wait.for(getPostPlayerSubRank,allnewposts[i].post_id);
+            var playersubrank=wait.for(getPostPlayerSubRank,post_id);
             console.log("Player Rank Number: " + playersubrank);
             //TODO: Handle no twitter
             //get player twitter handle
             var playertwitter=wait.for(getProfileTwitterHandle,playerid);
             console.log("Player Twitter Handle: " + playertwitter);
 
+            //messaging
+
+            //Twitter Message
+            var twitterannounce = wait.for(announcePlayerRankupTwitter, playername, playerrank, playertwitter);
+            console.log("Twitter announcement complete!");
+            //Discord Message
+            var discordannounce = wait.for(announcePlayerRankupDiscord, playername, playerrank);
+            console.log("Discord announcement complete!");
+          
+            //Update record to "bot_announced"
+            var botannounceupdate = wait.for(updatedSubmissionToBotAnnounced, post_id);
+            console.log("post completed!");
 
             console.log("Done retrieving record!\n\n");
-
-          }
-          //TODO: update based on workflow
-          else if (allnewposts[i].title == "Register")
-          {
-            console.log("New Player Register!");
-            console.log(allnewposts[i].post_id);
-            //get player player_id
-            var playerid=wait.for(getPostPlayerID,allnewposts[i].post_id);
-            console.log("Player ID: " + playerid);
-            //get player name
-            var playername=wait.for(getPostPlayerName,allnewposts[i].post_id);
-            console.log("Player Name: " + playername);
-            //get player rank
-            var playerrank=wait.for(getPostPlayerRank,allnewposts[i].post_id);
-            console.log("Player Rank: " + playerrank);
-            //get player subrank
-            var playersubrank=wait.for(getPostPlayerSubRank,allnewposts[i].post_id);
-            console.log("Player Rank Number: " + playersubrank);
-            //TODO: Handle no twitter
-            //get player twitter handle
-            var playertwitter=wait.for(getProfileTwitterHandle,playerid);
-            console.log("Player Twitter Handle: " + playertwitter);
-
-          }
-          //TODO: Add Trial
-          else if (allnewposts[i].title == "Trial Submission")
-          {
-            console.log("Trials! Not yet!");
-          }
-          
       }
+      else if (allnewposts[i].title == "Register")
+      {
+        console.log("New Player Registration!");
+        console.log(allnewposts[i].post_id);
+        //get player player_id
+        var playerid=wait.for(getPostPlayerID,post_id);
+        console.log("Player ID: " + playerid);
+        //get player name
+        var playername=wait.for(getPostPlayerName,post_id);
+        console.log("Player Name: " + playername);
+        //get player rank
+        //TODO: Update this for new players
+        var playerrank=wait.for(getPostPlayerRank,post_id);
+        console.log("Player Rank: " + playerrank);
+        //get player subrank
+        //TODO: Update this for new players
+        var playersubrank=wait.for(getPostPlayerSubRank,post_id);
+        console.log("Player Rank Number: " + playersubrank);
+        //TODO: Handle no twitter
+        //get player twitter handle
+        var playertwitter=wait.for(getProfileTwitterHandle,playerid);
+        console.log("Player Twitter Handle: " + playertwitter);
 
-      //announce on discord
-      //var discordannounce=wait.for(discordAnnounceSubmissionReady);
-
-      //update lastID
-      //var newIDGet=wait.for(updateLastSeenID,latestinqueue);
-      //console.log("latest ID updated");
+      }
+      else if (allnewposts[i].title == "Trial Submission")
+      {
+        console.log("Trial Submission!");
+      }
     }
+
+
   }
   //QUEUE
   //
