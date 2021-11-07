@@ -1123,9 +1123,103 @@ function getPostPlayerID(postid,callback){
 
 };
 
+//get player player_id
+//meta value 53 = user_fk
+function getTrialPostPlayerID(postid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_53'";
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      //console.log(results);
+      callback(null,results[0].meta_value)
+
+    });
+    
+}, 25);
+
+};
+
+//get trial ex score
+//meta value 48 = user_fk
+function getTrialExScore(postid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_48'";
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      //console.log(results);
+      callback(null,results[0].meta_value)
+
+    });
+    
+}, 25);
+
+};
+
+//get player name
+//meta value 54 = name
+function getTrialPostName(postid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_54'";
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      //console.log(results);
+      callback(null,results[0].meta_value)
+
+    });
+    
+}, 25);
+
+};
+
+//get trial title
+//meta value 46 = trial title
+function getTrialTitle(postid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_46'";
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      //console.log(results);
+      callback(null,results[0].meta_value)
+
+    });
+    
+}, 25);
+
+};
+
+//get trial title
+//meta value 46 = trial title
+function getTrialRank(postid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_49'";
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      //console.log(results);
+      callback(null,results[0].meta_value)
+
+    });
+    
+}, 25);
+
+};
+
 
 //get player twitter handle
-//meta value 6 = subrank
 function getProfileTwitterHandle(playerid,callback){
 
   setTimeout( function(){
@@ -1139,6 +1233,47 @@ function getProfileTwitterHandle(playerid,callback){
 
     });
     
+}, 25);
+
+};
+
+function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
+{
+
+  setTimeout( function(){
+
+    var returnedvalue;
+
+    if (trialname=="Devotion")
+    {
+      if (nameorlevel=="name")
+      {
+
+      }
+      else if (nameorlevel=="level")
+      {
+
+      }
+      callback("trial_Devotion_ex",12);
+    }
+    else if (trialname=="Heartbreak")
+    {
+      callback("trial_Heartbreak_ex",12);
+    }
+    else if (trialname=="Hellscape")
+    {
+      if (nameorlevel=="name")
+      {
+        returnedvalue="trial_Hellscape_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=15;
+      }
+    }
+    
+    callback(null,returnedvalue)
+
 }, 25);
 
 };
@@ -3502,6 +3637,8 @@ function LIFE4sequence()
       var post_id = nextapprovedvalues[0].post_id;
       var queuetype = nextapprovedvalues[0].formtype;
 
+      console.log("post_id:" + post_id + " and queuetype: "+queuetype+"");
+
       if (queuetype=="Rankup")
       {
         console.log("Player Rankup!");
@@ -3537,10 +3674,20 @@ function LIFE4sequence()
 
             console.log("Done retrieving record!\n\n");
       }
-      else if (allnewposts[i].title == "Register")
+      //TODO: Split platement and comprehensive placement
+      else if (queuetype == "Placement")
       {
+
+      }
+      else if (queuetype == "Comprehensive Placement")
+      {
+
+      }
+      else if (queuetype == "Register")
+      {
+        //not ready yet
+        /*
         console.log("New Player Registration!");
-        console.log(allnewposts[i].post_id);
         //get player player_id
         var playerid=wait.for(getPostPlayerID,post_id);
         console.log("Player ID: " + playerid);
@@ -3559,11 +3706,48 @@ function LIFE4sequence()
         //get player twitter handle
         var playertwitter=wait.for(getProfileTwitterHandle,playerid);
         console.log("Player Twitter Handle: " + playertwitter);
-
+        */
       }
-      else if (allnewposts[i].title == "Trial Submission")
+      else if (queuetype == "Trial Submission")
       {
         console.log("Trial Submission!");
+        //get player player_id
+        var playerid=wait.for(getTrialPostPlayerID,post_id);
+        console.log("Player ID: " + playerid);
+        //get Trial Title
+        var trialtitle=wait.for(getTrialTitle,post_id);
+        console.log("Trial Title: " + trialtitle);
+
+        //TODO: Get Trial Name to user field mapping
+        var trialusermetafield=wait.for(getTrialMetaKeyFieldNameOrLevel,trialtitle,"name");
+        console.log("Trial Meta Table Mapping: " + trialusermetafield);
+        
+        //TODO: Get Trial Name to # Ranking mapping in view list
+
+        //get player name
+        var playername=wait.for(getTrialPostName,post_id);
+        console.log("Player Name: " + playername);
+        //get player EX score
+        var exscore=wait.for(getTrialExScore,post_id);
+        console.log("EX Score: " + exscore);
+
+        //get Trial Rank
+        var trialrank=wait.for(getTrialRank,post_id);
+        console.log("Trial Rank: " + trialrank);
+
+        //TODO: Get Trial Level Rating
+
+        //TODO: Get Trial EX-
+      
+        //TODO: Get Trial # Ranking
+
+
+        //TODO: Handle no twitter
+        //get player twitter handle
+        //var playertwitter=wait.for(getProfileTwitterHandle,playerid);
+        //console.log("Player Twitter Handle: " + playertwitter);
+
+
       }
     }
 
