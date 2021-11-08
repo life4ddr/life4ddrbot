@@ -1142,25 +1142,6 @@ function getTrialPostPlayerID(postid,callback){
 
 };
 
-//get trial ex score
-//meta value 48 = user_fk
-function getTrialExScore(postid,callback){
-
-  setTimeout( function(){
-
-    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_48'";
-
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      //console.log(results);
-      callback(null,results[0].meta_value)
-
-    });
-    
-}, 25);
-
-};
-
 //get player name
 //meta value 54 = name
 function getTrialPostName(postid,callback){
@@ -1239,44 +1220,505 @@ function getProfileTwitterHandle(playerid,callback){
 
 function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
 {
-
+  //name_ex = ex score
+  //name_minus = minus ex score
+  //level = trial level
   setTimeout( function(){
 
     var returnedvalue;
 
     if (trialname=="Devotion")
     {
-      if (nameorlevel=="name")
+      if (nameorlevel=="name_ex")
       {
-
+        returnedvalue="trial_Devotion_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Devotion_missing_ex";
       }
       else if (nameorlevel=="level")
       {
-
+        returnedvalue=12;
       }
-      callback("trial_Devotion_ex",12);
     }
     else if (trialname=="Heartbreak")
     {
-      callback("trial_Heartbreak_ex",12);
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Heartbreak_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Heartbreak_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=12;
+      }
+    }
+    else if (trialname=="Believe")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Believe_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Believe_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=12;
+      }
+    }
+    else if (trialname=="Celestial")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Celestial_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Celestial_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=13;
+      }
+    }
+    else if (trialname=="Gospel")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Gospel_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Gospel_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=13;
+      }
+    }
+    else if (trialname=="Mainframe")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Mainframe_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Mainframe_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=13;
+      }
+    }
+    else if (trialname=="Primal")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Primal_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Primal_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=13;
+      }
+    }
+    else if (trialname=="Species")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Species_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Species_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=13;
+      }
+    }
+    else if (trialname=="Passport")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Passport_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Passport_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=13;
+      }
+    }
+    else if (trialname=="Daybreak")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Daybreak_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Daybreak_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=14;
+      }
+    }
+    else if (trialname=="Upheaval")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Upheaval_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Upheaval_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=14;
+      }
+    }
+    else if (trialname=="Superstar")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Superstar_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Superstar_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=14;
+      }
+    }
+    else if (trialname=="Countdown")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Countdown_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Countdown_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=14;
+      }
     }
     else if (trialname=="Hellscape")
     {
-      if (nameorlevel=="name")
+      if (nameorlevel=="name_ex")
       {
         returnedvalue="trial_Hellscape_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Hellscape_missing_ex";
       }
       else if (nameorlevel=="level")
       {
         returnedvalue=15;
       }
     }
-    
+    else if (trialname=="Clockwork")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Clockwork_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Clockwork_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=15;
+      }
+    }
+    else if (trialname=="Heatwave")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Heatwave_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Heatwave_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=15;
+      }
+    }
+    else if (trialname=="Tempest")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Tempest_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Tempest_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=15;
+      }
+    }
+    else if (trialname=="Mythos")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Mythos_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Mythos_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=15;
+      }
+    }
+    else if (trialname=="Pharaoh")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Pharaoh_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Pharaoh_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=15;
+      }
+    }
+    else if (trialname=="Rendition")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Rendition_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Rendition_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=15;
+      }
+    }
+    else if (trialname=="Wanderlust")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Wanderlust_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Wanderlust_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=15;
+      }
+    }
+    else if (trialname=="Circadia")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Circadia_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Circadia_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=16;
+      }
+    }
+    else if (trialname=="Snowdrift")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Snowdrift_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Snowdrift_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=16;
+      }
+    }
+    else if (trialname=="Paradox")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Paradox_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Paradox_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=16;
+      }
+    }
+    else if (trialname=="Spectacle")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Spectacle_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Spectacle_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=16;
+      }
+    }
+    else if (trialname=="Inhuman")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Inhuman_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Inhuman_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=16;
+      }
+    }
+    else if (trialname=="Chemical")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Chemical_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Chemical_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=17;
+      }
+    }
+    else if (trialname=="Ascension")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Ascension_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Ascension_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=17;
+      }
+    }
+    else if (trialname=="Quantum")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Quantum_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Quantum_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=18;
+      }
+    }
+    else if (trialname=="Origin")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Origin_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Origin_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=18;
+      }
+    }
+
+
+
     callback(null,returnedvalue)
 
 }, 25);
 
 };
+
+function getTrialEXMinusfromMapping(user_id,mappingvalue,callback){
+
+  setTimeout( function(){
+
+    var trialquery = "select meta_value from wp_kikf_usermeta where meta_key='"+mappingvalue+"' and user_id="+user_id+"";
+
+
+    connection.query(trialquery, function (error, results) {
+      if (error) throw error;
+      callback(null,results[0].meta_value)
+
+    });
+    
+}, 25);
+
+}
+
+function getTrialEXfromMapping(user_id,mappingvalue,callback){
+
+  setTimeout( function(){
+
+    var trialquery = "select meta_value from wp_kikf_usermeta where meta_key='"+mappingvalue+"' and user_id="+user_id+"";
+
+
+    connection.query(trialquery, function (error, results) {
+      if (error) throw error;
+      callback(null,results[0].meta_value)
+
+    });
+    
+}, 25);
+
+}
 
 function updateLastSeenID(newID, callback){
 
@@ -3718,26 +4160,32 @@ function LIFE4sequence()
         var trialtitle=wait.for(getTrialTitle,post_id);
         console.log("Trial Title: " + trialtitle);
 
-        //TODO: Get Trial Name to user field mapping
-        var trialusermetafield=wait.for(getTrialMetaKeyFieldNameOrLevel,trialtitle,"name");
-        console.log("Trial Meta Table Mapping: " + trialusermetafield);
-        
-        //TODO: Get Trial Name to # Ranking mapping in view list
+        // Get trial ex minus mapping
+        var trialexscoreexminusmapping=wait.for(getTrialMetaKeyFieldNameOrLevel,trialtitle,"name_minus");
+        console.log("Ex Minus Mapping: " + trialexscoreexminusmapping);
+        //Get EX from Mapping
+        var trialExMinusScore=wait.for(getTrialEXMinusfromMapping,playerid,trialexscoreexminusmapping);
+        console.log("Actual Minus EX: " + trialExMinusScore);
+
+        // Get trial ex score mapping
+        var trialexscoreexmapping=wait.for(getTrialMetaKeyFieldNameOrLevel,trialtitle,"name_ex");
+        console.log("Ex  Mapping: " + trialexscoreexmapping);
+        //Get EX from Mapping
+        var trialExScore=wait.for(getTrialEXfromMapping,playerid,trialexscoreexmapping);
+        console.log("Actual EX: " + trialExScore);
+
+        //Get trial level
+        var trialscorelevel=wait.for(getTrialMetaKeyFieldNameOrLevel,trialtitle,"level");
+        console.log("Level Mapping: " + trialscorelevel);
 
         //get player name
         var playername=wait.for(getTrialPostName,post_id);
         console.log("Player Name: " + playername);
-        //get player EX score
-        var exscore=wait.for(getTrialExScore,post_id);
-        console.log("EX Score: " + exscore);
 
         //get Trial Rank
         var trialrank=wait.for(getTrialRank,post_id);
         console.log("Trial Rank: " + trialrank);
 
-        //TODO: Get Trial Level Rating
-
-        //TODO: Get Trial EX-
       
         //TODO: Get Trial # Ranking
 
