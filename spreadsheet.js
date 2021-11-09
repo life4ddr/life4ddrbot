@@ -1223,6 +1223,8 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
   //name_ex = ex score
   //name_minus = minus ex score
   //level = trial level
+  //rankingview = view mapping for overall ranking
+
   setTimeout( function(){
 
     var returnedvalue;
@@ -1241,6 +1243,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       {
         returnedvalue=12;
       }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Devotion_rankings";
+      }
     }
     else if (trialname=="Heartbreak")
     {
@@ -1255,6 +1261,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       else if (nameorlevel=="level")
       {
         returnedvalue=12;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Heartbreak_rankings";
       }
     }
     else if (trialname=="Believe")
@@ -1271,6 +1281,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       {
         returnedvalue=12;
       }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Believe_rankings";
+      }
     }
     else if (trialname=="Celestial")
     {
@@ -1285,6 +1299,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       else if (nameorlevel=="level")
       {
         returnedvalue=13;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Celestial_rankings";
       }
     }
     else if (trialname=="Gospel")
@@ -1301,6 +1319,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       {
         returnedvalue=13;
       }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Gospel_rankings";
+      }
     }
     else if (trialname=="Mainframe")
     {
@@ -1315,6 +1337,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       else if (nameorlevel=="level")
       {
         returnedvalue=13;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Mainframe_rankings";
       }
     }
     else if (trialname=="Primal")
@@ -1331,6 +1357,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       {
         returnedvalue=13;
       }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Primal_rankings";
+      }
     }
     else if (trialname=="Species")
     {
@@ -1345,6 +1375,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       else if (nameorlevel=="level")
       {
         returnedvalue=13;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Species_rankings";
       }
     }
     else if (trialname=="Passport")
@@ -1361,6 +1395,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       {
         returnedvalue=13;
       }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Passport_rankings";
+      }
     }
     else if (trialname=="Daybreak")
     {
@@ -1375,6 +1413,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       else if (nameorlevel=="level")
       {
         returnedvalue=14;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Daybreak_rankings";
       }
     }
     else if (trialname=="Upheaval")
@@ -1391,6 +1433,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       {
         returnedvalue=14;
       }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Upheaval_rankings";
+      }
     }
     else if (trialname=="Superstar")
     {
@@ -1405,6 +1451,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       else if (nameorlevel=="level")
       {
         returnedvalue=14;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Superstar_rankings";
       }
     }
     else if (trialname=="Countdown")
@@ -1421,6 +1471,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       {
         returnedvalue=14;
       }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Countdown_rankings";
+      }
     }
     else if (trialname=="Hellscape")
     {
@@ -1435,6 +1489,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       else if (nameorlevel=="level")
       {
         returnedvalue=15;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Hellscape_rankings";
       }
     }
     else if (trialname=="Clockwork")
@@ -1451,6 +1509,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       {
         returnedvalue=15;
       }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Clockwork_rankings";
+      }
     }
     else if (trialname=="Heatwave")
     {
@@ -1465,6 +1527,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       else if (nameorlevel=="level")
       {
         returnedvalue=15;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Heatwave_rankings";
       }
     }
     else if (trialname=="Tempest")
@@ -1481,6 +1547,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       {
         returnedvalue=15;
       }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Tempest_rankings";
+      }
     }
     else if (trialname=="Mythos")
     {
@@ -1495,6 +1565,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       else if (nameorlevel=="level")
       {
         returnedvalue=15;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Mythos_rankings";
       }
     }
     else if (trialname=="Pharaoh")
@@ -1511,6 +1585,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       {
         returnedvalue=15;
       }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Pharaoh_rankings";
+      }
     }
     else if (trialname=="Rendition")
     {
@@ -1525,6 +1603,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       else if (nameorlevel=="level")
       {
         returnedvalue=15;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Rendition_rankings";
       }
     }
     else if (trialname=="Wanderlust")
@@ -1541,6 +1623,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       {
         returnedvalue=15;
       }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Wanderlust_rankings";
+      }
     }
     else if (trialname=="Circadia")
     {
@@ -1555,6 +1641,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       else if (nameorlevel=="level")
       {
         returnedvalue=16;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Circadia_rankings";
       }
     }
     else if (trialname=="Snowdrift")
@@ -1571,6 +1661,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       {
         returnedvalue=16;
       }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Snowdrift_rankings";
+      }
     }
     else if (trialname=="Paradox")
     {
@@ -1585,6 +1679,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       else if (nameorlevel=="level")
       {
         returnedvalue=16;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Paradox_rankings";
       }
     }
     else if (trialname=="Spectacle")
@@ -1601,6 +1699,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       {
         returnedvalue=16;
       }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Spectacle_rankings";
+      }
     }
     else if (trialname=="Inhuman")
     {
@@ -1615,6 +1717,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       else if (nameorlevel=="level")
       {
         returnedvalue=16;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Inhuman_rankings";
       }
     }
     else if (trialname=="Chemical")
@@ -1631,6 +1737,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       {
         returnedvalue=17;
       }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Chemical_rankings";
+      }
     }
     else if (trialname=="Ascension")
     {
@@ -1645,6 +1755,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       else if (nameorlevel=="level")
       {
         returnedvalue=17;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Ascension_rankings";
       }
     }
     else if (trialname=="Quantum")
@@ -1661,6 +1775,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       {
         returnedvalue=18;
       }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Quantum_rankings";
+      }
     }
     else if (trialname=="Origin")
     {
@@ -1675,6 +1793,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       else if (nameorlevel=="level")
       {
         returnedvalue=18;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Origin_rankings";
       }
     }
 
@@ -1713,6 +1835,57 @@ function getTrialEXfromMapping(user_id,mappingvalue,callback){
     connection.query(trialquery, function (error, results) {
       if (error) throw error;
       callback(null,results[0].meta_value)
+
+    });
+    
+}, 25);
+
+}
+
+function setRankingVariable(callback){
+
+  setTimeout( function(){
+
+    var trialquery = "set @ranking=0;";
+
+
+    connection.query(trialquery, function (error, results) {
+      if (error) throw error;
+      callback(null,results)
+
+    });
+    
+}, 25);
+
+}
+
+function setOverallRankings(viewmapping,callback){
+
+  setTimeout( function(){
+
+    var trialquery = "select @ranking:=@ranking+1 as 'ranking', username,user_id,trial_ex from "+viewmapping+" order by trial_ex desc";
+
+
+    connection.query(trialquery, function (error, results) {
+      if (error) throw error;
+      callback(null,results)
+
+    });
+    
+}, 25);
+
+}
+
+function getTrialUserRanking(user_id,viewmapping,callback){
+
+  setTimeout( function(){
+
+    var trialquery = "select @ranking as 'ranking',user_id,username from " + viewmapping + " where user_id="+user_id+"";
+
+
+    connection.query(trialquery, function (error, results) {
+      if (error) throw error;
+      callback(null,results[0].ranking)
 
     });
     
@@ -4186,9 +4359,17 @@ function LIFE4sequence()
         var trialrank=wait.for(getTrialRank,post_id);
         console.log("Trial Rank: " + trialrank);
 
-      
-        //TODO: Get Trial # Ranking
-
+        //Get Trial # Ranking
+        // Get mapping for ranking view
+        var mappingview=wait.for(getTrialMetaKeyFieldNameOrLevel,trialtitle,"rankingview");
+        console.log("Mapping View: " + mappingview);
+        //set var to 0 for rankings
+        var setvar=wait.for(setRankingVariable);
+        //get all rankings for trial
+        var setoverallrankings=wait.for(setOverallRankings,mappingview);
+        //rerun query to get player trial rankings
+        var trialnumberrankings=wait.for(getTrialUserRanking,playerid,mappingview);
+        console.log("# rank: " +trialnumberrankings);
 
         //TODO: Handle no twitter
         //get player twitter handle
