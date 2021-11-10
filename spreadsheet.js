@@ -1123,6 +1123,98 @@ function getPostPlayerID(postid,callback){
 
 };
 
+
+//get placement player_id
+//meta value 58 = user_fk
+function getPlacementPostPlayerID(postid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_58'";
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      callback(null,results[0].meta_value)
+
+    });
+    
+}, 25);
+
+};
+
+//get comp placement player_id
+//meta value 67 = user_fk
+function getCompPlacementPostPlayerID(postid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_67'";
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      callback(null,results[0].meta_value)
+
+    });
+    
+}, 25);
+
+};
+
+
+//get placement player_id
+//meta value 59 = player name
+function getPlacementPostPlayerName(postid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_59'";
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      callback(null,results[0].meta_value)
+
+    });
+    
+}, 25);
+
+};
+
+//get comp placement player_id
+//meta value 68 = player name
+function getCompPlacementPostPlayerName(postid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_68'";
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      callback(null,results[0].meta_value)
+
+    });
+    
+}, 25);
+
+};
+
+//get placement player rank
+//use player profile as that is what got approved
+function getPlacementPostPlayerRank(userid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "SELECT meta_value FROM life4_devel.wp_kikf_usermeta where user_id="+userid+" && meta_key='rank'";
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      callback(null,results[0].meta_value)
+
+    });
+    
+}, 25);
+
+};
+
 //get player player_id
 //meta value 53 = user_fk
 function getTrialPostPlayerID(postid,callback){
@@ -4254,6 +4346,8 @@ function LIFE4sequence()
 
       console.log("post_id:" + post_id + " and queuetype: "+queuetype+"");
 
+      //TODO: Re-add discord to this for later
+
       if (queuetype=="Rankup")
       {
         console.log("Player Rankup!");
@@ -4289,39 +4383,45 @@ function LIFE4sequence()
 
             console.log("Done retrieving record!\n\n");
       }
-      //TODO: Split platement and comprehensive placement
+      //Placement (New Player)
       else if (queuetype == "Placement")
       {
+        console.log("New Player - Placement!");
+        //get player id
+        var playerid=wait.for(getPlacementPostPlayerID,post_id);
+        console.log("Player ID: " + playerid);
 
+        //get player name
+        var playername=wait.for(getPlacementPostPlayerName,post_id);
+        console.log("Player Name: " + playername);
+
+        //get player rank
+        var playerrank=wait.for(getPlacementPostPlayerRank,playerid);
+        console.log("Player Rank: " + playerrank);
+
+        //get player twitter handle
+        var playertwitter=wait.for(getProfileTwitterHandle,playerid);
+        console.log("Player Twitter Handle: " + playertwitter);        
       }
       else if (queuetype == "Comprehensive Placement")
       {
+        console.log("New Player - Comprehensive Placement!");
 
-      }
-      else if (queuetype == "Register")
-      {
-        //not ready yet
-        /*
-        console.log("New Player Registration!");
-        //get player player_id
-        var playerid=wait.for(getPostPlayerID,post_id);
+        //get player id
+        var playerid=wait.for(getCompPlacementPostPlayerID,post_id);
         console.log("Player ID: " + playerid);
+
         //get player name
-        var playername=wait.for(getPostPlayerName,post_id);
+        var playername=wait.for(getCompPlacementPostPlayerName,post_id);
         console.log("Player Name: " + playername);
+
         //get player rank
-        //TODO: Update this for new players
-        var playerrank=wait.for(getPostPlayerRank,post_id);
+        var playerrank=wait.for(getPlacementPostPlayerRank,playerid);
         console.log("Player Rank: " + playerrank);
-        //get player subrank
-        //TODO: Update this for new players
-        var playersubrank=wait.for(getPostPlayerSubRank,post_id);
-        console.log("Player Rank Number: " + playersubrank);
-        //TODO: Handle no twitter
+
         //get player twitter handle
         var playertwitter=wait.for(getProfileTwitterHandle,playerid);
-        console.log("Player Twitter Handle: " + playertwitter);
-        */
+        console.log("Player Twitter Handle: " + playertwitter);      
       }
       else if (queuetype == "Trial Submission")
       {
@@ -4373,8 +4473,8 @@ function LIFE4sequence()
 
         //TODO: Handle no twitter
         //get player twitter handle
-        //var playertwitter=wait.for(getProfileTwitterHandle,playerid);
-        //console.log("Player Twitter Handle: " + playertwitter);
+        var playertwitter=wait.for(getProfileTwitterHandle,playerid);
+        console.log("Player Twitter Handle: " + playertwitter);
 
 
       }
