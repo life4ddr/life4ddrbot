@@ -10,6 +10,8 @@
 //TODO: Add discord messaging
 
 //TODO: Code cleanup, create another .js for functions
+//TODO: Code cleanup, rename NEWQUEUE to ON
+//TODO: Switch over DBs
 
 const fs = require('fs');
 const readline = require('readline');
@@ -4490,7 +4492,7 @@ function LIFE4sequence()
         console.log("Player Twitter Handle: " + playertwitter);
 
         //TODO: Update for trial level
-        var twitterannounce = wait.for(announceUpdatePlayerTrialTwitter, playername, trialrank,trialExScore,trialExMinusScore, playertwitter, trialtitle.toUpperCase() + " ("+trialscorelevel+")",trialnumberrankings);
+        var twitterannounce = wait.for(announceUpdatePlayerTrialTwitter, playername, trialrank,trialExScore,"("+trialExMinusScore+")", playertwitter, trialtitle.toUpperCase() + " ("+trialscorelevel+")",trialnumberrankings);
         console.log("Twitter announcement complete!");
         //TODO: Add discord handle
         var discordannounce = wait.for(announceUpdatePlayerTrialDiscord, playername, trialrank,trialExScore,trialExMinusScore, trialtitle.toUpperCase() + " ("+trialscorelevel+")",trialnumberrankings);
