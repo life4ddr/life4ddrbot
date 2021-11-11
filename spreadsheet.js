@@ -3531,8 +3531,10 @@ function announceUpdatePlayerTrialTwitter(playerName, playerRank,playerScore,pla
     }
     console.log(trialName + "||" + playerRank);
     var b64content = fs.readFileSync(getTwitterTrialImageURL(trialName,playerRank), { encoding: 'base64' })
-                  
+              
+
     // get the new image media on twitter!
+    
     Twitter.post('media/upload', { media_data: b64content }, function (err, data, response) {
       var mediaIdStr = data.media_id_string
       var altText = "LIFE4 Trial rankup"
@@ -3573,7 +3575,7 @@ function announceNewPlayerTwitter(playerName, playerRank,playerTwitterHandle,cal
     }
 
     var b64content = fs.readFileSync(getTwitterImageURL(playerRank), { encoding: 'base64' })
-                  
+                 
     // get the new image media on twitter!
     Twitter.post('media/upload', { media_data: b64content }, function (err, data, response) {
       var mediaIdStr = data.media_id_string
@@ -3605,10 +3607,9 @@ function updatedSubmissionToBotAnnounced(post_id,callback){
   setTimeout( function(){
 
     console.log("updating");
-    var appStatus = "update life4_devel.wp_kikf_postmeta set meta_value='bot_announced' where meta_key='state' and meta_value='submitted' and post_id="+post_id+"";
+    var appStatus = "update life4_devel.wp_kikf_postmeta set meta_value='bot_announced' where meta_key='state' and meta_value='approved' and post_id="+post_id+"";
     connection.query(appStatus, function (error, results) {
       if (error) throw error;
-      console.log("gonna update");
       callback(null,results)
 
     });
@@ -3632,9 +3633,12 @@ function announcePlayerRankupTwitter(playerName, playerRank,playerTwitterHandle,
       twitterpost = "Player " + playerName + " has earned a new rank! They are now " + playerRank +"! Congratulations! ";
     }
 
+    console.log(twitterpost);
+
     var b64content = fs.readFileSync(getTwitterImageURL(playerRank), { encoding: 'base64' })
                   
     // get the new image media on twitter!
+    
     Twitter.post('media/upload', { media_data: b64content }, function (err, data, response) {
       var mediaIdStr = data.media_id_string
       var altText = "LIFE4 Player Rank"
@@ -3651,7 +3655,7 @@ function announcePlayerRankupTwitter(playerName, playerRank,playerTwitterHandle,
         }
       })
     })
-
+    
 
     callback(null,"done");
 
@@ -3669,6 +3673,8 @@ function announcePlayerRankupDiscord(playerName, playerRank,callback)
 
     var discordpost = "Player " + playerName + " has earned a new rank! They are now " + playerRank +"! Congratulations! "  + getDiscordIcon(playerRank);
 
+    console.log(discordpost);
+    
     playerrankupchannel.send(discordpost)
     //.then(message => console.log(discordpost))
     .then(msg => { msg.react(getDiscordIcon(playerRank))})
@@ -3828,10 +3834,12 @@ function announceNewPlayerDiscord(playerName, playerRank,playerDiscordHandle,cal
     //old
     var discordpost = "Player " + playerName + " has joined LIFE4! Their current rank is " + playerRank + "! Welcome! " + getDiscordIcon(playerRank);
 
+    
     playerrankupchannel.send(discordpost)
     //.then(message => console.log(discordpost))
     .then(msg => { msg.react(getDiscordIcon(playerRank)) })
     .catch(console.error);
+    
 
     callback(null,"done");
 
@@ -3860,7 +3868,6 @@ function announceNewPlayerTrialDiscord(playerName, playerRank,playerScore,player
     //}
     //else if (isEvent == false)
     //{
-
       //old
       //discordpost = "Player " + playerName + " has earned the " + playerRank + " " + getTrialDiscordIcon(playerRank) + " Trial Rank for " + trialName + " with " + playerScore + " EX " + playerDiff + " for a Trial Ranking of #"+numberRank+"!";
       discordpost = playerName + "\n" + trialName + " - " + playerRank + " " + getTrialDiscordIcon(playerRank) +"\nScore: " + playerScore + " EX " + playerDiff + "\nTrial Rank: #"+numberRank;
@@ -3887,32 +3894,14 @@ function announceUpdatePlayerTrialDiscord(playerName, playerRank,playerScore,pla
 {
   setTimeout( function(){
 
-    //var isEvent=false;
     var discordpost = "";
-    //if (trialName == "HALLOWED (13)")
-    //{
-    //    isEvent = true;
-    //}
-
-    //if (isEvent == true)
-    //{
-    //  discordpost = "Player " + playerName + " scored " + playerScore + " EX " + playerDiff + " on the Limited Edition Trial " + trialName + " for a " + playerRank + " " + getTrialDiscordIcon(playerRank) + " division rank of #"+numberRank+"!";
-    //}
-    //else if (isEvent == false)
-    //{
-      //old
-      //var discordpost = "Player " + playerName + " has earned the " + playerRank + " " + getTrialDiscordIcon(playerRank) + " Trial Rank for " + trialName + " with " + playerScore + " EX " + playerDiff + " for a Trial Ranking of #"+numberRank+"!";
-      discordpost = playerName + "\n" + trialName + " - " + playerRank + " " + getTrialDiscordIcon(playerRank) +"\nScore: " + playerScore + " EX " + playerDiff + "\nTrial Rank: #"+numberRank;
-
-    //}
-
+    
+    discordpost = playerName + "\n" + trialName + " - " + playerRank + " " + getTrialDiscordIcon(playerRank) +"\nScore: " + playerScore + " EX " + playerDiff + "\nTrial Rank: #"+numberRank;
 
     trialrankupchannel.send(discordpost)
     //.then(message => console.log(discordpost))
     .then(msg => { msg.react(getTrialDiscordIcon(playerRank)) })
     .catch(console.error);
-
-
 
     callback(null,"done");
 
@@ -4371,10 +4360,10 @@ function LIFE4sequence()
             //messaging
 
             //Twitter Message
-            var twitterannounce = wait.for(announcePlayerRankupTwitter, playername, playerrank, playertwitter);
+            var twitterannounce = wait.for(announcePlayerRankupTwitter, playername, playerrank + " " + playersubrank, playertwitter);
             console.log("Twitter announcement complete!");
             //Discord Message
-            var discordannounce = wait.for(announcePlayerRankupDiscord, playername, playerrank);
+            var discordannounce = wait.for(announcePlayerRankupDiscord, playername, playerrank + " " + playersubrank);
             console.log("Discord announcement complete!");
           
             //Update record to "bot_announced"
@@ -4402,6 +4391,18 @@ function LIFE4sequence()
         //get player twitter handle
         var playertwitter=wait.for(getProfileTwitterHandle,playerid);
         console.log("Player Twitter Handle: " + playertwitter);        
+
+        var twitterannounce = wait.for(announceNewPlayerTwitter, playername, playerrank, playertwitter);
+        //console.log("Twitter announcement complete!");
+        var discordannounce = wait.for(announceNewPlayerDiscord, playername, playerrank, playertwitter);
+        console.log("Discord announcement complete!");
+
+        //Update record to "bot_announced"
+        var botannounceupdate = wait.for(updatedSubmissionToBotAnnounced, post_id);
+        console.log("post completed!");
+
+        console.log("Done retrieving record!\n\n");
+
       }
       else if (queuetype == "Comprehensive Placement")
       {
@@ -4422,6 +4423,18 @@ function LIFE4sequence()
         //get player twitter handle
         var playertwitter=wait.for(getProfileTwitterHandle,playerid);
         console.log("Player Twitter Handle: " + playertwitter);      
+
+        var twitterannounce = wait.for(announceNewPlayerTwitter, playername, playerrank, playertwitter);
+        //console.log("Twitter announcement complete!");
+        var discordannounce = wait.for(announceNewPlayerDiscord, playername, playerrank, playertwitter);
+        console.log("Discord announcement complete!");
+
+        //Update record to "bot_announced"
+        var botannounceupdate = wait.for(updatedSubmissionToBotAnnounced, post_id);
+        console.log("post completed!");
+
+        console.log("Done retrieving record!\n\n");
+
       }
       else if (queuetype == "Trial Submission")
       {
@@ -4476,6 +4489,19 @@ function LIFE4sequence()
         var playertwitter=wait.for(getProfileTwitterHandle,playerid);
         console.log("Player Twitter Handle: " + playertwitter);
 
+        //TODO: Update for trial level
+        var twitterannounce = wait.for(announceUpdatePlayerTrialTwitter, playername, trialrank,trialExScore,trialExMinusScore, playertwitter, trialtitle.toUpperCase() + " ("+trialscorelevel+")",trialnumberrankings);
+        console.log("Twitter announcement complete!");
+        //TODO: Add discord handle
+        var discordannounce = wait.for(announceUpdatePlayerTrialDiscord, playername, trialrank,trialExScore,trialExMinusScore, trialtitle.toUpperCase() + " ("+trialscorelevel+")",trialnumberrankings);
+        console.log("Discord announcement complete!");
+
+
+        //Update record to "bot_announced"
+        var botannounceupdate = wait.for(updatedSubmissionToBotAnnounced, post_id);
+        console.log("post completed!");
+
+        console.log("Done retrieving record!\n\n");
 
       }
     }
