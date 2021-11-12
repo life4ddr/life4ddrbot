@@ -4317,6 +4317,15 @@ function LIFE4sequence()
   //
   else if (botStatus == "NEWQUEUE")
   {
+
+    //get current time
+    var timedude = Date.now();
+    console.log(timedude);
+    var timedude_supreme = new Date(timedude);
+    //get hours
+    var hoursdude = timedude_supreme.getHours();
+    console.log(hoursdude);
+
     console.log("Bot is checking the new postID queue");
 
     //pull count of approved records
@@ -4326,8 +4335,10 @@ function LIFE4sequence()
 
 
 
-    if (queuecount>0)
+    if (queuecount>0 && (hoursdude > 11 && hoursdude < 23))
     {
+
+
       //get new record
       console.log("Starting check for new records!");
       var nextapprovedvalues=wait.for(getNextApprovedQueue);
