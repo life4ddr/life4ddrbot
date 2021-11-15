@@ -1013,7 +1013,7 @@ function getNumberOfApprovedForms(callback){
 
   setTimeout( function(){
 
-    var getQuery = "select COUNT(0) as 'approvedcount' from life4_devel.wp_kikf_postmeta where meta_key='state' and meta_value='approved'";
+    var getQuery = "select COUNT(0) as 'approvedcount' from wp_kikf_postmeta where meta_key='state' and meta_value='approved'";
 
 
     connection.query(getQuery, function (error, results) {
@@ -1032,7 +1032,7 @@ function getNextApprovedQueue(callback){
 
   setTimeout( function(){
 
-    var getQuery = "select pm.post_id as 'post_id',(SELECT fm.title from wp_kikf_postmeta pm2, wp_kikf_nf3_forms fm where pm2.meta_key='_form_id' and pm.post_id=pm2.post_id and pm2.meta_value=fm.id) as 'formtype' from life4_devel.wp_kikf_postmeta pm where pm.meta_key='state' and pm.meta_value='approved' limit 1";
+    var getQuery = "select pm.post_id as 'post_id',(SELECT fm.title from wp_kikf_postmeta pm2, wp_kikf_nf3_forms fm where pm2.meta_key='_form_id' and pm.post_id=pm2.post_id and pm2.meta_value=fm.id) as 'formtype' from wp_kikf_postmeta pm where pm.meta_key='state' and pm.meta_value='approved' limit 1";
 
 
     connection.query(getQuery, function (error, results) {
@@ -1055,7 +1055,7 @@ function getPostPlayerName(postid,callback){
 
   setTimeout( function(){
 
-    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_42'";
+    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_42'";
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
@@ -1074,7 +1074,7 @@ function getPostPlayerRank(postid,callback){
 
   setTimeout( function(){
 
-    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_5'";
+    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_5'";
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
@@ -1093,7 +1093,7 @@ function getPostPlayerSubRank(postid,callback){
 
   setTimeout( function(){
 
-    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_6'";
+    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_6'";
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
@@ -1112,7 +1112,7 @@ function getPostPlayerID(postid,callback){
 
   setTimeout( function(){
 
-    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_41'";
+    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_41'";
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
@@ -1132,7 +1132,7 @@ function getPlacementPostPlayerID(postid,callback){
 
   setTimeout( function(){
 
-    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_58'";
+    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_58'";
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
@@ -1150,7 +1150,7 @@ function getCompPlacementPostPlayerID(postid,callback){
 
   setTimeout( function(){
 
-    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_67'";
+    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_67'";
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
@@ -1169,7 +1169,7 @@ function getPlacementPostPlayerName(postid,callback){
 
   setTimeout( function(){
 
-    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_59'";
+    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_59'";
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
@@ -1187,7 +1187,7 @@ function getCompPlacementPostPlayerName(postid,callback){
 
   setTimeout( function(){
 
-    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_68'";
+    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_68'";
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
@@ -1205,7 +1205,7 @@ function getPlacementPostPlayerRank(userid,callback){
 
   setTimeout( function(){
 
-    var getQuery = "SELECT meta_value FROM life4_devel.wp_kikf_usermeta where user_id="+userid+" && meta_key='rank'";
+    var getQuery = "SELECT meta_value FROM wp_kikf_usermeta where user_id="+userid+" && meta_key='rank'";
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
@@ -1223,7 +1223,7 @@ function getTrialPostPlayerID(postid,callback){
 
   setTimeout( function(){
 
-    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_53'";
+    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_53'";
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
@@ -1242,7 +1242,7 @@ function getTrialPostName(postid,callback){
 
   setTimeout( function(){
 
-    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_54'";
+    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_54'";
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
@@ -1261,7 +1261,7 @@ function getTrialTitle(postid,callback){
 
   setTimeout( function(){
 
-    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_46'";
+    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_46'";
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
@@ -1280,7 +1280,7 @@ function getTrialRank(postid,callback){
 
   setTimeout( function(){
 
-    var getQuery = "select meta_value from life4_devel.wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_49'";
+    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_49'";
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
@@ -1299,7 +1299,7 @@ function getProfileTwitterHandle(playerid,callback){
 
   setTimeout( function(){
 
-    var getQuery = "SELECT meta_value FROM life4_devel.wp_kikf_usermeta where meta_key='twitter_handle' and user_id="+playerid+"";
+    var getQuery = "SELECT meta_value FROM wp_kikf_usermeta where meta_key='twitter_handle' and user_id="+playerid+"";
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
@@ -3609,7 +3609,7 @@ function updatedSubmissionToBotAnnounced(post_id,callback){
   setTimeout( function(){
 
     console.log("updating");
-    var appStatus = "update life4_devel.wp_kikf_postmeta set meta_value='bot_announced' where meta_key='state' and meta_value='approved' and post_id="+post_id+"";
+    var appStatus = "update wp_kikf_postmeta set meta_value='bot_announced' where meta_key='state' and meta_value='approved' and post_id="+post_id+"";
     connection.query(appStatus, function (error, results) {
       if (error) throw error;
       callback(null,results)
@@ -4312,10 +4312,10 @@ function LIFE4sequence()
     }
 
   }
-  //NEWQUEUE
+  //ON (NEW)
   //
   //
-  else if (botStatus == "NEWQUEUE")
+  else if (botStatus == "ON")
   {
 
     //get current time
