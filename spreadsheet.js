@@ -10,8 +10,11 @@
 //TODO: Add discord messaging
 
 //TODO: Code cleanup, create another .js for functions
-//TODO: Code cleanup, rename NEWQUEUE to ON
-//TODO: Switch over DBs
+//TODO: Gut Google Sheets stuff
+//TODO: Remove QUEUE
+//TODO: Remove PLAYER check
+//TODO: Remove TRIALS check
+//TODO: Remove Google APIs from package.json
 
 const fs = require('fs');
 const readline = require('readline');
@@ -26,7 +29,6 @@ var Twitter = new twit(config);
 
 //discord
 var Discord = require('discord.js');
-//var Discord = require('discord.js.old');
 var bot = new Discord.Client();
 var adminchannel;
 var playerrankupchannel;
@@ -659,6 +661,598 @@ var getTrialDiscordIcon = function(rank)
   return discordemoji;
 }
 
+function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
+{
+  //name_ex = ex score
+  //name_minus = minus ex score
+  //level = trial level
+  //rankingview = view mapping for overall ranking
+
+  setTimeout( function(){
+
+    var returnedvalue;
+
+    if (trialname=="Devotion")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Devotion_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Devotion_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=12;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Devotion_rankings";
+      }
+    }
+    else if (trialname=="Heartbreak")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Heartbreak_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Heartbreak_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=12;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Heartbreak_rankings";
+      }
+    }
+    else if (trialname=="Believe")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Believe_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Believe_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=12;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Believe_rankings";
+      }
+    }
+    else if (trialname=="Celestial")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Celestial_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Celestial_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=13;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Celestial_rankings";
+      }
+    }
+    else if (trialname=="Gospel")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Gospel_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Gospel_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=13;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Gospel_rankings";
+      }
+    }
+    else if (trialname=="Mainframe")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Mainframe_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Mainframe_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=13;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Mainframe_rankings";
+      }
+    }
+    else if (trialname=="Primal")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Primal_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Primal_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=13;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Primal_rankings";
+      }
+    }
+    else if (trialname=="Species")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Species_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Species_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=13;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Species_rankings";
+      }
+    }
+    else if (trialname=="Passport")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Passport_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Passport_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=13;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Passport_rankings";
+      }
+    }
+    else if (trialname=="Daybreak")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Daybreak_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Daybreak_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=14;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Daybreak_rankings";
+      }
+    }
+    else if (trialname=="Upheaval")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Upheaval_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Upheaval_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=14;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Upheaval_rankings";
+      }
+    }
+    else if (trialname=="Superstar")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Superstar_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Superstar_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=14;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Superstar_rankings";
+      }
+    }
+    else if (trialname=="Countdown")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Countdown_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Countdown_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=14;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Countdown_rankings";
+      }
+    }
+    else if (trialname=="Hellscape")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Hellscape_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Hellscape_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=15;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Hellscape_rankings";
+      }
+    }
+    else if (trialname=="Clockwork")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Clockwork_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Clockwork_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=15;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Clockwork_rankings";
+      }
+    }
+    else if (trialname=="Heatwave")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Heatwave_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Heatwave_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=15;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Heatwave_rankings";
+      }
+    }
+    else if (trialname=="Tempest")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Tempest_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Tempest_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=15;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Tempest_rankings";
+      }
+    }
+    else if (trialname=="Mythos")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Mythos_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Mythos_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=15;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Mythos_rankings";
+      }
+    }
+    else if (trialname=="Pharaoh")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Pharaoh_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Pharaoh_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=15;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Pharaoh_rankings";
+      }
+    }
+    else if (trialname=="Rendition")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Rendition_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Rendition_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=15;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Rendition_rankings";
+      }
+    }
+    else if (trialname=="Wanderlust")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Wanderlust_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Wanderlust_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=15;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Wanderlust_rankings";
+      }
+    }
+    else if (trialname=="Circadia")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Circadia_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Circadia_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=16;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Circadia_rankings";
+      }
+    }
+    else if (trialname=="Snowdrift")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Snowdrift_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Snowdrift_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=16;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Snowdrift_rankings";
+      }
+    }
+    else if (trialname=="Paradox")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Paradox_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Paradox_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=16;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Paradox_rankings";
+      }
+    }
+    else if (trialname=="Spectacle")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Spectacle_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Spectacle_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=16;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Spectacle_rankings";
+      }
+    }
+    else if (trialname=="Inhuman")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Inhuman_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Inhuman_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=16;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Inhuman_rankings";
+      }
+    }
+    else if (trialname=="Chemical")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Chemical_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Chemical_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=17;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Chemical_rankings";
+      }
+    }
+    else if (trialname=="Ascension")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Ascension_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Ascension_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=17;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Ascension_rankings";
+      }
+    }
+    else if (trialname=="Quantum")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Quantum_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Quantum_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=18;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Quantum_rankings";
+      }
+    }
+    else if (trialname=="Origin")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Origin_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Origin_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=18;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="trial_Origin_rankings";
+      }
+    }
+
+
+
+    callback(null,returnedvalue)
+
+}, 25);
+
+};
+
+
+
 //TODO: Update this to be not readonly
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 const TOKEN_PATH = 'token.json';
@@ -704,17 +1298,6 @@ function getBotStatus(callback){
 
 }; 
 
-//NEW WORDPRESS TABLES
-//
-function checkWPsubmissions(callback){
-  setTimeout( function(){
-
-    var returnedVer = 'ok';
-      callback(null,returnedVer);
-
-}, 25);
-
-};
 
 function tournamentQualGetPlayerIsVerified(row, callback){
   setTimeout( function(){
@@ -1312,595 +1895,7 @@ function getProfileTwitterHandle(playerid,callback){
 
 };
 
-function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
-{
-  //name_ex = ex score
-  //name_minus = minus ex score
-  //level = trial level
-  //rankingview = view mapping for overall ranking
 
-  setTimeout( function(){
-
-    var returnedvalue;
-
-    if (trialname=="Devotion")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Devotion_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Devotion_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=12;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Devotion_rankings";
-      }
-    }
-    else if (trialname=="Heartbreak")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Heartbreak_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Heartbreak_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=12;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Heartbreak_rankings";
-      }
-    }
-    else if (trialname=="Believe")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Believe_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Believe_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=12;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Believe_rankings";
-      }
-    }
-    else if (trialname=="Celestial")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Celestial_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Celestial_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=13;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Celestial_rankings";
-      }
-    }
-    else if (trialname=="Gospel")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Gospel_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Gospel_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=13;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Gospel_rankings";
-      }
-    }
-    else if (trialname=="Mainframe")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Mainframe_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Mainframe_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=13;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Mainframe_rankings";
-      }
-    }
-    else if (trialname=="Primal")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Primal_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Primal_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=13;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Primal_rankings";
-      }
-    }
-    else if (trialname=="Species")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Species_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Species_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=13;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Species_rankings";
-      }
-    }
-    else if (trialname=="Passport")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Passport_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Passport_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=13;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Passport_rankings";
-      }
-    }
-    else if (trialname=="Daybreak")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Daybreak_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Daybreak_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=14;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Daybreak_rankings";
-      }
-    }
-    else if (trialname=="Upheaval")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Upheaval_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Upheaval_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=14;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Upheaval_rankings";
-      }
-    }
-    else if (trialname=="Superstar")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Superstar_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Superstar_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=14;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Superstar_rankings";
-      }
-    }
-    else if (trialname=="Countdown")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Countdown_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Countdown_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=14;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Countdown_rankings";
-      }
-    }
-    else if (trialname=="Hellscape")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Hellscape_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Hellscape_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=15;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Hellscape_rankings";
-      }
-    }
-    else if (trialname=="Clockwork")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Clockwork_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Clockwork_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=15;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Clockwork_rankings";
-      }
-    }
-    else if (trialname=="Heatwave")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Heatwave_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Heatwave_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=15;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Heatwave_rankings";
-      }
-    }
-    else if (trialname=="Tempest")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Tempest_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Tempest_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=15;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Tempest_rankings";
-      }
-    }
-    else if (trialname=="Mythos")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Mythos_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Mythos_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=15;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Mythos_rankings";
-      }
-    }
-    else if (trialname=="Pharaoh")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Pharaoh_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Pharaoh_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=15;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Pharaoh_rankings";
-      }
-    }
-    else if (trialname=="Rendition")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Rendition_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Rendition_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=15;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Rendition_rankings";
-      }
-    }
-    else if (trialname=="Wanderlust")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Wanderlust_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Wanderlust_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=15;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Wanderlust_rankings";
-      }
-    }
-    else if (trialname=="Circadia")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Circadia_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Circadia_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=16;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Circadia_rankings";
-      }
-    }
-    else if (trialname=="Snowdrift")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Snowdrift_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Snowdrift_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=16;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Snowdrift_rankings";
-      }
-    }
-    else if (trialname=="Paradox")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Paradox_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Paradox_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=16;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Paradox_rankings";
-      }
-    }
-    else if (trialname=="Spectacle")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Spectacle_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Spectacle_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=16;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Spectacle_rankings";
-      }
-    }
-    else if (trialname=="Inhuman")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Inhuman_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Inhuman_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=16;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Inhuman_rankings";
-      }
-    }
-    else if (trialname=="Chemical")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Chemical_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Chemical_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=17;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Chemical_rankings";
-      }
-    }
-    else if (trialname=="Ascension")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Ascension_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Ascension_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=17;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Ascension_rankings";
-      }
-    }
-    else if (trialname=="Quantum")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Quantum_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Quantum_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=18;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Quantum_rankings";
-      }
-    }
-    else if (trialname=="Origin")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Origin_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Origin_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=18;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="trial_Origin_rankings";
-      }
-    }
-
-
-
-    callback(null,returnedvalue)
-
-}, 25);
-
-};
 
 function getTrialEXMinusfromMapping(user_id,mappingvalue,callback){
 
@@ -4325,6 +4320,7 @@ function LIFE4sequence()
     //get hours
     var hoursdude = timedude_supreme.getHours();
     console.log(hoursdude);
+    //TODO: Compare this to heroku local time
 
     console.log("Bot is checking the new postID queue");
 
@@ -4780,6 +4776,3 @@ function newGetLimitedTrials(auth,trialRange, spreadsheetID,callback)
     callback(null,rows);
   });
 }
-
-
-//wait.launchFiber(LIFE4sequence);
