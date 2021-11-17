@@ -1534,9 +1534,9 @@ function setQueueItemToProcessed(playerQueueID,callback){
   setTimeout( function(){
 
     //old
-    //var updateQuery = "UPDATE playerQueue SET queueStatus = 'DONE',playerQueueTimestamp=now() WHERE playerQueueID = " + playerQueueID; 
+    var updateQuery = "UPDATE playerQueue SET queueStatus = 'DONE',playerQueueTimestamp=now() WHERE playerQueueID = " + playerQueueID; 
 
-    var updateQuery = "UPDATE life4_playerqueue SET queueStatus = 'DONE',playerQueueTimestamp=now() WHERE playerQueueID = " + playerQueueID; 
+    //var updateQuery = "UPDATE life4_playerqueue SET queueStatus = 'DONE',playerQueueTimestamp=now() WHERE playerQueueID = " + playerQueueID; 
 
 
 
@@ -1575,9 +1575,9 @@ function getReadyFromQueue(callback){
   setTimeout( function(){
 
     //old
-    //var getQuery = "select playerQueueID, playerName, updateType, updateCategory, playerID, trialID, queueStatus from playerQueue where queueStatus = 'ACTIVE' limit 1";
+    var getQuery = "select playerQueueID, playerName, updateType, updateCategory, playerID, trialID, queueStatus from playerQueue where queueStatus = 'ACTIVE' limit 1";
 
-    var getQuery = "select playerQueueID, playerName, updateType, updateCategory, playerID, trialID, queueStatus from life4_playerqueue where queueStatus = 'ACTIVE' limit 1";
+    //var getQuery = "select playerQueueID, playerName, updateType, updateCategory, playerID, trialID, queueStatus from life4_playerqueue where queueStatus = 'ACTIVE' limit 1";
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
@@ -2004,9 +2004,9 @@ function getTrialQueueInfo(trialID,callback){
   setTimeout( function(){
 
     //old
-    //var trialQueueQuery = "SELECT * from playertrialrank WHERE playerTrialRankID = " + trialID;
+    var trialQueueQuery = "SELECT * from playertrialrank WHERE playerTrialRankID = " + trialID;
 
-    var trialQueueQuery = "SELECT * from life4_playertrialrank WHERE playerTrialRankID = " + trialID;
+    //var trialQueueQuery = "SELECT * from life4_playertrialrank WHERE playerTrialRankID = " + trialID;
 
 
     connection.query(trialQueueQuery, function (error, results) {
@@ -2025,9 +2025,9 @@ function getPlayerQueueInfo(playerID,callback){
   setTimeout( function(){
 
     //old
-    //var playerQueueQuery = "SELECT * from playerList WHERE playerID = " + playerID;
+    var playerQueueQuery = "SELECT * from playerList WHERE playerID = " + playerID;
 
-    var playerQueueQuery = "SELECT * from life4_playerlist WHERE playerID = " + playerID;
+    //var playerQueueQuery = "SELECT * from life4_playerlist WHERE playerID = " + playerID;
 
 
     connection.query(playerQueueQuery, function (error, results) {
@@ -2237,9 +2237,9 @@ function getranks(trialname, playerName, callback){
 
   setTimeout( function(){
     //old
-    //var checkrankquery = "SELECT playerName, playerScore from playertrialrank WHERE trialName = '"+trialname+"' order by playerScore DESC";
+    var checkrankquery = "SELECT playerName, playerScore from playertrialrank WHERE trialName = '"+trialname+"' order by playerScore DESC";
     
-    var checkrankquery = "SELECT playerName, playerScore from life4_playertrialrank WHERE trialName = '"+trialname+"' order by playerScore DESC";
+    //var checkrankquery = "SELECT playerName, playerScore from life4_playertrialrank WHERE trialName = '"+trialname+"' order by playerScore DESC";
 
     
     var theRank = 0;
