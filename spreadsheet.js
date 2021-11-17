@@ -4315,12 +4315,10 @@ function LIFE4sequence()
 
     //get current time
     var timedude = Date.now();
-    console.log(timedude);
     var timedude_supreme = new Date(timedude);
     //get hours
     var hoursdude = timedude_supreme.getHours();
-    console.log(hoursdude);
-    //TODO: Compare this to heroku local time
+    console.log("TIME! It is " + hoursdude+ " UTC right now");
 
     console.log("Bot is checking the new postID queue");
 
@@ -4329,12 +4327,9 @@ function LIFE4sequence()
     var queuecount=wait.for(getNumberOfApprovedForms);
     console.log(queuecount + " records found");
 
-
-
-    if (queuecount>0 && (hoursdude > 11 && hoursdude < 23))
+    //check for UTC window
+    if (queuecount>0 && (hoursdude > 16 || hoursdude < 4))
     {
-
-
       //get new record
       console.log("Starting check for new records!");
       var nextapprovedvalues=wait.for(getNextApprovedQueue);
