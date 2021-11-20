@@ -1615,7 +1615,7 @@ function getNextApprovedQueue(callback){
 
   setTimeout( function(){
 
-    var getQuery = "select pm.post_id as 'post_id',(SELECT fm.title from wp_kikf_postmeta pm2, wp_kikf_nf3_forms fm where pm2.meta_key='_form_id' and pm.post_id=pm2.post_id and pm2.meta_value=fm.id) as 'formtype' from wp_kikf_postmeta pm where pm.meta_key='state' and pm.meta_value='approved' limit 1";
+    var getQuery = "select pm.post_id as 'post_id',(SELECT fm.title from wp_kikf_postmeta pm2, wp_kikf_nf3_forms fm where pm2.meta_key='_form_id' and pm.post_id=pm2.post_id and pm2.meta_value=fm.id) as 'formtype' from wp_kikf_postmeta pm where pm.meta_key='state' and pm.meta_value='approved'";
 
 
     connection.query(getQuery, function (error, results) {
@@ -4310,14 +4310,24 @@ function LIFE4sequence()
     console.log(queuecount + " records found");
 
     //check for UTC window
-    if (queuecount>0 && (hoursdude > 16 || hoursdude < 4))
+    if (queuecount>0 && (hoursdude > 13 || hoursdude < 4))
     {
       //get new record
       console.log("Starting check for new records!");
       var nextapprovedvalues=wait.for(getNextApprovedQueue);
+
+      //get the next index for a record that isn't needed for announcements!
+      //TODO: Update this to use a better query rather than this hacked up if else statement
+      var approvedindex=0;
+      while (nextapprovedvalues[approvedindex].formtype == "Ready? Register!" || nextapprovedvalues[approvedindex].formtype == "Ready? Qualify!")
+      {
+        approvedindex+=1;
+      }
+      console.log("approved index=" + approvedindex);
+
       //sort into vars
-      var post_id = nextapprovedvalues[0].post_id;
-      var queuetype = nextapprovedvalues[0].formtype;
+      var post_id = nextapprovedvalues[approvedindex].post_id;
+      var queuetype = nextapprovedvalues[approvedindex].formtype;
 
       console.log("post_id:" + post_id + " and queuetype: "+queuetype+"");
 
@@ -4473,7 +4483,6 @@ function LIFE4sequence()
         var playertwitter=wait.for(getProfileTwitterHandle,playerid);
         console.log("Player Twitter Handle: " + playertwitter);
 
-        //TODO: Update for trial level
         var twitterannounce = wait.for(announceUpdatePlayerTrialTwitter, playername, trialrank,trialExScore,"("+trialExMinusScore+")", playertwitter, trialtitle.toUpperCase() + " ("+trialscorelevel+")",trialnumberrankings);
         console.log("Twitter announcement complete!");
         //TODO: Add discord handle
