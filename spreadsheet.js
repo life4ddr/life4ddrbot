@@ -1948,28 +1948,11 @@ function setRankingVariable(callback){
 
 }
 
-function setOverallRankings(viewmapping,callback){
-
-  setTimeout( function(){
-
-    var trialquery = "select @ranking:=@ranking+1 as 'ranking', username,user_id,trial_ex from "+viewmapping+" order by trial_ex desc";
-
-
-    connection.query(trialquery, function (error, results) {
-      if (error) throw error;
-      callback(null,results)
-
-    });
-    
-}, 25);
-
-}
-
 function getTrialUserRanking(user_id,viewmapping,callback){
 
   setTimeout( function(){
 
-    var trialquery = "select @ranking as 'ranking',user_id,username from " + viewmapping + " where user_id="+user_id+"";
+    var trialquery = "select * from ( select @ranking:=@ranking+1 as 'ranking', username,user_id,trial_ex from "+viewmapping+" order by trial_ex desc ) as rankings where user_id="+user_id+"";
 
 
     connection.query(trialquery, function (error, results) {
@@ -4481,9 +4464,7 @@ function LIFE4sequence()
         console.log("Mapping View: " + mappingview);
         //set var to 0 for rankings
         var setvar=wait.for(setRankingVariable);
-        //get all rankings for trial
-        var setoverallrankings=wait.for(setOverallRankings,mappingview);
-        //rerun query to get player trial rankings
+        //get rank # from list of ranked players
         var trialnumberrankings=wait.for(getTrialUserRanking,playerid,mappingview);
         console.log("# rank: " +trialnumberrankings);
 
