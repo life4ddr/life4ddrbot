@@ -4326,12 +4326,15 @@ function LIFE4sequence()
       console.log("approved index=" + approvedindex);
 
       //sort into vars
-      var post_id = nextapprovedvalues[approvedindex].post_id;
-      var queuetype = nextapprovedvalues[approvedindex].formtype;
-
+      //TODO: Hack to avoid errors, fix this w/ query
+      if (approvedindex>0)
+      {
+        var post_id = nextapprovedvalues[approvedindex].post_id;
+        var queuetype = nextapprovedvalues[approvedindex].formtype;
+      }
       console.log("post_id:" + post_id + " and queuetype: "+queuetype+"");
 
-      //TODO: Re-add discord to this for later
+      //TODO: Re-add discord handle to this for later
 
       if (queuetype=="Rankup")
       {
