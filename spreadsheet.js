@@ -4319,7 +4319,7 @@ function LIFE4sequence()
       //get the next index for a record that isn't needed for announcements!
       //TODO: Update this to use a better query rather than this hacked up if else statement
       var approvedindex=0;
-      while (nextapprovedvalues[approvedindex].formtype == "Ready? Register!" || nextapprovedvalues[approvedindex].formtype == "Ready? Qualify!")
+      while ((nextapprovedvalues[approvedindex].formtype == "Ready? Register!" || nextapprovedvalues[approvedindex].formtype == "Ready? Qualify!") && approvedindex < nextapprovedvalues.length)
       {
         approvedindex+=1;
       }
