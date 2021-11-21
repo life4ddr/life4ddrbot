@@ -1589,9 +1589,36 @@ function getReadyFromQueue(callback){
 
 };
 
+//gets COUNT of approved forms with type
+function getNumberOfApprovedFormsWithType(callback){
 
+  setTimeout( function(){
+
+    var getQuery = "select pm.post_id as 'post_id', (SELECT pm3.meta_value from wp_kikf_postmeta pm3 where pm3.meta_key='state' and pm3.meta_value='approved' and pm.post_id=pm3.post_id) as 'approvalvalue',(SELECT fm.title from wp_kikf_postmeta pm2, wp_kikf_nf3_forms fm where pm2.meta_key='_form_id' and pm.post_id=pm2.post_id and pm2.meta_value=fm.id) as 'formtype' from wp_kikf_postmeta pm where pm.meta_key='state' and pm.meta_value='approved'";
+
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      var count=0;
+      for (var i=0;i<results.length;i++)
+      {
+        if (results[i].formtype=="Placement" || results[i].formtype=="Comprehensive Placement" || results[i].formtype=="Trial Submission" || results[i].formtype=="Trial Rankup")
+        {
+          count+=1;
+        }
+      }
+
+      console.log(count);
+      callback(null,count)
+
+    });
+    
+}, 25);
+
+};
 
 //gets COUNT of approved forms
+//old - remove
 function getNumberOfApprovedForms(callback){
 
   setTimeout( function(){
@@ -1616,12 +1643,19 @@ function getNextApprovedQueue(callback){
   setTimeout( function(){
 
     var getQuery = "select pm.post_id as 'post_id',(SELECT fm.title from wp_kikf_postmeta pm2, wp_kikf_nf3_forms fm where pm2.meta_key='_form_id' and pm.post_id=pm2.post_id and pm2.meta_value=fm.id) as 'formtype' from wp_kikf_postmeta pm where pm.meta_key='state' and pm.meta_value='approved'";
-
+    var nextselected;
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
-      console.log(results);
-      callback(null,results)
+      for (var i=0;i<results.length;i++)
+      {
+        if (nextselected=undefined && (results[i].formtype=="Placement" || results[i].formtype=="Comprehensive Placement" || results[i].formtype=="Trial Submission" || results[i].formtype=="Trial Rankup"))
+        {
+          nextselected=results[i];
+        }
+      }      
+      console.log(nextselected);
+      callback(null,nextselected)
 
     });
     
@@ -4306,7 +4340,10 @@ function LIFE4sequence()
 
     //pull count of approved records
     console.log("checking for new approved records")
-    var queuecount=wait.for(getNumberOfApprovedForms);
+    //var queuecount=wait.for(getNumberOfApprovedForms);
+
+    //test
+    var queuecount=wait.for(getNumberOfApprovedFormsWithType);
     console.log(queuecount + " records found");
 
     //check for UTC window
@@ -4316,22 +4353,11 @@ function LIFE4sequence()
       console.log("Starting check for new records!");
       var nextapprovedvalues=wait.for(getNextApprovedQueue);
 
-      //get the next index for a record that isn't needed for announcements!
-      //TODO: Update this to use a better query rather than this hacked up if else statement
-      var approvedindex=0;
-      while ((nextapprovedvalues[approvedindex].formtype == "Ready? Register!" || nextapprovedvalues[approvedindex].formtype == "Ready? Qualify!") && approvedindex < nextapprovedvalues.length)
-      {
-        approvedindex+=1;
-      }
-      console.log("approved index=" + approvedindex);
 
       //sort into vars
-      //TODO: Hack to avoid errors, fix this w/ query
-      if (approvedindex>0)
-      {
-        var post_id = nextapprovedvalues[approvedindex].post_id;
-        var queuetype = nextapprovedvalues[approvedindex].formtype;
-      }
+      var post_id = nextapprovedvalues[0].post_id;
+      var queuetype = nextapprovedvalues[0].formtype;
+
       console.log("post_id:" + post_id + " and queuetype: "+queuetype+"");
 
       //TODO: Re-add discord handle to this for later
