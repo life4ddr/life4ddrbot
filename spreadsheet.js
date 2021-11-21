@@ -1929,6 +1929,22 @@ function getProfileTwitterHandle(playerid,callback){
 
 };
 
+//get player discord handle
+function getProfileDiscordHandle(playerid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "SELECT meta_value FROM wp_kikf_usermeta where meta_key='discord_handle' and user_id="+playerid+"";
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      callback(null,results[0].meta_value)
+
+    });
+    
+}, 25);
+
+};
 
 
 function getTrialEXMinusfromMapping(user_id,mappingvalue,callback){
@@ -4377,13 +4393,14 @@ function LIFE4sequence()
             //get player subrank
             var playersubrank=wait.for(getPostPlayerSubRank,post_id);
             console.log("Player Rank Number: " + playersubrank);
-            //TODO: Handle no twitter
             //get player twitter handle
             var playertwitter=wait.for(getProfileTwitterHandle,playerid);
             console.log("Player Twitter Handle: " + playertwitter);
+            //get player discord handle
+            var playerdiscord=wait.for(getProfileDiscordHandle,playerid);
+            console.log("Player Discord Handle: " + playerdiscord);
 
             //messaging
-
             //Twitter Message
             var twitterannounce = wait.for(announcePlayerRankupTwitter, playername, playerrank + " " + playersubrank, playertwitter);
             console.log("Twitter announcement complete!");
@@ -4416,6 +4433,10 @@ function LIFE4sequence()
         //get player twitter handle
         var playertwitter=wait.for(getProfileTwitterHandle,playerid);
         console.log("Player Twitter Handle: " + playertwitter);        
+        //get player discord handle
+        var playerdiscord=wait.for(getProfileDiscordHandle,playerid);
+        console.log("Player Discord Handle: " + playerdiscord);
+
 
         var twitterannounce = wait.for(announceNewPlayerTwitter, playername, playerrank, playertwitter);
         //console.log("Twitter announcement complete!");
@@ -4448,6 +4469,9 @@ function LIFE4sequence()
         //get player twitter handle
         var playertwitter=wait.for(getProfileTwitterHandle,playerid);
         console.log("Player Twitter Handle: " + playertwitter);      
+        //get player discord handle
+        var playerdiscord=wait.for(getProfileDiscordHandle,playerid);
+        console.log("Player Discord Handle: " + playerdiscord);
 
         var twitterannounce = wait.for(announceNewPlayerTwitter, playername, playerrank, playertwitter);
         //console.log("Twitter announcement complete!");
@@ -4507,10 +4531,13 @@ function LIFE4sequence()
         var trialnumberrankings=wait.for(getTrialUserRanking,playerid,mappingview);
         console.log("# rank: " +trialnumberrankings);
 
-        //TODO: Handle no twitter
         //get player twitter handle
         var playertwitter=wait.for(getProfileTwitterHandle,playerid);
         console.log("Player Twitter Handle: " + playertwitter);
+
+        //get player discord handle
+        var playerdiscord=wait.for(getProfileDiscordHandle,playerid);
+        console.log("Player Discord Handle: " + playerdiscord);
 
         var twitterannounce = wait.for(announceUpdatePlayerTrialTwitter, playername, trialrank,trialExScore,"("+trialExMinusScore+")", playertwitter, trialtitle.toUpperCase() + " ("+trialscorelevel+")",trialnumberrankings);
         console.log("Twitter announcement complete!");
