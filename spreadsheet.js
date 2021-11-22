@@ -1602,7 +1602,7 @@ function getNumberOfApprovedFormsWithType(callback){
       var count=0;
       for (var i=0;i<results.length;i++)
       {
-        if (results[i].formtype=="Placement" || results[i].formtype=="Comprehensive Placement" || results[i].formtype=="Trial Submission" || results[i].formtype=="Trial Rankup")
+        if (results[i].formtype=="Placement" || results[i].formtype=="Comprehensive Placement" || results[i].formtype=="Trial Submission" || results[i].formtype=="Rankup")
         {
           count+=1;
         }
@@ -1617,24 +1617,6 @@ function getNumberOfApprovedFormsWithType(callback){
 
 };
 
-//gets COUNT of approved forms
-//old - remove
-function getNumberOfApprovedForms(callback){
-
-  setTimeout( function(){
-
-    var getQuery = "select COUNT(0) as 'approvedcount' from wp_kikf_postmeta where meta_key='state' and meta_value='approved'";
-
-
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      callback(null,results[0].approvedcount)
-
-    });
-    
-}, 25);
-
-};
 
 //gets only latest post
 //use form_id to retrieve the form type from the form meta table
@@ -1649,7 +1631,7 @@ function getNextApprovedQueue(callback){
       if (error) throw error;
       for (var i=0;i<results.length;i++)
       {
-        if (nextselected=undefined && (results[i].formtype=="Placement" || results[i].formtype=="Comprehensive Placement" || results[i].formtype=="Trial Submission" || results[i].formtype=="Trial Rankup"))
+        if (nextselected==undefined && (results[i].formtype=="Placement" || results[i].formtype=="Comprehensive Placement" || results[i].formtype=="Trial Submission" || results[i].formtype=="Rankup"))
         {
           nextselected=results[i];
         }
@@ -3982,9 +3964,12 @@ function LIFE4sequence()
   {
     console.log("Bot is having issues! Bot will not run!");
   }
+
+
   //PLAYERS
   //
   //
+  /*
   else if (botStatus == "PLAYERS")
   {
     try
@@ -3992,7 +3977,6 @@ function LIFE4sequence()
       var numberofrecords=0;
       console.log("Bot is checking for new players!");
 
-      //TODO: Add error catching for player retrieval
       var playerSpreadsheetList = wait.for(newGetPlayersFromSheets, getauth);
       console.log("Player list retrieved!");
 
@@ -4078,101 +4062,17 @@ function LIFE4sequence()
 
     }
   }
-  //TOURNAMENT SYNC
-  //
-  //
-  //
-  else if (botStatus == "TOURNEYSYNC")
-  {
-    try
-    {
-      console.log("Running the tournament sync!");
-      //get list from spreadsheet
-      var playerSubmissionSheet = wait.for(getFullPlayerTournamentListFromSheets, getauth);
-      //if verification = true
-      
-      //compare against other tab to see if score exists or is new
-      console.log(playerSubmissionSheet);
-      //if new, add to PLAYER SCORES
-
-      //if updated, update PLAYER SCORES
-
-      //else, do nothing
-    }
-    catch(error)
-    {
-      console.log("ERROR!");
-
-      var discordannounce = wait.for(discordAdminAnnounceError);
-      var changeappstatus = wait.for(changeAppStatus, "OFF");
-
-    }
-  }
-    //TOURNAMENT QUALIFYING SYNC
-  //
-  //
-  //
-  else if (botStatus == "TOURNEYQUALSYNC")
-  {
-    try
-    {
-      console.log("Running the tournament sync!");
-      //get list from spreadsheet
-      var playerSubmissionSheet = wait.for(getFullPlayerQualifierListFromSheets, getauth);
-      console.log("List of players retrieved!");
-      //if verification = true
-      if (playerSubmissionSheet.length)
-      {
-        //map each row
-        playerSubmissionSheet.map((row) => {
-          //console.log(row);
-          var playerIsVerified=wait.for(tournamentQualGetPlayerIsVerified,row);
-          var playerTimestamp=wait.for(tournamentQualGetTimestamp,row);
-          var playerName = wait.for(tournamentQualGetName,row);
-          var playerLIFE4ID = wait.for(tournamentQualGetID,row);
-          var song1EX=wait.for(tournamentQualGetSongEX,row,1);
-          var song2EX=wait.for(tournamentQualGetSongEX,row,2);
-          var song3EX=wait.for(tournamentQualGetSongEX,row,3);
-
-          //console.log(playerIsVerified + " " + playerTimestamp + " " + playerName + " " + playerLIFE4ID + " " + song1EX + " " + song2EX + " " + song3EX);
-
-          //check that player is verified
-          if (playerIsVerified=="V")
-          {
-            console.log("Player is verified!");
-            console.log(row);
-            var submissionwrite = wait.for(tournamentQualTestWriteToRow, getauth);
-
-          }
-
-          //compare against other tab to see if score exists or is new
-          //console.log(playerSubmissionSheet);
-
-          //if new, add to PLAYER SCORES
-
-          //if updated, update PLAYER SCORES
-
-          //else, do nothing
-
-        });
-      }
+  */
+  
+ 
 
 
 
-    }
-    catch(error)
-    {
-      console.log("ERROR!");
-
-      var discordannounce = wait.for(discordAdminAnnounceError);
-      var changeappstatus = wait.for(changeAppStatus, "OFF");
-
-    }
-  }
   //TRIALS
   //
   //
   //
+  /*
   else if (botStatus == "TRIALS")
   {
     try
@@ -4339,6 +4239,7 @@ function LIFE4sequence()
     }
 
   }
+  */
   //ON (NEW)
   //
   //
@@ -4369,10 +4270,9 @@ function LIFE4sequence()
       console.log("Starting check for new records!");
       var nextapprovedvalues=wait.for(getNextApprovedQueue);
 
-
       //sort into vars
-      var post_id = nextapprovedvalues[0].post_id;
-      var queuetype = nextapprovedvalues[0].formtype;
+      var post_id = nextapprovedvalues.post_id;
+      var queuetype = nextapprovedvalues.formtype;
 
       console.log("post_id:" + post_id + " and queuetype: "+queuetype+"");
 
@@ -4560,6 +4460,7 @@ function LIFE4sequence()
   //QUEUE
   //
   //
+  /*
   else if (botStatus == "QUEUE")
   {
     console.log("Bot is checking the queue!");
@@ -4689,6 +4590,7 @@ function LIFE4sequence()
 
 
   }
+  */
   
 connection.end();
 }
