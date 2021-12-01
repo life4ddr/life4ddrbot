@@ -12,7 +12,6 @@
 //TODO: ^ Images
 //TODO: ^ Icons
 //TODO: ^ Queries
-//TODO: Remove Google APIs from package.json
 
 
 
