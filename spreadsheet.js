@@ -6,19 +6,23 @@
 //built using NodeJS
 
 //TODO: Dependabot updates
-//TODO: Get discord sync
 //TODO: Add discord messaging
 
 //TODO: Code cleanup, create another .js for functions
-//TODO: Remove QUEUE
-//TODO: Remove PLAYER check
-//TODO: Remove TRIALS check
+//TODO: ^ Images
+//TODO: ^ Icons
+//TODO: ^ Queries
 //TODO: Remove Google APIs from package.json
+
+
 
 const fs = require('fs');
 const readline = require('readline');
 require('dotenv').config();
 
+//functions
+//image/icon functions
+var twitterTrialImageFunction = require('./image_icon_functions/getTwitterTrialImageURL.js');
 
 //twitter
 var twit = require('twit');
@@ -27,7 +31,11 @@ var Twitter = new twit(config);
 
 //discord
 var Discord = require('discord.js');
-var bot = new Discord.Client();
+var Intents = require('discord.js');
+//var bot = new Discord.Client({ intents: [Intents.Guild] });
+var bot = new Discord.Client({ ws: { intents: ['GUILD_MEMBERS'] }});
+
+//var guild = new Discord.Guild(bot);
 var adminchannel;
 var playerrankupchannel;
 var trialrankupchannel;
@@ -44,7 +52,13 @@ bot.on('ready', () => {
     playerrankupchannel= bot.channels.cache.get('530616617571319809');
     trialrankupchannel= bot.channels.cache.get('556390024938258433');
 
-    
+    //var boy = bot.users.fetch('');
+
+    //const members = guild.members.fetch().then((user) => {
+    //  console.log(user);
+    //}).catch(console.error);
+
+
     wait.launchFiber(LIFE4sequence);
   });
 
@@ -1030,32 +1044,6 @@ else if (rank == "Onyx" && trial == "SUPERSTAR (14)")
   twitterImageURL = './trial_images/SUPERSTAR/Superstar Onyx.webp';
 }
 
-//EVENTS!
-//HALLOWED (13)
-else if (rank == "Wood/Bronze/Silver" && trial == "HALLOWED (13)")
-{
-  twitterImageURL = './trial_images/HALLOWED/HALLOWED_SILVER_AND_BELOW.png';
-}
-else if (rank == "Gold" && trial == "HALLOWED (13)")
-{
-  twitterImageURL = './trial_images/HALLOWED/HALLOWED_GOLD.png';
-}
-else if (rank == "Diamond" && trial == "HALLOWED (13)")
-{
-  twitterImageURL = './trial_images/HALLOWED/HALLOWED_DIAMOND.png';
-}
-else if (rank == "Cobalt" && trial == "HALLOWED (13)")
-{
-  twitterImageURL = './trial_images/HALLOWED/HALLOWED_COBALT.png';
-}
-else if (rank == "Amethyst and Above" && trial == "HALLOWED (13)")
-{
-  twitterImageURL = './trial_images/HALLOWED/HALLOWED_AMETHYST_AND_ABOVE.png';
-}
-
-
-
-
   return twitterImageURL;
 
 }
@@ -1387,8 +1375,6 @@ var getTwitterImageURL = function(rank)
   
   return twitterImageURL;
 }
-
-
 
 var getDiscordIcon = function(rank)
 {
@@ -2717,8 +2703,12 @@ function announceUpdatePlayerTrialTwitter(playerName, playerRank,playerScore,pla
       }
     }
     console.log(trialName + "||" + playerRank);
-    var b64content = fs.readFileSync(getTwitterTrialImageURL(trialName,playerRank), { encoding: 'base64' })
-              
+    
+    //old
+    //var b64content = fs.readFileSync(getTwitterTrialImageURL(trialName,playerRank), { encoding: 'base64' })
+    //new
+    var b64content = fs.readFileSync(twitterTrialImageFunction.getTwitterTrialImageURL(trialName,playerRank), { encoding: 'base64' })
+    
 
     // get the new image media on twitter!
     
@@ -3189,6 +3179,16 @@ function LIFE4sequence()
         console.log("post completed!");
 
         console.log("Done retrieving record!\n\n");
+
+      }
+      //TODO: Badge Earned
+      else if (queuetype == "Badge Earned")
+      {
+
+      }
+      //TODO: RR Score Improved
+      else if (queuetype == "RR Score Improved")
+      {
 
       }
     }
