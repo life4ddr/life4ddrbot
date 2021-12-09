@@ -30,11 +30,11 @@ var Twitter = new twit(config);
 
 //discord
 var Discord = require('discord.js');
-var Intents = require('discord.js');
+//var Intents = require('discord.js');
 //var bot = new Discord.Client({ intents: [Intents.Guild] });
-var bot = new Discord.Client({ ws: { intents: ['GUILD_MEMBERS'] }});
+//var bot = new Discord.Client({ ws: { intents: ['GUILD_MEMBERS'] }});
+var bot = new Discord.Client();
 
-//var guild = new Discord.Guild(bot);
 var adminchannel;
 var playerrankupchannel;
 var trialrankupchannel;
@@ -47,9 +47,6 @@ bot.login(process.env.DISCORD_BOT_TOKEN);
 
 bot.on('ready', () => {
     console.log(`Logged in as ${bot.user.tag}!`);
-    adminchannel = bot.channels.cache.get('596168285477666832');
-    playerrankupchannel= bot.channels.cache.get('530616617571319809');
-    trialrankupchannel= bot.channels.cache.get('556390024938258433');
 
     //var boy = bot.users.fetch('');
 
@@ -67,6 +64,24 @@ var mysql = require('mysql');
 var connection;
 
 
+
+//connect to rankup channels
+//give it some time to connect
+function connectToRankupChannels(callback){
+
+  setTimeout( function(){
+
+    //connecting to rankup channels
+    adminchannel = bot.channels.cache.get('596168285477666832');
+    playerrankupchannel= bot.channels.cache.get('530616617571319809');
+    trialrankupchannel= bot.channels.cache.get('556390024938258433');
+
+      callback(null,"done");
+
+    
+}, 1000);
+
+};
 
 var getTwitterTrialImageURL = function(trial,rank)
 {
@@ -2706,7 +2721,7 @@ function announceUpdatePlayerTrialTwitter(playerName, playerRank,playerScore,pla
     //old
     //var b64content = fs.readFileSync(getTwitterTrialImageURL(trialName,playerRank), { encoding: 'base64' })
     //new
-    var b64content = fs.readFileSync(twitterTrialImageFunction.getTwitterTrialImageURL(trialName,playerRank), { encoding: 'base64' })
+    var b64content = fs.readFileSync(twitterTrialImageFunction.getTwitterTrialImageURL(trialName,playerRank), { encoding: 'base64' });
     
 
     // get the new image media on twitter!
@@ -2784,10 +2799,11 @@ function updatedSubmissionToBotAnnounced(post_id,callback){
 
     console.log("updating");
     var appStatus = "update wp_kikf_postmeta set meta_value='bot_announced' where meta_key='state' and meta_value='approved' and post_id="+post_id+"";
+    console.log(appStatus);
+
     connection.query(appStatus, function (error, results) {
       if (error) throw error;
       callback(null,results)
-
     });
     
 }, 25);
@@ -2815,6 +2831,7 @@ function announcePlayerRankupTwitter(playerName, playerRank,playerTwitterHandle,
                   
     // get the new image media on twitter!
     
+
     Twitter.post('media/upload', { media_data: b64content }, function (err, data, response) {
       var mediaIdStr = data.media_id_string
       var altText = "LIFE4 Player Rank"
@@ -2851,7 +2868,6 @@ function announcePlayerRankupDiscord(playerName, playerRank,callback)
     console.log(discordpost);
     
     playerrankupchannel.send(discordpost)
-    //.then(message => console.log(discordpost))
     .then(msg => { msg.react(getDiscordIcon(playerRank))})
     .catch(console.error);
 
@@ -2995,6 +3011,10 @@ function LIFE4sequence()
     //check for UTC window
     if (queuecount>0 && (hoursdude > 13 || hoursdude < 4))
     {
+      //connect to rankup channels
+      var channelsdone=wait.for(connectToRankupChannels);
+      console.log("connected to channels!");
+
       //get new record
       console.log("Starting check for new records!");
       var nextapprovedvalues=wait.for(getNextApprovedQueue);
@@ -3007,7 +3027,7 @@ function LIFE4sequence()
 
       if (queuetype=="Rankup")
       {
-        console.log("Player Rankup!");
+            console.log("Player Rankup!");
             //get player player_id
             var playerid=wait.for(getPostPlayerID,post_id);
             console.log("Player ID: " + playerid);
