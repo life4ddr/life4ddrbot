@@ -1014,7 +1014,7 @@ function getNextApprovedQueue(callback){
       if (error) throw error;
       for (var i=0;i<results.length;i++)
       {
-        if (nextselected==undefined && (results[i].formtype=="Placement" || results[i].formtype=="Comprehensive Placement" || results[i].formtype=="Trial Submission" || results[i].formtype=="Rankup"))
+        if (nextselected==undefined && (results[i].formtype=="Placement" || results[i].formtype=="Comprehensive Placement" || results[i].formtype=="Trial Submission" || results[i].formtype=="Rankup" || results[i].formtype=="Submit Scores!"))
         {
           nextselected=results[i];
         }
@@ -1137,6 +1137,32 @@ function getRRsubmissionPlayerID(postid,callback){
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
       callback(null,results[0].meta_value)
+
+    });
+    
+}, 25);
+
+};
+
+//get RR all submissions for that player
+function getRRAllPlayerSubmissions(playerid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "select pm.post_id as 'post_id', (SELECT pm3.meta_value from wp_kikf_postmeta pm3 where pm3.meta_key='state' and pm3.meta_value='approved' and pm.post_id=pm3.post_id) as 'approvalvalue', (SELECT pm4.meta_value from wp_kikf_postmeta pm4 where pm4.meta_key='_field_185' and pm4.meta_value="+playerid+" and pm.post_id=pm4.post_id) as 'username', (SELECT fm.title from wp_kikf_postmeta pm2, wp_kikf_nf3_forms fm where pm2.meta_key='_form_id' and pm.post_id=pm2.post_id and pm2.meta_value=fm.id) as 'formtype' from wp_kikf_postmeta pm where pm.meta_key='state' and pm.meta_value='approved'";
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      var postcount = [];
+      for (var i=0;i<results.length;i++)
+      {
+        if (results[i].username!=undefined && results[i].formtype=="Submit Scores!")
+        {
+          postcount.push(results[i].post_id);
+        }
+      }      
+      
+      callback(null,postcount);
 
     });
     
@@ -1532,15 +1558,15 @@ function announceNewPlayerTwitter(playerName, playerRank,playerTwitterHandle,cal
 
 }
 
-function updatedSubmissionToBotAnnounced(post_id,callback){
+function updateRRSubmissionsToBotAnnounced(postlist,callback){
 
   setTimeout( function(){
 
     console.log("updating");
-    var appStatus = "update wp_kikf_postmeta set meta_value='bot_announced' where meta_key='state' and meta_value='approved' and post_id="+post_id+"";
-    console.log(appStatus);
+    var updateall = "update wp_kikf_postmeta set meta_value='bot_announced' where meta_key='state' and meta_value='approved' and post_id in ("+postlist+")";
+    console.log(updateall);
 
-    connection.query(appStatus, function (error, results) {
+    connection.query(updateall, function (error, results) {
       if (error) throw error;
       callback(null,results)
     });
@@ -1660,6 +1686,28 @@ function announceNewPlayerDiscord(playerName, playerRank,playerDiscordHandle,cal
     playerrankupchannel.send(discordpost)
     //.then(message => console.log(discordpost))
     .then(msg => { msg.react(getDiscordIcon(playerRank)) })
+    .catch(console.error);
+    
+
+    callback(null,"done");
+
+    
+
+}, 750);
+
+}
+
+
+function announceRRDiscordScore(playerName, playerscorecount,callback)
+{
+  setTimeout( function(){
+
+    var discordpost = playerName + " has " + playerscorecount + " new rank royale scores!";
+
+    
+    adminchannel.send(discordpost)
+    //.then(message => console.log(discordpost))
+    //.then(msg => { msg.react(getDiscordIcon(playerRank)) })
     .catch(console.error);
     
 
@@ -1890,11 +1938,17 @@ function LIFE4sequence()
         console.log("Player Name: " + playername);
 
         //get all submissions
+        var postcount=wait.for(getRRAllPlayerSubmissions,playerid);
+        console.log("all posts:" + postcount);
 
         //discord announce
-
+        //console.log("our good friend " + playername + " has submitted " + postcount.length + " new scores hot damn");
+        var discordannounce = wait.for(announceRRDiscordScore, playername, postcount.length);
+        console.log("Discord announcement complete!");
+        
         //update ALL records to "bot announced"
-
+        var botannounceupdate = wait.for(updateRRSubmissionsToBotAnnounced, postcount);
+        console.log("post completed!");
 
         console.log("Done retrieving record!\n\n");
 
