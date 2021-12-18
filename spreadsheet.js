@@ -1702,7 +1702,16 @@ function announceRRDiscordScore(playerName, playerscorecount,callback)
 {
   setTimeout( function(){
 
-    var discordpost = playerName + " has " + playerscorecount + " new rank royale scores!";
+    var discordpost;
+
+    if (playerscorecount==1)
+    {
+      discordpost = playerName + " has a new rank royale score!";
+    }
+    else
+    {
+      discordpost = playerName + " has " + playerscorecount + " new rank royale scores!";
+    }
 
     
     adminchannel.send(discordpost)
