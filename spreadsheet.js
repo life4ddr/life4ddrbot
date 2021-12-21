@@ -2048,10 +2048,14 @@ function LIFE4sequence()
         //get rr letter grade
         var songlettergrade=wait.for(getRRSubmissionLetterScore,post_id);
         console.log("Letter Grade: " + songlettergrade);
+        //TODO: Map RR Letter Grade to better string value
 
         //get rr lamp
         var songlamp=wait.for(getRRSubmissionLamp,post_id);
         console.log("Lamp: " + songlamp);
+        //TODO: Map Lamp to Discord Icon
+
+        //TODO: Get PB Copy
 
         //get rr player team
         var playerteamname=wait.for(getRRSubmissionPlayerTeamID,post_id,playerid);
