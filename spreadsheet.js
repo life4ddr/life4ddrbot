@@ -1885,7 +1885,6 @@ function announceRRDiscordScore(playerName, playerscorecount,playerteam,playerso
     //}
 
 
-    console.log(discordpost);
     
     adminchannel.send(discordpost)
     .catch(console.error);
@@ -2153,7 +2152,7 @@ function LIFE4sequence()
         console.log("Discord announcement complete!");
         
         //update ALL records to "bot announced"
-        var botannounceupdate = wait.for(updateRRSubmissionsToBotAnnounced, postcount);
+        var botannounceupdate = wait.for(updateRRSubmissionsToBotAnnounced, post_id);//change to postcount
         console.log("post completed!");
 
         console.log("Done retrieving record!\n\n");
