@@ -309,6 +309,44 @@ var getDiscordIcon = function(rank)
   return discordemoji;
 }
 
+
+function getDiscordLampIcon(lampname,callback){
+  setTimeout( function(){
+
+    var discordemoji="";
+    if (lampname == "Great Full Combo")
+    {
+      discordemoji = "<:GreatLamp:530924491522441217>";
+    }
+    else if (lampname == "LIFE4 Clear")
+    {
+      discordemoji = "<:RedLamp:530924491971493928>";
+    }
+    else if (lampname == "Perfect Full Combo")
+    {
+      discordemoji = "<:PerfectLamp:530924491870830592>";
+    }
+    else if (lampname == "Good Full Combo")
+    {
+      discordemoji = "<:GoodLamp:530924491824431113>";
+    }
+    else if (lampname == "Marvelous Full Combo")
+    {
+      discordemoji = "<:MarvelousLamp:530924491853791251>";
+    }
+    else
+    {
+      discordemoji="";
+    }
+    
+      callback(null,discordemoji);
+
+      
+    
+}, 25);
+
+}; 
+
 var getTrialDiscordIcon = function(rank)
 {
   var discordemoji="";
@@ -1194,7 +1232,7 @@ function getRRsubmissionTourneySongName(postid,callback){
 
   setTimeout( function(){
 
-    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_181'";
+    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and (meta_key='_field_181' or meta_key='_field_180')";
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
@@ -1206,7 +1244,7 @@ function getRRsubmissionTourneySongName(postid,callback){
 
 };
 
-//get RR song name
+//get RR song ex
 //meta value 190 = ex song value
 function getRRSubmissionEXScore(postid,callback){
 
@@ -1224,6 +1262,33 @@ function getRRSubmissionEXScore(postid,callback){
 
 };
 
+//get RR pb best
+//meta value 191 = song letter score
+function getRRSubmissionPersonalBestText(postid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_191'";
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      var returnedString="";
+      if (results[0].meta_value="true")
+      {
+        returnedString="It's their personal best!";
+      }
+      else
+      {
+        returnedString="";
+      }
+      callback(null,returnedString)
+
+    });
+    
+}, 25);
+
+};
+
 //get RR song letter score
 //meta value 189 = song letter score
 function getRRSubmissionLetterScore(postid,callback){
@@ -1234,7 +1299,22 @@ function getRRSubmissionLetterScore(postid,callback){
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
-      callback(null,results[0].meta_value)
+      var lettervalue=results[0].meta_value;
+      
+      if (lettervalue=="AAP")
+      {
+        lettervalue="AA+";
+      }
+      else if (lettervalue=="Other")
+      {
+        lettervalue="";
+      }
+      else
+      {
+        lettervalue=results[0].meta_value;
+      }
+      
+      callback(null,lettervalue)
 
     });
     
@@ -1789,7 +1869,7 @@ function announceNewPlayerDiscord(playerName, playerRank,playerDiscordHandle,cal
 }
 
 
-function announceRRDiscordScore(playerName, playerscorecount,playerteam,playersong,playerexscore,playerlettergrade,playerlamp,callback)
+function announceRRDiscordScore(playerName, playerscorecount,playerteam,playersong,playerexscore,playerlettergrade,playerlamp,pbbest,callback)
 {
   setTimeout( function(){
 
@@ -1797,7 +1877,7 @@ function announceRRDiscordScore(playerName, playerscorecount,playerteam,playerso
 
     //if (playerscorecount==1)
     //{
-      discordpost = playerName + " from Team " + playerteam + " has submitted a new score on " + playersong + ". " + playerexscore + ", " + playerlettergrade + ", " + playerlamp + "!";
+      discordpost = playerName + " from Team " + playerteam + " has submitted a new score on " + playersong + ". " + playerexscore + ", " + playerlettergrade + ", " + playerlamp + " ! " + pbbest + "";
     //}
     //else
     //{
@@ -2048,14 +2128,16 @@ function LIFE4sequence()
         //get rr letter grade
         var songlettergrade=wait.for(getRRSubmissionLetterScore,post_id);
         console.log("Letter Grade: " + songlettergrade);
-        //TODO: Map RR Letter Grade to better string value
 
         //get rr lamp
         var songlamp=wait.for(getRRSubmissionLamp,post_id);
         console.log("Lamp: " + songlamp);
-        //TODO: Map Lamp to Discord Icon
+        var lampdiscordicon=wait.for(getDiscordLampIcon,songlamp);
+        console.log(lampdiscordicon);
 
-        //TODO: Get PB Copy
+        //get pb best
+        var pbbesttext=wait.for(getRRSubmissionPersonalBestText,post_id);
+        console.log("PB Best?: " + pbbesttext);
 
         //get rr player team
         var playerteamname=wait.for(getRRSubmissionPlayerTeamID,post_id,playerid);
@@ -2067,7 +2149,7 @@ function LIFE4sequence()
 
         //discord announce
         //console.log("our good friend " + playername + " has submitted " + postcount.length + " new scores hot damn");
-        var discordannounce = wait.for(announceRRDiscordScore, playername, postcount.length,playerteamname,songname,songexvalue,songlettergrade,songlamp);
+        var discordannounce = wait.for(announceRRDiscordScore, playername, postcount.length,playerteamname,songname,songexvalue,songlettergrade,lampdiscordicon,pbbesttext);
         console.log("Discord announcement complete!");
         
         //update ALL records to "bot announced"
