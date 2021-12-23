@@ -1232,11 +1232,20 @@ function getRRsubmissionTourneySongName(postid,callback){
 
   setTimeout( function(){
 
-    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and (meta_key='_field_181' or meta_key='_field_180')";
+    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and (meta_key='_field_181' or meta_key='_field_180' or meta_key='_field_178') and meta_value != ''";
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
-      callback(null,results[0].meta_value)
+      var songcorrect = results[0].meta_value;
+      if (results[0].meta_value == "DOWNER  UPPER")
+      {
+        songcorrect = "DOWNER & UPPER";
+      }
+      else if (results[0].meta_value == "Reach The Sky Without You")
+      {
+        songcorrect = "Reach The Sky, Without You";
+      } 
+      callback(null,songcorrect)
 
     });
     
@@ -1275,7 +1284,7 @@ function getRRSubmissionPersonalBestText(postid,callback){
       var returnedString="";
       if (results[0].meta_value="true")
       {
-        returnedString="It's their personal best!";
+        returnedString="PB";
       }
       else
       {
@@ -1322,18 +1331,35 @@ function getRRSubmissionLetterScore(postid,callback){
 
 };
 
-//get RR song lamp
-//meta value 177 = get player team name based on id
-function getRRSubmissionPlayerTeamID(postid,playerid,callback){
+//get RR player team
+function getRRSubmissionPlayerTeamID(playerid,callback){
 
   setTimeout( function(){
 
-    var getQuery = "select rrr.rank_royale_team from wp_kikf_postmeta pm, wp_rr_rankings rrr where pm.post_id="+postid+" and pm.meta_key='_field_177' and rrr.user_id="+playerid+" and pm.meta_value=rrr.rank_royale_division limit 1";
+    var getQuery = "select rank_royale_team from wp_rr_rankings where user_id="+playerid+" limit 1";
 
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
       callback(null,results[0].rank_royale_team)
+
+    });
+    
+}, 25);
+
+};
+
+//get RR player division
+function getRRSubmissionPlayerDivision(playerid,callback){
+
+  setTimeout( function(){
+
+    var getQuery = "select rank_royale_division from wp_rr_rankings where user_id="+playerid+" limit 1";
+
+
+    connection.query(getQuery, function (error, results) {
+      if (error) throw error;
+      callback(null,results[0].rank_royale_division)
 
     });
     
@@ -1869,7 +1895,7 @@ function announceNewPlayerDiscord(playerName, playerRank,playerDiscordHandle,cal
 }
 
 
-function announceRRDiscordScore(playerName, playerscorecount,playerteam,playersong,playerexscore,playerlettergrade,playerlamp,pbbest,callback)
+function announceRRDiscordScore(playerName, playerscorecount,playerteam,playersong,playerexscore,playerlettergrade,playerlamp,pbbest,division,callback)
 {
   setTimeout( function(){
 
@@ -1877,7 +1903,7 @@ function announceRRDiscordScore(playerName, playerscorecount,playerteam,playerso
 
     //if (playerscorecount==1)
     //{
-      discordpost = playerName + " from Team " + playerteam + " has submitted a new score on " + playersong + ". " + playerexscore + ", " + playerlettergrade + ", " + playerlamp + " ! " + pbbest + "";
+      discordpost = playerName + " - " + playerteam + "\n"+playersong+" - Division "+ division+"\nScore: "+playerexscore+ "\nBonuses: " + playerlettergrade + ", " + playerlamp + ", " + pbbest + "";
     //}
     //else
     //{
@@ -2139,8 +2165,12 @@ function LIFE4sequence()
         console.log("PB Best?: " + pbbesttext);
 
         //get rr player team
-        var playerteamname=wait.for(getRRSubmissionPlayerTeamID,post_id,playerid);
+        var playerteamname=wait.for(getRRSubmissionPlayerTeamID,playerid);
         console.log("Team Name: " + playerteamname);
+
+        //get rr player division
+        var playerdivision=wait.for(getRRSubmissionPlayerDivision,playerid);
+        console.log("Player Division: " + playerdivision);
 
         //get all submissions
         var postcount=wait.for(getRRAllPlayerSubmissions,playerid);
@@ -2148,7 +2178,7 @@ function LIFE4sequence()
 
         //discord announce
         //console.log("our good friend " + playername + " has submitted " + postcount.length + " new scores hot damn");
-        var discordannounce = wait.for(announceRRDiscordScore, playername, postcount.length,playerteamname,songname,songexvalue,songlettergrade,lampdiscordicon,pbbesttext);
+        var discordannounce = wait.for(announceRRDiscordScore, playername, postcount.length,playerteamname,songname,songexvalue,songlettergrade,lampdiscordicon,pbbesttext,playerdivision);
         console.log("Discord announcement complete!");
         
         //update ALL records to "bot announced"
