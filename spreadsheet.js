@@ -1774,6 +1774,22 @@ function updateRRSubmissionsToBotAnnounced(postlist,callback){
 
 }
 
+function updatedSubmissionToBotAnnounced(post_id,callback){
+
+  setTimeout( function(){
+
+    console.log("updating");
+    var updateall = "update wp_kikf_postmeta set meta_value='bot_announced' where meta_key='state' and meta_value='approved' and post_id ="+post_id+"";
+    console.log(updateall);
+
+    connection.query(updateall, function (error, results) {
+      if (error) throw error;
+      callback(null,results)
+    });
+    
+}, 25);
+
+}
 
 function announcePlayerRankupTwitter(playerName, playerRank,playerTwitterHandle,callback)
 {
