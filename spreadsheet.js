@@ -42,6 +42,7 @@ var bot = new Discord.Client();
 var adminchannel;
 var playerrankupchannel;
 var trialrankupchannel;
+var rankupsroyalechannel;
 
 //waitfor
 var wait = require('wait.for');
@@ -79,6 +80,7 @@ function connectToRankupChannels(callback){
     adminchannel = bot.channels.cache.get('596168285477666832');
     playerrankupchannel= bot.channels.cache.get('530616617571319809');
     trialrankupchannel= bot.channels.cache.get('556390024938258433');
+    rankupsroyalechannel= bot.channels.cache.get('923765429518884895');
 
       callback(null,"done");
 
@@ -1912,7 +1914,7 @@ function announceRRDiscordScore(playerName, playerscorecount,playerteam,playerso
 
 
     
-    adminchannel.send(discordpost)
+    rankupsroyalechannel.send(discordpost)
     .catch(console.error);
     
 
