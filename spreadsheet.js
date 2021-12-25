@@ -318,23 +318,23 @@ function getDiscordLampIcon(lampname,callback){
     var discordemoji="";
     if (lampname == "Great Full Combo")
     {
-      discordemoji = "<:GreatLamp:530924491522441217>";
+      discordemoji = "<:GreatLamp:530924491522441217>, ";
     }
     else if (lampname == "LIFE4 Clear")
     {
-      discordemoji = "<:RedLamp:530924491971493928>";
+      discordemoji = "<:RedLamp:530924491971493928>, ";
     }
     else if (lampname == "Perfect Full Combo")
     {
-      discordemoji = "<:PerfectLamp:530924491870830592>";
+      discordemoji = "<:PerfectLamp:530924491870830592>, ";
     }
     else if (lampname == "Good Full Combo")
     {
-      discordemoji = "<:GoodLamp:530924491824431113>";
+      discordemoji = "<:GoodLamp:530924491824431113>, ";
     }
     else if (lampname == "Marvelous Full Combo")
     {
-      discordemoji = "<:MarvelousLamp:530924491853791251>";
+      discordemoji = "<:MarvelousLamp:530924491853791251>, ";
     }
     else
     {
@@ -1314,7 +1314,7 @@ function getRRSubmissionLetterScore(postid,callback){
       
       if (lettervalue=="AAP")
       {
-        lettervalue="AA+";
+        lettervalue="AA+, ";
       }
       else if (lettervalue=="Other")
       {
@@ -1322,8 +1322,9 @@ function getRRSubmissionLetterScore(postid,callback){
       }
       else
       {
-        lettervalue=results[0].meta_value;
+        lettervalue=results[0].meta_value+", ";
       }
+
       
       callback(null,lettervalue)
 
@@ -1921,7 +1922,7 @@ function announceRRDiscordScore(playerName, playerscorecount,playerteam,playerso
 
     //if (playerscorecount==1)
     //{
-      discordpost = playerName + " - " + playerteam + "\n"+playersong+" - Division "+ division+"\nScore: "+playerexscore+ "\nBonuses: " + playerlettergrade + ", " + playerlamp + ", " + pbbest + "";
+      discordpost = playerName + " - " + playerteam + "\n"+playersong+" - Division "+ division+"\nScore: "+playerexscore+ "\nBonuses: " + playerlettergrade  + playerlamp  + pbbest + "";
     //}
     //else
     //{
