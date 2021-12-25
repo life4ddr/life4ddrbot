@@ -1265,9 +1265,22 @@ function getRRSubmissionEXScore(postid,callback){
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
-      callback(null,results[0].meta_value + " EX")
+      callback(null,results[0].meta_value)
 
     });
+    
+}, 25);
+
+};
+
+//RR Add string to end of ex score
+function RRAddEXString(exvalue,minusexvalue,callback){
+
+  setTimeout( function(){
+
+      var newstring = exvalue + " EX " + "(" + minusexvalue + ") ";
+      callback(null,newstring)
+
     
 }, 25);
 
@@ -1329,6 +1342,58 @@ function getRRSubmissionLetterScore(postid,callback){
       callback(null,lettervalue)
 
     });
+    
+}, 25);
+
+};
+
+//get RR -EX
+function getRRMinusEXAmount(examount,songname,callback){
+
+  setTimeout( function(){
+
+      var totalexforsong;
+      if (songname=="Beautiful Dream")
+      {
+        totalexforsong=1275;
+      }
+      else if (songname=="Condor")
+      {
+        totalexforsong=1638;
+      }
+      else if (songname=="Far east nightbird")
+      {
+        totalexforsong=1005;
+      }
+      else if (songname=="Emera")
+      {
+        totalexforsong=1851;
+      }
+      else if (songname=="Illegal Function Call")
+      {
+        totalexforsong=2133;
+      }
+      else if (songname=="DOWNER & UPPER")
+      {
+        totalexforsong=1251;
+      }
+      else if (songname=="Reach The Sky, Without You")
+      {
+        totalexforsong=1446;
+      }
+      else if (songname=="RISING FIRE HAWK")
+      {
+        totalexforsong=1221;
+      }
+
+      var minusexamount = examount - totalexforsong;
+
+      console.log(examount);
+      console.log(totalexforsong);
+      console.log(minusexamount);
+
+      callback(null,minusexamount)
+
     
 }, 25);
 
@@ -1764,7 +1829,6 @@ function updateRRSubmissionsToBotAnnounced(postlist,callback){
 
     console.log("updating");
     var updateall = "update wp_kikf_postmeta set meta_value='bot_announced' where meta_key='state' and meta_value='approved' and post_id in ("+postlist+")";
-    console.log(updateall);
 
     connection.query(updateall, function (error, results) {
       if (error) throw error;
@@ -1922,7 +1986,7 @@ function announceRRDiscordScore(playerName, playerscorecount,playerteam,playerso
 
     //if (playerscorecount==1)
     //{
-      discordpost = playerName + " - " + playerteam + "\n"+playersong+" - Division "+ division+"\nScore: "+playerexscore+ "\nBonuses: " + playerlettergrade  + playerlamp  + pbbest + "";
+      discordpost = playerName + " - " + playerteam + "\n"+playersong+" - Division "+ division+"\nScore: "+playerexscore + "\nBonuses: " + playerlettergrade  + playerlamp  + pbbest + "";
     //}
     //else
     //{
@@ -2169,6 +2233,14 @@ function LIFE4sequence()
         var songexvalue=wait.for(getRRSubmissionEXScore,post_id);
         console.log("EX Value: " + songexvalue);
 
+        //get rr ex minus value
+        var songexminusvalue=wait.for(getRRMinusEXAmount,songexvalue,songname);
+        console.log("EX Minus Value: " + songexminusvalue);
+
+        //clean up ex string
+        var songexfinalvalues=wait.for(RRAddEXString,songexvalue,songexminusvalue);
+        console.log("Cleaned up EX String: " + songexfinalvalues);
+
         //get rr letter grade
         var songlettergrade=wait.for(getRRSubmissionLetterScore,post_id);
         console.log("Letter Grade: " + songlettergrade);
@@ -2196,8 +2268,7 @@ function LIFE4sequence()
         console.log("all posts:" + postcount);
 
         //discord announce
-        //console.log("our good friend " + playername + " has submitted " + postcount.length + " new scores hot damn");
-        var discordannounce = wait.for(announceRRDiscordScore, playername, postcount.length,playerteamname,songname,songexvalue,songlettergrade,lampdiscordicon,pbbesttext,playerdivision);
+        var discordannounce = wait.for(announceRRDiscordScore, playername, postcount.length,playerteamname,songname,songexfinalvalues,songlettergrade,lampdiscordicon,pbbesttext,playerdivision);
         console.log("Discord announcement complete!");
         
         //update ALL records to "bot announced"
