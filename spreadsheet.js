@@ -1385,6 +1385,10 @@ function getRRMinusEXAmount(examount,songname,callback){
       {
         totalexforsong=1221;
       }
+      else if (songname =="ACES FOR ACES")
+      {
+        totalexforsong=2406;
+      }
 
       var minusexamount = examount - totalexforsong;
 
