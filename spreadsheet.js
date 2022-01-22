@@ -12,11 +12,14 @@
 //TODO: ^ Images
 //TODO: ^ Icons
 //TODO: ^ Queries
+//TODO: ^ Old RR functions
 
 //TODO: Add detailed error handling
 //TODO: ^ Add try/catch that works
 //TODO: ^ Auto disable bot
 //TODO: ^ Discord error messaging
+
+//TODO: Remove old trial folders - Heartbreak, Primal, Countdown, Origin
 
 const fs = require('fs');
 const readline = require('readline');
@@ -391,6 +394,7 @@ var getTrialDiscordIcon = function(rank)
   }
 
   //special
+  /*
   else if (rank == "Wood/Bronze/Silver")
   {
     discordemoji ="<:cp3:540808178108203018> <:b3:530665367417389097> <:s3:530666660051419136>";
@@ -399,6 +403,7 @@ var getTrialDiscordIcon = function(rank)
   {
     discordemoji ="<:a3:540807991373594633> <:e3:592474998564716544>";
   }
+  */
 
   return discordemoji;
 }
@@ -413,6 +418,7 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
   setTimeout( function(){
 
     var returnedvalue;
+
 
     if (trialname=="Devotion")
     {
@@ -433,6 +439,27 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
         returnedvalue="wp_trial_devotion_rankings";
       }
     }
+    //TODO: Update with values
+    else if (trialname == "Confectionary")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Devotion_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Devotion_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=12;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="wp_trial_devotion_rankings";
+      }
+    }
+    /*
     else if (trialname=="Heartbreak")
     {
       if (nameorlevel=="name_ex")
@@ -452,6 +479,7 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
         returnedvalue="wp_trial_heartbreak_rankings";
       }
     }
+    */
     else if (trialname=="Believe")
     {
       if (nameorlevel=="name_ex")
@@ -528,6 +556,27 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
         returnedvalue="wp_trial_mainframe_rankings";
       }
     }
+    //TODO: Update with values
+    else if (trialname=="Storybook")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Primal_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Primal_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=13;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="wp_trial_primal_rankings";
+      }
+    }
+    /*
     else if (trialname=="Primal")
     {
       if (nameorlevel=="name_ex")
@@ -547,6 +596,7 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
         returnedvalue="wp_trial_primal_rankings";
       }
     }
+    */
     else if (trialname=="Species")
     {
       if (nameorlevel=="name_ex")
@@ -642,6 +692,27 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
         returnedvalue="wp_trial_superstar_rankings";
       }
     }
+    //TODO: Update with values
+    else if (trialname=="Sidequest")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Primal_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Primal_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=13;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="wp_trial_primal_rankings";
+      }
+    }
+    /*
     else if (trialname=="Countdown")
     {
       if (nameorlevel=="name_ex")
@@ -661,6 +732,7 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
         returnedvalue="wp_trial_countdown_rankings";
       }
     }
+    */
     else if (trialname=="Hellscape")
     {
       if (nameorlevel=="name_ex")
@@ -965,6 +1037,27 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
         returnedvalue="wp_trial_quantum_rankings";
       }
     }
+    //TODO: Update with values
+    else if (trialname=="Dogfight")
+    {
+      if (nameorlevel=="name_ex")
+      {
+        returnedvalue="trial_Primal_ex";
+      }
+      else if (nameorlevel=="name_minus")
+      {
+        returnedvalue="trial_Primal_missing_ex";
+      }
+      else if (nameorlevel=="level")
+      {
+        returnedvalue=13;
+      }
+      else if (nameorlevel=="rankingview")
+      {
+        returnedvalue="wp_trial_primal_rankings";
+      }
+    }
+    /*
     else if (trialname=="Origin")
     {
       if (nameorlevel=="name_ex")
@@ -984,6 +1077,7 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
         returnedvalue="wp_trial_origin_rankings";
       }
     }
+    */
 
 
 
@@ -2222,6 +2316,9 @@ function LIFE4sequence()
       {
         console.log("RR Score submission!");
 
+        //commented out, uncomment for future RR events!
+
+        /*
         //get player id
         var playerid=wait.for(getRRsubmissionPlayerID,post_id);
         console.log("Player ID: " + playerid);
@@ -2275,7 +2372,9 @@ function LIFE4sequence()
         //discord announce
         var discordannounce = wait.for(announceRRDiscordScore, playername, postcount.length,playerteamname,songname,songexfinalvalues,songlettergrade,lampdiscordicon,pbbesttext,playerdivision);
         console.log("Discord announcement complete!");
-        
+        */
+
+
         //update ALL records to "bot announced"
         var botannounceupdate = wait.for(updateRRSubmissionsToBotAnnounced, post_id);//change to postcount
         console.log("post completed!");
