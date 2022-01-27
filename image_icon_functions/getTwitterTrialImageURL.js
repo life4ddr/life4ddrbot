@@ -6,7 +6,7 @@ module.exports = {
         var twitterImageURL = "";
 
         //HEARTBREAK(12)
-        /*
+        
         if (rank == "Silver" && trial == "HEARTBREAK (12)")
         {
           twitterImageURL = './trial_images/HEARTBREAK/Heartbreak Silver.webp';
@@ -39,7 +39,7 @@ module.exports = {
         {
           twitterImageURL = './trial_images/HEARTBREAK/Heartbreak Onyx.webp';
         }
-        */
+        
       
         //TODO: Add details here with images
         //CONFECTIONARY (12)
@@ -368,7 +368,7 @@ module.exports = {
         }
 
       //ORIGIN(18)
-      /*
+      
       else if (rank == "Diamond" && trial == "ORIGIN (18)")
       {
         twitterImageURL = './trial_images/ORIGIN/Origin Diamond.webp';
@@ -393,7 +393,7 @@ module.exports = {
       {
         twitterImageURL = './trial_images/ORIGIN/Origin Onyx.webp';
       }
-      */
+      
       
       
       //ASCENSION (17)
@@ -458,7 +458,7 @@ module.exports = {
         }
 
       //COUNTDOWN (14)
-      /*
+      
       else if (rank == "Silver" && trial == "COUNTDOWN (14)")
       {
         twitterImageURL = './trial_images/COUNTDOWN/Countdown Silver.webp';
@@ -491,7 +491,7 @@ module.exports = {
       {
         twitterImageURL = './trial_images/COUNTDOWN/Countdown Onyx.webp';
       }
-      */
+      
       
       //HEATWAVE (15)
       else if (rank == "Silver" && trial == "HEATWAVE (15)")
@@ -627,7 +627,7 @@ module.exports = {
         }
 
       //Primal (13)
-      /*
+      
       else if (rank == "Silver" && trial == "PRIMAL (13)")
       {
         twitterImageURL = './trial_images/PRIMAL/Primal Silver.webp';
@@ -660,7 +660,7 @@ module.exports = {
       {
         twitterImageURL = './trial_images/PRIMAL/Primal Onyx.webp';
       }
-      */
+      
       
       
       //Wanderlust (15)
