@@ -1782,7 +1782,7 @@ function announceNewPlayerDiscord(playerName, playerRank,playerDiscordHandle,cal
 
 
     //old
-    var discordpost = "Player " + playerName + " has joined LIFE4! Their current rank is " + playerRank + "! Welcome! " + getDiscordIcon(playerRank);
+    var discordpost = "Player " + playerName + " has joined LIFE4! Their current rank is " + playerRank + "! Welcome! " + discordIconFunction.getDiscordIcon(playerRank);
 
     
     playerrankupchannel.send(discordpost)
