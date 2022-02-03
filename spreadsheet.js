@@ -1594,7 +1594,7 @@ function announceUpdatePlayerTrialTwitter(playerName, playerRank,playerScore,pla
     callback(null,"done");
 
 
-}, 1000);
+}, 10000);
 
 }
 
@@ -1641,7 +1641,7 @@ function announceNewPlayerTwitter(playerName, playerRank,playerTwitterHandle,cal
     callback(null,"done");
 
 
-}, 1000);
+}, 10000);
 
 }
 
@@ -1724,7 +1724,7 @@ function announcePlayerRankupTwitter(playerName, playerRank,playerTwitterHandle,
     callback(null,"done");
 
 
-}, 1000);
+}, 10000);
 
 }
 
