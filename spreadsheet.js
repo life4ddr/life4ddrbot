@@ -92,6 +92,16 @@ function connectToRankupChannels(callback){
 
 };
 
+//wait function
+function waitASec(ms,callback){
+  setTimeout( function(){
+
+      callback(null,"done");
+
+}, ms);
+
+}
+
 
 function getDiscordLampIcon(lampname,callback){
   setTimeout( function(){
@@ -1961,6 +1971,11 @@ function LIFE4sequence()
             var botannounceupdate = wait.for(updatedSubmissionToBotAnnounced, post_id);
             console.log("post completed!");
 
+            //wait a sec
+            console.log("waiting...");
+            var secwaited = wait.for(waitASec, 10000);
+            console.log("wait completed");
+
             console.log("Done retrieving record!\n\n");
       }
       //Placement (New Player)
@@ -1996,6 +2011,11 @@ function LIFE4sequence()
         var botannounceupdate = wait.for(updatedSubmissionToBotAnnounced, post_id);
         console.log("post completed!");
 
+        //wait a sec
+        console.log("waiting...");
+        var secwaited = wait.for(waitASec, 10000);
+        console.log("wait completed");
+
         console.log("Done retrieving record!\n\n");
 
       }
@@ -2030,6 +2050,11 @@ function LIFE4sequence()
         //Update record to "bot_announced"
         var botannounceupdate = wait.for(updatedSubmissionToBotAnnounced, post_id);
         console.log("post completed!");
+
+        //wait a sec
+        console.log("waiting...");
+        var secwaited = wait.for(waitASec, 10000);
+        console.log("wait completed");
 
         console.log("Done retrieving record!\n\n");
 
@@ -2170,6 +2195,11 @@ function LIFE4sequence()
         //Update record to "bot_announced"
         var botannounceupdate = wait.for(updatedSubmissionToBotAnnounced, post_id);
         console.log("post completed!");
+
+        //wait a sec
+        console.log("waiting...");
+        var secwaited = wait.for(waitASec, 10000);
+        console.log("wait completed");
 
         console.log("Done retrieving record!\n\n");
 
