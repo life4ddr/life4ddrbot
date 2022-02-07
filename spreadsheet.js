@@ -171,16 +171,15 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
         returnedvalue="wp_trial_devotion_rankings";
       }
     }
-    //TODO: Update with values
     else if (trialname == "Confectionary")
     {
       if (nameorlevel=="name_ex")
       {
-        returnedvalue="trial_Devotion_ex";
+        returnedvalue="trial_Confectionary_ex";
       }
       else if (nameorlevel=="name_minus")
       {
-        returnedvalue="trial_Devotion_missing_ex";
+        returnedvalue="trial_Confectionary_missing_ex";
       }
       else if (nameorlevel=="level")
       {
@@ -188,27 +187,7 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       }
       else if (nameorlevel=="rankingview")
       {
-        returnedvalue="wp_trial_devotion_rankings";
-      }
-    }
-    
-    else if (trialname=="Heartbreak")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Heartbreak_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Heartbreak_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=12;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="wp_trial_heartbreak_rankings";
+        returnedvalue="wp_trial_confectionary_rankings";
       }
     }
     
@@ -288,16 +267,15 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
         returnedvalue="wp_trial_mainframe_rankings";
       }
     }
-    //TODO: Update with values
     else if (trialname=="Storybook")
     {
       if (nameorlevel=="name_ex")
       {
-        returnedvalue="trial_Primal_ex";
+        returnedvalue="trial_Storybook_ex";
       }
       else if (nameorlevel=="name_minus")
       {
-        returnedvalue="trial_Primal_missing_ex";
+        returnedvalue="trial_Storybook_missing_ex";
       }
       else if (nameorlevel=="level")
       {
@@ -305,30 +283,9 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       }
       else if (nameorlevel=="rankingview")
       {
-        returnedvalue="wp_trial_primal_rankings";
+        returnedvalue="wp_trial_storybook_rankings";
       }
     }
-    
-    else if (trialname=="Primal")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Primal_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Primal_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=13;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="wp_trial_primal_rankings";
-      }
-    }
-    
     else if (trialname=="Species")
     {
       if (nameorlevel=="name_ex")
@@ -424,36 +381,16 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
         returnedvalue="wp_trial_superstar_rankings";
       }
     }
-    //TODO: Update with values
+    
     else if (trialname=="Sidequest")
     {
       if (nameorlevel=="name_ex")
       {
-        returnedvalue="trial_Primal_ex";
+        returnedvalue="trial_Sidequest_ex";
       }
       else if (nameorlevel=="name_minus")
       {
-        returnedvalue="trial_Primal_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=13;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="wp_trial_primal_rankings";
-      }
-    }
-    
-    else if (trialname=="Countdown")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Countdown_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Countdown_missing_ex";
+        returnedvalue="trial_Sidequest_missing_ex";
       }
       else if (nameorlevel=="level")
       {
@@ -461,7 +398,7 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       }
       else if (nameorlevel=="rankingview")
       {
-        returnedvalue="wp_trial_countdown_rankings";
+        returnedvalue="wp_trial_sidequest_rankings";
       }
     }
     
@@ -769,36 +706,16 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
         returnedvalue="wp_trial_quantum_rankings";
       }
     }
-    //TODO: Update with values
+    
     else if (trialname=="Dogfight")
     {
       if (nameorlevel=="name_ex")
       {
-        returnedvalue="trial_Primal_ex";
+        returnedvalue="trial_Dogfight_ex";
       }
       else if (nameorlevel=="name_minus")
       {
-        returnedvalue="trial_Primal_missing_ex";
-      }
-      else if (nameorlevel=="level")
-      {
-        returnedvalue=13;
-      }
-      else if (nameorlevel=="rankingview")
-      {
-        returnedvalue="wp_trial_primal_rankings";
-      }
-    }
-    
-    else if (trialname=="Origin")
-    {
-      if (nameorlevel=="name_ex")
-      {
-        returnedvalue="trial_Origin_ex";
-      }
-      else if (nameorlevel=="name_minus")
-      {
-        returnedvalue="trial_Origin_missing_ex";
+        returnedvalue="trial_Dogfight_missing_ex";
       }
       else if (nameorlevel=="level")
       {
@@ -806,9 +723,10 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
       }
       else if (nameorlevel=="rankingview")
       {
-        returnedvalue="wp_trial_origin_rankings";
+        returnedvalue="wp_trial_dogfight_rankings";
       }
     }
+    
     
 
 

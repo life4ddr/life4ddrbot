@@ -356,7 +356,6 @@ module.exports = {
         twitterImageURL = './trial_images/ASCENSION/Ascension Onyx.webp';
       }
       
-        //TODO: Add details here with images
         //STORYBOOK (13)
         if (rank == "Silver" && trial == "STORYBOOK (13)")
         {
