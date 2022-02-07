@@ -5,75 +5,38 @@ module.exports = {
        
         var twitterImageURL = "";
 
-        //HEARTBREAK(12)
-        
-        if (rank == "Silver" && trial == "HEARTBREAK (12)")
-        {
-          twitterImageURL = './trial_images/HEARTBREAK/Heartbreak Silver.webp';
-        }
-        else if (rank == "Gold" && trial == "HEARTBREAK (12)")
-        {
-          twitterImageURL = './trial_images/HEARTBREAK/Heartbreak Gold.webp';
-        }
-        else if (rank == "Diamond" && trial == "HEARTBREAK (12)")
-        {
-          twitterImageURL = './trial_images/HEARTBREAK/Heartbreak Diamond.webp';
-        }
-        else if (rank == "Cobalt" && trial == "HEARTBREAK (12)")
-        {
-          twitterImageURL = './trial_images/HEARTBREAK/Heartbreak Cobalt.webp';
-        }
-        else if (rank == "Amethyst" && trial == "HEARTBREAK (12)")
-        {
-          twitterImageURL = './trial_images/HEARTBREAK/Heartbreak Amethyst.webp';
-        }
-        else if (rank == "Emerald" && trial == "HEARTBREAK (12)")
-        {
-          twitterImageURL = './trial_images/HEARTBREAK/Heartbreak Emerald.webp';
-        }
-        else if (rank == "Platinum" && trial == "HEARTBREAK (12)")
-        {
-          twitterImageURL = './trial_images/HEARTBREAK/Heartbreak Platinum.webp';
-        }
-        else if (rank == "Onyx" && trial == "HEARTBREAK (12)")
-        {
-          twitterImageURL = './trial_images/HEARTBREAK/Heartbreak Onyx.webp';
-        }
-        
-      
-        //TODO: Add details here with images
         //CONFECTIONARY (12)
       if (rank == "Silver" && trial == "CONFECTIONARY (12)")
       {
-        twitterImageURL = './trial_images/CELESTIAL/Celestial Silver.webp';
+        twitterImageURL = './trial_images/CONFECTIONARY/LIFE4_BotGraphic_Confectionary_Silver.webp';
       }
       else if (rank == "Gold" && trial == "CONFECTIONARY (12)")
       {
-        twitterImageURL = './trial_images/CELESTIAL/Celestial Gold.webp';
+        twitterImageURL = './trial_images/CONFECTIONARY/LIFE4_BotGraphic_Confectionary_Gold.webp';
       }
       else if (rank == "Diamond" && trial == "CONFECTIONARY (12)")
       {
-        twitterImageURL = './trial_images/CELESTIAL/Celestial Diamond.webp';
+        twitterImageURL = './trial_images/CONFECTIONARY/LIFE4_BotGraphic_Confectionary_Diamond.webp';
       }
       else if (rank == "Cobalt" && trial == "CONFECTIONARY (12)")
       {
-        twitterImageURL = './trial_images/CELESTIAL/Celestial Cobalt.webp';
+        twitterImageURL = './trial_images/CONFECTIONARY/LIFE4_BotGraphic_Confectionary_Cobalt.webp';
       }
       else if (rank == "Amethyst" && trial == "CONFECTIONARY (12)")
       {
-        twitterImageURL = './trial_images/CELESTIAL/Celestial Amethyst.webp';
+        twitterImageURL = './trial_images/CONFECTIONARY/LIFE4_BotGraphic_Confectionary_Amethyst.webp';
       }
       else if (rank == "Emerald" && trial == "CONFECTIONARY (12)")
       {
-        twitterImageURL = './trial_images/CELESTIAL/Celestial Emerald.webp';
+        twitterImageURL = './trial_images/CONFECTIONARY/LIFE4_BotGraphic_Confectionary_Emerald.webp';
       }
       else if (rank == "Platinum" && trial == "CONFECTIONARY (12)")
       {
-        twitterImageURL = './trial_images/CELESTIAL/Celestial Platinum.webp';
+        twitterImageURL = './trial_images/CONFECTIONARY/LIFE4_BotGraphic_Confectionary_Platinum.webp';
       }
       else if (rank == "Onyx" && trial == "CONFECTIONARY (12)")
       {
-        twitterImageURL = './trial_images/CELESTIAL/Celestial Onyx.webp';
+        twitterImageURL = './trial_images/CONFECTIONARY/LIFE4_BotGraphic_Confectionary_Onyx.webp';
       }
 
       //CELESTIAL(13)
@@ -332,70 +295,41 @@ module.exports = {
         twitterImageURL = './trial_images/CHEMICAL/Chemical Onyx.webp';
       }
       
-      //TODO: Add details here with images
         //DOGFIGHT (18)
         if (rank == "Silver" && trial == "DOGFIGHT (18)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Silver.webp';
+          twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Silver.webp';
         }
         else if (rank == "Gold" && trial == "DOGFIGHT (18)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Gold.webp';
+          twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Gold.webp';
         }
         else if (rank == "Diamond" && trial == "DOGFIGHT (18)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Diamond.webp';
+          twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Diamond.webp';
         }
         else if (rank == "Cobalt" && trial == "DOGFIGHT (18)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Cobalt.webp';
+          twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Cobalt.webp';
         }
         else if (rank == "Amethyst" && trial == "DOGFIGHT (18)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Amethyst.webp';
+          twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Amethyst.webp';
         }
         else if (rank == "Emerald" && trial == "DOGFIGHT (18)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Emerald.webp';
+          twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Emerald.webp';
         }
         else if (rank == "Platinum" && trial == "DOGFIGHT (18)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Platinum.webp';
+          twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Platinum.webp';
         }
         else if (rank == "Onyx" && trial == "DOGFIGHT (18)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Onyx.webp';
+          twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Onyx.webp';
         }
-
-      //ORIGIN(18)
-      
-      else if (rank == "Diamond" && trial == "ORIGIN (18)")
-      {
-        twitterImageURL = './trial_images/ORIGIN/Origin Diamond.webp';
-      }
-      else if (rank == "Cobalt" && trial == "ORIGIN (18)")
-      {
-        twitterImageURL = './trial_images/ORIGIN/Origin Cobalt.webp';
-      }
-      else if (rank == "Amethyst" && trial == "ORIGIN (18)")
-      {
-        twitterImageURL = './trial_images/ORIGIN/Origin Amethyst.webp';
-      }
-      else if (rank == "Emerald" && trial == "ORIGIN (18)")
-      {
-        twitterImageURL = './trial_images/ORIGIN/Origin Emerald.webp';
-      }
-      else if (rank == "Platinum" && trial == "ORIGIN (18)")
-      {
-        twitterImageURL = './trial_images/ORIGIN/Origin Platinum.webp';
-      }
-      else if (rank == "Onyx" && trial == "ORIGIN (18)")
-      {
-        twitterImageURL = './trial_images/ORIGIN/Origin Onyx.webp';
-      }
-      
-      
-      
+   
+            
       //ASCENSION (17)
       else if (rank == "Diamond" && trial == "ASCENSION (17)")
       {
@@ -426,73 +360,37 @@ module.exports = {
         //STORYBOOK (13)
         if (rank == "Silver" && trial == "STORYBOOK (13)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Silver.webp';
+          twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Silver.webp';
         }
         else if (rank == "Gold" && trial == "STORYBOOK (13)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Gold.webp';
+          twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Gold.webp';
         }
         else if (rank == "Diamond" && trial == "STORYBOOK (13)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Diamond.webp';
+          twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Diamond.webp';
         }
         else if (rank == "Cobalt" && trial == "STORYBOOK (13)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Cobalt.webp';
+          twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Cobalt.webp';
         }
         else if (rank == "Amethyst" && trial == "STORYBOOK (13)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Amethyst.webp';
+          twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Amethyst.webp';
         }
         else if (rank == "Emerald" && trial == "STORYBOOK (13)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Emerald.webp';
+          twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Emerald.webp';
         }
         else if (rank == "Platinum" && trial == "STORYBOOK (13)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Platinum.webp';
+          twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Platinum.webp';
         }
         else if (rank == "Onyx" && trial == "STORYBOOK (13)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Onyx.webp';
+          twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Onyx.webp';
         }
-
-      //COUNTDOWN (14)
-      
-      else if (rank == "Silver" && trial == "COUNTDOWN (14)")
-      {
-        twitterImageURL = './trial_images/COUNTDOWN/Countdown Silver.webp';
-      }
-      else if (rank == "Gold" && trial == "COUNTDOWN (14)")
-      {
-        twitterImageURL = './trial_images/COUNTDOWN/Countdown Gold.webp';
-      }
-      else if (rank == "Diamond" && trial == "COUNTDOWN (14)")
-      {
-        twitterImageURL = './trial_images/COUNTDOWN/Countdown Diamond.webp';
-      }
-      else if (rank == "Cobalt" && trial == "COUNTDOWN (14)")
-      {
-        twitterImageURL = './trial_images/COUNTDOWN/Countdown Cobalt.webp';
-      }
-      else if (rank == "Amethyst" && trial == "COUNTDOWN (14)")
-      {
-        twitterImageURL = './trial_images/COUNTDOWN/Countdown Amethyst.webp';
-      }
-      else if (rank == "Emerald" && trial == "COUNTDOWN (14)")
-      {
-        twitterImageURL = './trial_images/COUNTDOWN/Countdown Emerald.webp';
-      }
-      else if (rank == "Platinum" && trial == "COUNTDOWN (14)")
-      {
-        twitterImageURL = './trial_images/COUNTDOWN/Countdown Platinum.webp';
-      }
-      else if (rank == "Onyx" && trial == "COUNTDOWN (14)")
-      {
-        twitterImageURL = './trial_images/COUNTDOWN/Countdown Onyx.webp';
-      }
-      
-      
+    
       //HEATWAVE (15)
       else if (rank == "Silver" && trial == "HEATWAVE (15)")
       {
@@ -591,78 +489,40 @@ module.exports = {
         twitterImageURL = './trial_images/SNOWDRIFT/Snowdrift Onyx.webp';
       }
       
-      //TODO: Add details here with images
         //SIDEQUEST (14)
         if (rank == "Silver" && trial == "SIDEQUEST (14)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Silver.webp';
+          twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Silver.webp';
         }
         else if (rank == "Gold" && trial == "SIDEQUEST (14)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Gold.webp';
+          twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Gold.webp';
         }
         else if (rank == "Diamond" && trial == "SIDEQUEST (14)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Diamond.webp';
+          twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Diamond.webp';
         }
         else if (rank == "Cobalt" && trial == "SIDEQUEST (14)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Cobalt.webp';
+          twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Cobalt.webp';
         }
         else if (rank == "Amethyst" && trial == "SIDEQUEST (14)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Amethyst.webp';
+          twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Amethyst.webp';
         }
         else if (rank == "Emerald" && trial == "SIDEQUEST (14)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Emerald.webp';
+          twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Emerald.webp';
         }
         else if (rank == "Platinum" && trial == "SIDEQUEST (14)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Platinum.webp';
+          twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Platinum.webp';
         }
         else if (rank == "Onyx" && trial == "SIDEQUEST (14)")
         {
-          twitterImageURL = './trial_images/CELESTIAL/Celestial Onyx.webp';
+          twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Onyx.webp';
         }
 
-      //Primal (13)
-      
-      else if (rank == "Silver" && trial == "PRIMAL (13)")
-      {
-        twitterImageURL = './trial_images/PRIMAL/Primal Silver.webp';
-      }
-      else if (rank == "Gold" && trial == "PRIMAL (13)")
-      {
-        twitterImageURL = './trial_images/PRIMAL/Primal Gold.webp';
-      }
-      else if (rank == "Diamond" && trial == "PRIMAL (13)")
-      {
-        twitterImageURL = './trial_images/PRIMAL/Primal Diamond.webp';
-      }
-      else if (rank == "Cobalt" && trial == "PRIMAL (13)")
-      {
-        twitterImageURL = './trial_images/PRIMAL/Primal Cobalt.webp';
-      }
-      else if (rank == "Amethyst" && trial == "PRIMAL (13)")
-      {
-        twitterImageURL = './trial_images/PRIMAL/Primal Amethyst.webp';
-      }
-      else if (rank == "Emerald" && trial == "PRIMAL (13)")
-      {
-        twitterImageURL = './trial_images/PRIMAL/Primal Emerald.webp';
-      }
-      else if (rank == "Platinum" && trial == "PRIMAL (13)")
-      {
-        twitterImageURL = './trial_images/PRIMAL/Primal Platinum.webp';
-      }
-      else if (rank == "Onyx" && trial == "PRIMAL (13)")
-      {
-        twitterImageURL = './trial_images/PRIMAL/Primal Onyx.webp';
-      }
-      
-      
-      
       //Wanderlust (15)
       else if (rank == "Silver" && trial == "WANDERLUST (15)")
       {
