@@ -325,6 +325,26 @@ module.exports = {
   {
     twitterImageURL = './rankup_images/Onyx V.webp';
   }
+  else if (rank == "Pearl I")
+  {
+
+  }
+  else if (rank == "Pearl II")
+  {
+
+  }
+  else if (rank == "Pearl III")
+  {
+
+  }
+  else if (rank == "Pearl IV")
+  {
+
+  }
+  else if (rank == "Pearl V")
+  {
+    
+  }
   
   return twitterImageURL;
 
