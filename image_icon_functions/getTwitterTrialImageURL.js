@@ -38,6 +38,10 @@ module.exports = {
       {
         twitterImageURL = './trial_images/CONFECTIONARY/LIFE4_BotGraphic_Confectionary_Onyx.webp';
       }
+      else if (rank == "Pearl" && trial == "CONFECTIONARY (12)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
 
       //CELESTIAL(13)
       else if (rank == "Silver" && trial == "CELESTIAL (13)")
@@ -72,7 +76,11 @@ module.exports = {
       {
         twitterImageURL = './trial_images/CELESTIAL/Celestial Onyx.webp';
       }
-      
+      else if (rank == "Pearl" && trial == "CELESTIAL (13)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
       //DAYBREAK(14)
       else if (rank == "Silver" && trial == "DAYBREAK (14)")
       {
@@ -106,7 +114,11 @@ module.exports = {
       {
         twitterImageURL = './trial_images/DAYBREAK/Daybreak Onyx.webp';
       }
-      
+      else if (rank == "Pearl" && trial == "DAYBREAK (14)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
       //HELLSCAPE(15)
       else if (rank == "Silver" && trial == "HELLSCAPE (15)")
       {
@@ -140,7 +152,12 @@ module.exports = {
       {
         twitterImageURL = './trial_images/HELLSCAPE/Hellscape Onyx.webp';
       }
-      
+      else if (rank == "Pearl" && trial == "HELLSCAPE (15)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
       //CLOCKWORK(15)
       else if (rank == "Silver" && trial == "CLOCKWORK (15)")
       {
@@ -174,7 +191,12 @@ module.exports = {
       {
         twitterImageURL = './trial_images/CLOCKWORK/Clockwork Onyx.webp';
       }
-      
+      else if (rank == "Pearl" && trial == "CLOCKWORK (15)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
       //PHARAOH(15)
       else if (rank == "Silver" && trial == "PHARAOH (15)")
       {
@@ -208,7 +230,12 @@ module.exports = {
       {
         twitterImageURL = './trial_images/PHARAOH/Pharaoh Onyx.webp';
       }
-      
+      else if (rank == "Pearl" && trial == "PHARAOH (15)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
       //PARADOX(16)
       else if (rank == "Gold" && trial == "PARADOX (16)")
       {
@@ -238,7 +265,12 @@ module.exports = {
       {
         twitterImageURL = './trial_images/PARADOX/Paradox Onyx.webp';
       }
-      
+      else if (rank == "Pearl" && trial == "PARADOX (16)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
       //INHUMAN(16)
       else if (rank == "Gold" && trial == "INHUMAN (16)")
       {
@@ -268,7 +300,13 @@ module.exports = {
       {
         twitterImageURL = './trial_images/INHUMAN/Inhuman Onyx.webp';
       }
-      
+      else if (rank == "Pearl" && trial == "INHUMAN (16)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
+
       //CHEMICAL(17)
       else if (rank == "Diamond" && trial == "CHEMICAL (17)")
       {
@@ -294,41 +332,49 @@ module.exports = {
       {
         twitterImageURL = './trial_images/CHEMICAL/Chemical Onyx.webp';
       }
-      
-        //DOGFIGHT (18)
-        if (rank == "Silver" && trial == "DOGFIGHT (18)")
-        {
-          twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Silver.webp';
-        }
-        else if (rank == "Gold" && trial == "DOGFIGHT (18)")
-        {
-          twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Gold.webp';
-        }
-        else if (rank == "Diamond" && trial == "DOGFIGHT (18)")
-        {
-          twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Diamond.webp';
-        }
-        else if (rank == "Cobalt" && trial == "DOGFIGHT (18)")
-        {
-          twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Cobalt.webp';
-        }
-        else if (rank == "Amethyst" && trial == "DOGFIGHT (18)")
-        {
-          twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Amethyst.webp';
-        }
-        else if (rank == "Emerald" && trial == "DOGFIGHT (18)")
-        {
-          twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Emerald.webp';
-        }
-        else if (rank == "Platinum" && trial == "DOGFIGHT (18)")
-        {
-          twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Platinum.webp';
-        }
-        else if (rank == "Onyx" && trial == "DOGFIGHT (18)")
-        {
-          twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Onyx.webp';
-        }
-   
+      else if (rank == "Pearl" && trial == "CHEMICAL (17)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
+      //DOGFIGHT (18)
+      if (rank == "Silver" && trial == "DOGFIGHT (18)")
+      {
+        twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Silver.webp';
+      }
+      else if (rank == "Gold" && trial == "DOGFIGHT (18)")
+      {
+        twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Gold.webp';
+      }
+      else if (rank == "Diamond" && trial == "DOGFIGHT (18)")
+      {
+        twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Diamond.webp';
+      }
+      else if (rank == "Cobalt" && trial == "DOGFIGHT (18)")
+      {
+        twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Cobalt.webp';
+      }
+      else if (rank == "Amethyst" && trial == "DOGFIGHT (18)")
+      {
+        twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Amethyst.webp';
+      }
+      else if (rank == "Emerald" && trial == "DOGFIGHT (18)")
+      {
+        twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Emerald.webp';
+      }
+      else if (rank == "Platinum" && trial == "DOGFIGHT (18)")
+      {
+        twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Platinum.webp';
+      }
+      else if (rank == "Onyx" && trial == "DOGFIGHT (18)")
+      {
+        twitterImageURL = './trial_images/DOGFIGHT/LIFE4_BotGraphic_Dogfight_Onyx.webp';
+      }
+      else if (rank == "Pearl" && trial == "DOGFIGHT (18)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
             
       //ASCENSION (17)
       else if (rank == "Diamond" && trial == "ASCENSION (17)")
@@ -355,41 +401,52 @@ module.exports = {
       {
         twitterImageURL = './trial_images/ASCENSION/Ascension Onyx.webp';
       }
-      
-        //STORYBOOK (13)
-        if (rank == "Silver" && trial == "STORYBOOK (13)")
-        {
-          twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Silver.webp';
-        }
-        else if (rank == "Gold" && trial == "STORYBOOK (13)")
-        {
-          twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Gold.webp';
-        }
-        else if (rank == "Diamond" && trial == "STORYBOOK (13)")
-        {
-          twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Diamond.webp';
-        }
-        else if (rank == "Cobalt" && trial == "STORYBOOK (13)")
-        {
-          twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Cobalt.webp';
-        }
-        else if (rank == "Amethyst" && trial == "STORYBOOK (13)")
-        {
-          twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Amethyst.webp';
-        }
-        else if (rank == "Emerald" && trial == "STORYBOOK (13)")
-        {
-          twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Emerald.webp';
-        }
-        else if (rank == "Platinum" && trial == "STORYBOOK (13)")
-        {
-          twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Platinum.webp';
-        }
-        else if (rank == "Onyx" && trial == "STORYBOOK (13)")
-        {
-          twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Onyx.webp';
-        }
-    
+      else if (rank == "Pearl" && trial == "ASCENSION (17)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
+      //STORYBOOK (13)
+      if (rank == "Silver" && trial == "STORYBOOK (13)")
+      {
+        twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Silver.webp';
+      }
+      else if (rank == "Gold" && trial == "STORYBOOK (13)")
+      {
+        twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Gold.webp';
+      }
+      else if (rank == "Diamond" && trial == "STORYBOOK (13)")
+      {
+        twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Diamond.webp';
+      }
+      else if (rank == "Cobalt" && trial == "STORYBOOK (13)")
+      {
+        twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Cobalt.webp';
+      }
+      else if (rank == "Amethyst" && trial == "STORYBOOK (13)")
+      {
+        twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Amethyst.webp';
+      }
+      else if (rank == "Emerald" && trial == "STORYBOOK (13)")
+      {
+        twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Emerald.webp';
+      }
+      else if (rank == "Platinum" && trial == "STORYBOOK (13)")
+      {
+        twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Platinum.webp';
+      }
+      else if (rank == "Onyx" && trial == "STORYBOOK (13)")
+      {
+        twitterImageURL = './trial_images/STORYBOOK/LIFE4_BotGraphic_Storybook_Onyx.webp';
+      }
+      else if (rank == "Pearl" && trial == "STORYBOOK (13)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
+
       //HEATWAVE (15)
       else if (rank == "Silver" && trial == "HEATWAVE (15)")
       {
@@ -423,7 +480,13 @@ module.exports = {
       {
         twitterImageURL = './trial_images/HEATWAVE/Heatwave Onyx.webp';
       }
-      
+      else if (rank == "Pearl" && trial == "HEATWAVE (15)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
+
       //MAINFRAME (13)
       else if (rank == "Silver" && trial == "MAINFRAME (13)")
       {
@@ -457,7 +520,13 @@ module.exports = {
       {
         twitterImageURL = './trial_images/MAINFRAME/Mainframe Onyx.webp';
       }
-      
+      else if (rank == "Pearl" && trial == "MAINFRAME (13)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
+
       //SNOWDRIFT (16)
       else if (rank == "Gold" && trial == "SNOWDRIFT (16)")
       {
@@ -487,40 +556,52 @@ module.exports = {
       {
         twitterImageURL = './trial_images/SNOWDRIFT/Snowdrift Onyx.webp';
       }
-      
-        //SIDEQUEST (14)
-        if (rank == "Silver" && trial == "SIDEQUEST (14)")
-        {
-          twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Silver.webp';
-        }
-        else if (rank == "Gold" && trial == "SIDEQUEST (14)")
-        {
-          twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Gold.webp';
-        }
-        else if (rank == "Diamond" && trial == "SIDEQUEST (14)")
-        {
-          twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Diamond.webp';
-        }
-        else if (rank == "Cobalt" && trial == "SIDEQUEST (14)")
-        {
-          twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Cobalt.webp';
-        }
-        else if (rank == "Amethyst" && trial == "SIDEQUEST (14)")
-        {
-          twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Amethyst.webp';
-        }
-        else if (rank == "Emerald" && trial == "SIDEQUEST (14)")
-        {
-          twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Emerald.webp';
-        }
-        else if (rank == "Platinum" && trial == "SIDEQUEST (14)")
-        {
-          twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Platinum.webp';
-        }
-        else if (rank == "Onyx" && trial == "SIDEQUEST (14)")
-        {
-          twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Onyx.webp';
-        }
+      else if (rank == "Pearl" && trial == "SNOWDRIFT (16)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
+
+      //SIDEQUEST (14)
+      if (rank == "Silver" && trial == "SIDEQUEST (14)")
+      {
+        twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Silver.webp';
+      }
+      else if (rank == "Gold" && trial == "SIDEQUEST (14)")
+      {
+        twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Gold.webp';
+      }
+      else if (rank == "Diamond" && trial == "SIDEQUEST (14)")
+      {
+        twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Diamond.webp';
+      }
+      else if (rank == "Cobalt" && trial == "SIDEQUEST (14)")
+      {
+        twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Cobalt.webp';
+      }
+      else if (rank == "Amethyst" && trial == "SIDEQUEST (14)")
+      {
+        twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Amethyst.webp';
+      }
+      else if (rank == "Emerald" && trial == "SIDEQUEST (14)")
+      {
+        twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Emerald.webp';
+      }
+      else if (rank == "Platinum" && trial == "SIDEQUEST (14)")
+      {
+        twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Platinum.webp';
+      }
+      else if (rank == "Onyx" && trial == "SIDEQUEST (14)")
+      {
+        twitterImageURL = './trial_images/SIDEQUEST/LIFE4_BotGraphic_Sidequest_Onyx.webp';
+      }
+      else if (rank == "Pearl" && trial == "SIDEQUEST (14)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
 
       //Wanderlust (15)
       else if (rank == "Silver" && trial == "WANDERLUST (15)")
@@ -555,7 +636,13 @@ module.exports = {
       {
         twitterImageURL = './trial_images/WANDERLUST/Wanderlust Onyx.webp';
       }
-      
+      else if (rank == "Pearl" && trial == "WANDERLUST (15)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
+
       //CIRCADIA (16)
       else if (rank == "Gold" && trial == "CIRCADIA (16)")
       {
@@ -585,7 +672,13 @@ module.exports = {
       {
         twitterImageURL = './trial_images/CIRCADIA/Circadia Onyx.webp';
       }
-      
+      else if (rank == "Pearl" && trial == "CIRCADIA (16)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
+
       //QUANTUM (18)
       else if (rank == "Diamond" && trial == "QUANTUM (18)")
       {
@@ -611,7 +704,13 @@ module.exports = {
       {
         twitterImageURL = './trial_images/QUANTUM/Quantum Onyx.webp';
       }
-      
+      else if (rank == "Pearl" && trial == "QUANTUM (18)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
+
       //SPECIES (13)
       else if (rank == "Silver" && trial == "SPECIES (13)")
       {
@@ -645,7 +744,14 @@ module.exports = {
       {
         twitterImageURL = './trial_images/SPECIES/Species Onyx.webp';
       }
-      
+      else if (rank == "Pearl" && trial == "SPECIES (13)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
+
+
       //TEMPEST (15)
       else if (rank == "Silver" && trial == "TEMPEST (15)")
       {
@@ -679,7 +785,13 @@ module.exports = {
       {
         twitterImageURL = './trial_images/TEMPEST/Tempest Onyx.webp';
       }
-      
+      else if (rank == "Pearl" && trial == "TEMPEST (15)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
+
       //UPHEAVAL (14)
       else if (rank == "Silver" && trial == "UPHEAVAL (14)")
       {
@@ -713,7 +825,13 @@ module.exports = {
       {
         twitterImageURL = './trial_images/UPHEAVAL/Upheaval Onyx.webp';
       }
-      
+      else if (rank == "Pearl" && trial == "UPHEAVAL (14)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
+
       //DEVOTION (12)
       else if (rank == "Silver" && trial == "DEVOTION (12)")
       {
@@ -747,7 +865,13 @@ module.exports = {
       {
         twitterImageURL = './trial_images/DEVOTION/Devotion Onyx.webp';
       }
-      
+      else if (rank == "Pearl" && trial == "DEVOTION (12)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
+
       //BELIEVE (12)
       else if (rank == "Silver" && trial == "BELIEVE (12)")
       {
@@ -781,7 +905,13 @@ module.exports = {
       {
         twitterImageURL = './trial_images/BELIEVE/Believe Onyx.webp';
       }
-      
+      else if (rank == "Pearl" && trial == "BELIEVE (12)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
+
       //PASSPORT (13)
       else if (rank == "Silver" && trial == "PASSPORT (13)")
       {
@@ -815,7 +945,12 @@ module.exports = {
       {
         twitterImageURL = './trial_images/PASSPORT/Passport Onyx.webp';
       }
-      
+      else if (rank == "Pearl" && trial == "PASSPORT (13)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
       //SPECTACLE (16)
       else if (rank == "Gold" && trial == "SPECTACLE (16)")
       {
@@ -845,7 +980,13 @@ module.exports = {
       {
         twitterImageURL = './trial_images/SPECTACLE/Spectacle Onyx.webp';
       }
-      
+      else if (rank == "Pearl" && trial == "SPECTACLE (16)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
+
       //GOSPEL (13)
       else if (rank == "Silver" && trial == "GOSPEL (13)")
       {
@@ -879,7 +1020,13 @@ module.exports = {
       {
         twitterImageURL = './trial_images/GOSPEL/Gospel Onyx.webp';
       }
-      
+      else if (rank == "Pearl" && trial == "GOSPEL (13)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
+
       //MYTHOS (15)
       else if (rank == "Silver" && trial == "MYTHOS (15)")
       {
@@ -913,7 +1060,13 @@ module.exports = {
       {
         twitterImageURL = './trial_images/MYTHOS/Mythos Onyx.webp';
       }
-      
+      else if (rank == "Pearl" && trial == "MYTHOS (15)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
+
       //RENDITION (15)
       else if (rank == "Silver" && trial == "RENDITION (15)")
       {
@@ -947,7 +1100,13 @@ module.exports = {
       {
         twitterImageURL = './trial_images/RENDITION/Rendition Onyx.webp';
       }
-      
+      else if (rank == "Pearl" && trial == "RENDITION (15)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
+
+
+
       //SUPERSTAR (14)
       else if (rank == "Silver" && trial == "SUPERSTAR (14)")
       {
@@ -981,8 +1140,13 @@ module.exports = {
       {
         twitterImageURL = './trial_images/SUPERSTAR/Superstar Onyx.webp';
       }
-      
-        return twitterImageURL;
+      else if (rank == "Pearl" && trial == "SUPERSTAR (14)")
+      {
+        twitterImageURL = ''; //TODO: Pearl
+      }
 
-       }
+
+      return twitterImageURL;
+
+      }
    };
