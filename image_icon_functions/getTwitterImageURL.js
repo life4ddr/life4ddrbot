@@ -325,25 +325,29 @@ module.exports = {
   {
     twitterImageURL = './rankup_images/Onyx V.webp';
   }
+  else if (rank == "Pearl (P)")
+  {
+    twitterImageURL = './rankup_images/Pearl P.webp';
+  }
   else if (rank == "Pearl I")
   {
-
+    twitterImageURL = './rankup_images/Pearl I.webp';
   }
   else if (rank == "Pearl II")
   {
-
+    twitterImageURL = './rankup_images/Pearl II.webp';
   }
   else if (rank == "Pearl III")
   {
-
+    twitterImageURL = './rankup_images/Pearl III.webp';
   }
   else if (rank == "Pearl IV")
   {
-
+    twitterImageURL = './rankup_images/Pearl IV.webp';
   }
   else if (rank == "Pearl V")
   {
-    
+    twitterImageURL = './rankup_images/Pearl V.webp';
   }
   
   return twitterImageURL;
