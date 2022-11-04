@@ -40,7 +40,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "CONFECTIONARY (12)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/CONFECTIONARY/Confectionary Pearl.webp';
       }
 
       //CELESTIAL(13)
@@ -78,7 +78,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "CELESTIAL (13)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/CELESTIAL/Celestial Pearl.webp';
       }
 
       //DAYBREAK(14)
@@ -116,7 +116,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "DAYBREAK (14)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/DAYBREAK/Daybreak Pearl.webp';
       }
 
       //HELLSCAPE(15)
@@ -154,7 +154,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "HELLSCAPE (15)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/HELLSCAPE/Hellscape Pearl.webp';
       }
 
 
@@ -193,7 +193,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "CLOCKWORK (15)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/CLOCKWORK/Clockwork Pearl.webp';
       }
 
 
@@ -232,7 +232,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "PHARAOH (15)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/PHARAOH/Pharaoh Pearl.webp';
       }
 
 
@@ -267,7 +267,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "PARADOX (16)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/PARADOX/Paradox Pearl.webp';
       }
 
 
@@ -302,7 +302,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "INHUMAN (16)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/INHUMAN/Inhuman Pearl.webp';
       }
 
 
@@ -334,7 +334,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "CHEMICAL (17)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/CHEMICAL/Chemical Pearl.webp';
       }
 
 
@@ -373,7 +373,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "DOGFIGHT (18)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/DOGFIGHT/Dogfight Pearl.webp';
       }
             
       //ASCENSION (17)
@@ -403,7 +403,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "ASCENSION (17)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/ASCENSION/Ascension Pearl.webp';
       }
 
 
@@ -442,7 +442,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "STORYBOOK (13)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/STORYBOOK/Storybook Pearl.webp';
       }
 
 
@@ -482,7 +482,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "HEATWAVE (15)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/HEATWAVE/Heatwave Pearl.webp';
       }
 
 
