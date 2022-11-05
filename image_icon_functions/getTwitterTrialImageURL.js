@@ -522,7 +522,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "MAINFRAME (13)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/MAINFRAME/Mainframe Pearl.webp';
       }
 
 
@@ -558,7 +558,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "SNOWDRIFT (16)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/SNOWDRIFT/Snowdrift Pearl.webp';
       }
 
 
@@ -598,10 +598,8 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "SIDEQUEST (14)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/SIDEQUEST/Sidequest Pearl.webp';
       }
-
-
 
       //Wanderlust (15)
       else if (rank == "Silver" && trial == "WANDERLUST (15)")
@@ -638,7 +636,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "WANDERLUST (15)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/WANDERLUST/Wanderlust Pearl.webp';
       }
 
 
@@ -674,7 +672,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "CIRCADIA (16)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/CIRCADIA/Circadia Pearl.webp';
       }
 
 
@@ -706,7 +704,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "QUANTUM (18)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/QUANTUM/Quantum Pearl.webp';
       }
 
 
@@ -746,7 +744,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "SPECIES (13)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/SPECIES/Species Pearl.webp';
       }
 
 
@@ -787,7 +785,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "TEMPEST (15)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/TEMPEST/Tempest Pearl.webp';
       }
 
 
@@ -827,7 +825,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "UPHEAVAL (14)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/UPHEAVAL/Upheaval Pearl.webp';
       }
 
 
@@ -867,7 +865,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "DEVOTION (12)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/DEVOTION/Devotion Pearl.webp';
       }
 
 
@@ -907,7 +905,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "BELIEVE (12)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/BELIEVE/Believe Pearl.webp';
       }
 
 
@@ -947,7 +945,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "PASSPORT (13)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/PASSPORT/Passport Pearl.webp';
       }
 
 
@@ -982,7 +980,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "SPECTACLE (16)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/SPECTACLE/Spectacle Pearl.webp';
       }
 
 
@@ -1022,7 +1020,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "GOSPEL (13)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/GOSPEL/Gospel Pearl.webp';
       }
 
 
@@ -1062,7 +1060,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "MYTHOS (15)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/MYTHOS/Mythos Pearl.webp';
       }
 
 
@@ -1102,7 +1100,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "RENDITION (15)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/RENDITION/Rendition Pearl.webp';
       }
 
 
@@ -1142,7 +1140,7 @@ module.exports = {
       }
       else if (rank == "Pearl" && trial == "SUPERSTAR (14)")
       {
-        twitterImageURL = ''; //TODO: Pearl
+        twitterImageURL = './trial_images/SUPERSTAR/Superstar Pearl.webp';
       }
 
 
