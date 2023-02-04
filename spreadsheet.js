@@ -1,7 +1,7 @@
 //Life4DDRBot
 //Created by Steve Sefchick
 //Program curated by the LIFE4 Admin Team
-//2019 - 2022
+//2019 - 2023
 //Tweets to @Life4DDRBot
 //built using NodeJS
 
@@ -25,15 +25,15 @@ require('dotenv').config();
 
 //functions
 //image/icon functions
-var twitterTrialImageFunction = require('./image_icon_functions/getTwitterTrialImageURL.js');
-var twitterImageFunction = require('./image_icon_functions/getTwitterImageURL.js');
+//var twitterTrialImageFunction = require('./image_icon_functions/getTwitterTrialImageURL.js');
+//var twitterImageFunction = require('./image_icon_functions/getTwitterImageURL.js');
 var discordIconFunction = require('./image_icon_functions/getDiscordIcon.js');
 var discordTrialIconFunction = require('./image_icon_functions/getTrialDiscordIcon.js');
 
 //twitter
-var twit = require('twit');
-var config = require('./config.js');
-var Twitter = new twit(config);
+//var twit = require('twit');
+//var config = require('./config.js');
+//var Twitter = new twit(config);
 
 //discord
 var Discord = require('discord.js');
@@ -1457,7 +1457,7 @@ function getTrialUserRanking(user_id,viewmapping,callback){
 
 }
 
-
+/*
 function announceUpdatePlayerTrialTwitter(playerName, playerRank,playerScore,playerDiff,playerTwitterHandle,trialName,numberRank,callback)
 {
   setTimeout( function(){
@@ -1525,7 +1525,9 @@ function announceUpdatePlayerTrialTwitter(playerName, playerRank,playerScore,pla
 }, 10000);
 
 }
+*/
 
+/*
 function announceNewPlayerTwitter(playerName, playerRank,playerTwitterHandle,callback)
 {
   setTimeout( function(){
@@ -1572,6 +1574,7 @@ function announceNewPlayerTwitter(playerName, playerRank,playerTwitterHandle,cal
 }, 10000);
 
 }
+*/
 
 function updateRRSubmissionsToBotAnnounced(postlist,callback){
 
@@ -1606,6 +1609,7 @@ function updatedSubmissionToBotAnnounced(post_id,callback){
 
 }
 
+/*
 function announcePlayerRankupTwitter(playerName, playerRank,playerTwitterHandle,callback)
 {
   setTimeout( function(){
@@ -1655,6 +1659,7 @@ function announcePlayerRankupTwitter(playerName, playerRank,playerTwitterHandle,
 }, 10000);
 
 }
+*/
 
 
 //TODO: Add Discord Handle
@@ -1879,8 +1884,8 @@ function LIFE4sequence()
 
             //messaging
             //Twitter Message
-            var twitterannounce = wait.for(announcePlayerRankupTwitter, playername, playerrank + " " + playersubrank, playertwitter);
-            console.log("Twitter announcement complete!");
+            //var twitterannounce = wait.for(announcePlayerRankupTwitter, playername, playerrank + " " + playersubrank, playertwitter);
+            //console.log("Twitter announcement complete!");
             //Discord Message
             var discordannounce = wait.for(announcePlayerRankupDiscord, playername, playerrank + " " + playersubrank);
             console.log("Discord announcement complete!");
@@ -1920,7 +1925,7 @@ function LIFE4sequence()
         console.log("Player Discord Handle: " + playerdiscord);
 
 
-        var twitterannounce = wait.for(announceNewPlayerTwitter, playername, playerrank, playertwitter);
+        //var twitterannounce = wait.for(announceNewPlayerTwitter, playername, playerrank, playertwitter);
         //console.log("Twitter announcement complete!");
         var discordannounce = wait.for(announceNewPlayerDiscord, playername, playerrank, playertwitter);
         console.log("Discord announcement complete!");
@@ -1960,7 +1965,7 @@ function LIFE4sequence()
         var playerdiscord=wait.for(getProfileDiscordHandle,playerid);
         console.log("Player Discord Handle: " + playerdiscord);
 
-        var twitterannounce = wait.for(announceNewPlayerTwitter, playername, playerrank, playertwitter);
+        //var twitterannounce = wait.for(announceNewPlayerTwitter, playername, playerrank, playertwitter);
         //console.log("Twitter announcement complete!");
         var discordannounce = wait.for(announceNewPlayerDiscord, playername, playerrank, playertwitter);
         console.log("Discord announcement complete!");
@@ -2103,8 +2108,8 @@ function LIFE4sequence()
         var playerdiscord=wait.for(getProfileDiscordHandle,playerid);
         console.log("Player Discord Handle: " + playerdiscord);
 
-        var twitterannounce = wait.for(announceUpdatePlayerTrialTwitter, playername, trialrank,trialExScore,"("+trialExMinusScore+")", playertwitter, trialtitle.toUpperCase() + " ("+trialscorelevel+")",trialnumberrankings);
-        console.log("Twitter announcement complete!");
+        //var twitterannounce = wait.for(announceUpdatePlayerTrialTwitter, playername, trialrank,trialExScore,"("+trialExMinusScore+")", playertwitter, trialtitle.toUpperCase() + " ("+trialscorelevel+")",trialnumberrankings);
+        //console.log("Twitter announcement complete!");
         //TODO: Add discord handle
         var discordannounce = wait.for(announceUpdatePlayerTrialDiscord, playername, trialrank,trialExScore,trialExMinusScore, trialtitle.toUpperCase() + " ("+trialscorelevel+")",trialnumberrankings);
         console.log("Discord announcement complete!");
