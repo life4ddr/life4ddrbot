@@ -219,23 +219,23 @@ module.exports = {
   }
   else if (rank == "Pearl I")
   {
-
+    discordemoji = "<:pe1:1088289649845350460>";
   }
   else if (rank == "Pearl II")
   {
-
+    discordemoji = "<:pe2:1088289682133094433>";
   }
   else if (rank == "Pearl III")
   {
-
+    discordemoji = "<:pe3:1088289684406407269>";
   }
   else if (rank == "Pearl IV")
   {
-
+    discordemoji = "<:pe4:1088289685454991482>";
   }
   else if (rank == "Pearl V")
   {
-    
+    discordemoji = "<:pe5:1088289686478397510>";
   }
 
 
