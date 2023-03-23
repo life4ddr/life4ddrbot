@@ -41,7 +41,10 @@ module.exports = {
   {
     discordemoji = "<:on5:825471412578811955>";
   }
-
+  else if (rank == "Pearl")
+  {
+    discordemoji = "<:pe5:1088289686478397510>";
+  }
 
   return discordemoji;
 
