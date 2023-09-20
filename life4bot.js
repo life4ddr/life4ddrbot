@@ -19,13 +19,17 @@
 
 //TODO: Remove old trial folders - Heartbreak, Primal, Countdown, Origin
 
+//fs used for file loading / trial images
 const fs = require('fs');
 const readline = require('readline');
+
+//dotenv for environment variables
 require('dotenv').config();
 
 //functions
 //image/icon functions
-var twitterTrialImageFunction = require('./image_icon_functions/getTwitterTrialImageURL.js');var twitterImageFunction = require('./image_icon_functions/getTwitterImageURL.js');
+var twitterTrialImageFunction = require('./image_icon_functions/getTwitterTrialImageURL.js');
+var twitterImageFunction = require('./image_icon_functions/getTwitterImageURL.js');
 var twitterImageFunction = require('./image_icon_functions/getTwitterImageURL.js');
 var discordIconFunction = require('./image_icon_functions/getDiscordIcon.js');
 var discordTrialIconFunction = require('./image_icon_functions/getTrialDiscordIcon.js');
@@ -37,18 +41,27 @@ var Twitter = new twit(config);
 
 //discord
 var Discord = require('discord.js');
-//var Intents = require('discord.js');
-//var bot = new Discord.Client({ intents: [Intents.Guild] });
-//var bot = new Discord.Client({ ws: { intents: ['GUILD_MEMBERS'] }});
 var bot = new Discord.Client();
-
+//discord channels
 var adminchannel;
 var playerrankupchannel;
 var trialrankupchannel;
 var rankupsroyalechannel;
 
-//waitfor
-var wait = require('wait.for');
+//mysql
+var mysql = require('mysql');
+var connection;
+
+
+
+
+
+
+
+
+
+
+
 
 
 bot.login(process.env.DISCORD_BOT_TOKEN);
@@ -67,9 +80,7 @@ bot.on('ready', () => {
   });
 
 
-//mysql
-var mysql = require('mysql');
-var connection;
+
 
 
 

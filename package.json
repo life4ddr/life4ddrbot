@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node spreadsheet.js"
+    "start": "node life4bot.js"
   },
   "author": "",
   "license": "ISC",
@@ -13,17 +13,14 @@
     "axios": "^0.23.0",
     "discord.io": "^2.5.3",
     "discord.js": "^12.5.3",
-    "discord.js.old": "^11.6.5",
     "dotenv": "^6.2.0",
     "express": "^4.17.1",
-    "fibers": "^3.1.1",
     "mysql": "^2.17.1",
     "npm": "^6.13.4",
     "promise": "^8.0.3",
-    "twit": "^2.2.11",
-    "wait.for": "^0.6.6"
+    "twit": "^2.2.11"
   },
   "engines": {
-    "node": "10.17.0"
+    "node": "18.17.1"
   }
 }
