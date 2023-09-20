@@ -42,6 +42,8 @@ var Twitter = new twit(config);
 //discord
 var Discord = require('discord.js');
 var bot = new Discord.Client();
+bot.login(process.env.DISCORD_BOT_TOKEN);
+
 //discord channels
 var adminchannel;
 var playerrankupchannel;
@@ -55,28 +57,10 @@ var connection;
 
 
 
-
-
-
-
-
-
-
-
-
-bot.login(process.env.DISCORD_BOT_TOKEN);
-
+//BOT LOG IN
+//This runs automatically in order to log in on discord and listen to activity
 bot.on('ready', () => {
     console.log(`Logged in as ${bot.user.tag}!`);
-
-    //var boy = bot.users.fetch('');
-
-    //const members = guild.members.fetch().then((user) => {
-    //  console.log(user);
-    //}).catch(console.error);
-
-
-    wait.launchFiber(LIFE4sequence);
   });
 
 
