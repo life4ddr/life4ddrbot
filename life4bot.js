@@ -54,6 +54,8 @@ var rankupsroyalechannel;
 var mysql = require('mysql');
 var connection;
 
+//debug flag
+var isDebug = true;
 
 
 
@@ -733,18 +735,32 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
 };
 
 function getBotStatus(callback){
-  setTimeout( function(){
 
-    var appStatus = "SELECT varValue from life4controls where varName='appStatus'";
+  return new Promise((resolve) => {
+ 
+    setTimeout( function(){
+
+          if (isDebug)
+          {
+            console("debug time! bot is on!");
+              resolve("ON");
+          }
+          else
+          {
+              var appStatus = "SELECT varValue from life4controls where varName='appStatus'";
 
 
-    connection.query(appStatus, function (error, results) {
-      if (error) throw error;
-      callback(null,results)
+              connection.query(appStatus, function (error, results) {
+                if (error) throw error;
+                //callback(null,results)
+                resolve(results);
+
+              });
+          }
+          
+      }, 2000);
 
     });
-    
-}, 25);
 
 }; 
 
@@ -1785,6 +1801,7 @@ function announceUpdatePlayerTrialDiscord(playerName, playerRank,playerScore,pla
 function LIFE4sequence()
 {
   //connecting to DB
+  /*
   connection = mysql.createConnection({
     host     : process.env.MYSQLHOST,
     user     : process.env.MYSQLUSER,
@@ -1793,11 +1810,14 @@ function LIFE4sequence()
   });
 
   connection.connect();
+  */
 
   //GET BOT STATUS
+  /*
   var botStatus = "ON";
   botStatus = wait.for(getBotStatus);
   botStatus = botStatus[0].varValue;
+  */
 
   //OFF
   //
@@ -2147,3 +2167,49 @@ process.exit(0);
 
 
 
+//Make a database connection
+function GetConnection(){
+  return new Promise((resolve) => {
+    setTimeout(() => {
+
+      if (isDebug)
+      {
+        console.log("ok!");
+        resolve("debug");
+        
+      }
+      else
+      {
+        connection = mysql.createConnection({
+          host     : process.env.MYSQLHOST,
+          user     : process.env.MYSQLUSER,
+          password : process.env.MYSQLPW,
+          database : process.env.MYSQLPLAYERDB
+        });
+        connection.connect();
+        resolve(connection);
+      }
+
+    }, 5000);
+
+});
+};
+
+
+
+
+//
+//ASYNC FUNCTION ZONE
+//
+async function MainLIFE4Sequence()
+{
+    //make connection
+    connection = await GetConnection();
+    //get bot status
+    const botStatus = await getBotStatus();
+
+}
+
+
+
+MainLIFE4Sequence();
