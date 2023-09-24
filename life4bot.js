@@ -770,28 +770,35 @@ function getBotStatus(callback){
 //gets COUNT of approved forms with type
 function getNumberOfApprovedFormsWithType(callback){
 
-  setTimeout( function(){
 
-    var getQuery = "select pm.post_id as 'post_id', (SELECT pm3.meta_value from wp_kikf_postmeta pm3 where pm3.meta_key='state' and pm3.meta_value='approved' and pm.post_id=pm3.post_id) as 'approvalvalue',(SELECT fm.title from wp_kikf_postmeta pm2, wp_kikf_nf3_forms fm where pm2.meta_key='_form_id' and pm.post_id=pm2.post_id and pm2.meta_value=fm.id) as 'formtype' from wp_kikf_postmeta pm where pm.meta_key='state' and pm.meta_value='approved'";
+  return new Promise((resolve) => {
+
+      setTimeout( function(){
+
+        var getQuery = "select pm.post_id as 'post_id', (SELECT pm3.meta_value from wp_kikf_postmeta pm3 where pm3.meta_key='state' and pm3.meta_value='approved' and pm.post_id=pm3.post_id) as 'approvalvalue',(SELECT fm.title from wp_kikf_postmeta pm2, wp_kikf_nf3_forms fm where pm2.meta_key='_form_id' and pm.post_id=pm2.post_id and pm2.meta_value=fm.id) as 'formtype' from wp_kikf_postmeta pm where pm.meta_key='state' and pm.meta_value='approved'";
 
 
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      var count=0;
-      for (var i=0;i<results.length;i++)
-      {
-        if (results[i].formtype=="Placement" || results[i].formtype=="Comprehensive Placement" || results[i].formtype=="Trial Submission" || results[i].formtype=="Rankup" || results[i].formtype=="Submit Scores!")
-        {
-          count+=1;
-        }
-      }
+        connection.query(getQuery, function (error, results) {
+          if (error) throw error;
+          var count=0;
+          for (var i=0;i<results.length;i++)
+          {
+            if (results[i].formtype=="Placement" || results[i].formtype=="Comprehensive Placement" || results[i].formtype=="Trial Submission" || results[i].formtype=="Rankup" || results[i].formtype=="Submit Scores!")
+            {
+              count+=1;
+            }
+          }
 
-      console.log(count);
-      callback(null,count)
+          console.log(count);
+          resolve(count);
+          //callback(null,count)
 
-    });
-    
-}, 25);
+        });
+        
+    }, 250);
+
+});
+
 
 };
 
@@ -2258,7 +2265,10 @@ async function MainLIFE4Sequence()
 
       //check for new records
       console.log("Bot is checking the new postID queue");
-      console.log("checking for new approved records")
+      console.log("checking for new approved records");
+      var queue_count = await getNumberOfApprovedFormsWithType();
+      console.log(queue_count + " records found");
+
 
     }
 
