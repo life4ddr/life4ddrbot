@@ -742,7 +742,7 @@ function getBotStatus(callback){
 
           if (isDebug)
           {
-            console("debug time! bot is on!");
+            console.log("debug time! bot is on!");
               resolve("ON");
           }
           else
@@ -1822,6 +1822,7 @@ function LIFE4sequence()
   //OFF
   //
   //
+  /*
   if (botStatus =="OFF")
   {
     console.log("Bot is off! Nothing will run!");
@@ -1834,12 +1835,15 @@ function LIFE4sequence()
   {
     console.log("Bot is having issues! Bot will not run!");
   }
+  */
   //ON
   //
   //
-  else if (botStatus == "ON")
+  if (botStatus == "ON")
   {
 
+
+    /*
     //get current time
     var timedude = Date.now();
     var timedude_supreme = new Date(timedude);
@@ -1849,8 +1853,10 @@ function LIFE4sequence()
 
     console.log("Bot is checking the new postID queue");
 
+    */
+
     //pull count of approved records
-    console.log("checking for new approved records")
+    //console.log("checking for new approved records")
     //var queuecount=wait.for(getNumberOfApprovedForms);
 
     //test
@@ -2195,8 +2201,32 @@ function GetConnection(){
 });
 };
 
+//Return current time
+function GetCurrentTime(){
 
+  return new Promise((resolve) => {
+    setTimeout(() => {
 
+      var base_time = Date.now();
+      resolve(new Date(base_time));
+
+    }, 500);
+
+  });
+};
+
+//Return current hours based on time
+function GetCurrentHour(base_time){
+
+  return new Promise((resolve) => {
+    setTimeout(() => {
+
+      resolve(base_time.getHours())
+
+    }, 500);
+
+  });
+};
 
 //
 //ASYNC FUNCTION ZONE
@@ -2207,6 +2237,30 @@ async function MainLIFE4Sequence()
     connection = await GetConnection();
     //get bot status
     const botStatus = await getBotStatus();
+
+    //Bot error - end!
+    if (botStatus=="ERROR")
+    {
+      console.log("Bot is having issues! Bot will not run!");
+    }
+    //Bot off - end!
+    else if (botStatus=="OFF")
+    {
+      console.log("Bot is off! Nothing will run!");
+    }
+    //Bot on - main flow
+    else if (botStatus == "ON")
+    {
+      //get time and hours
+      var time_ust = await GetCurrentTime();
+      var time_hours = await GetCurrentHour(time_ust);
+      console.log("TIME! It is " + time_hours+ " UTC right now");
+
+      //check for new records
+      console.log("Bot is checking the new postID queue");
+      console.log("checking for new approved records")
+
+    }
 
 }
 
