@@ -72,20 +72,24 @@ bot.on('ready', () => {
 
 //connect to rankup channels
 //give it some time to connect
-function connectToRankupChannels(callback){
+function connectToRankupChannels(){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    //connecting to rankup channels
-    adminchannel = bot.channels.cache.get('596168285477666832');
-    playerrankupchannel= bot.channels.cache.get('530616617571319809');
-    trialrankupchannel= bot.channels.cache.get('556390024938258433');
-    rankupsroyalechannel= bot.channels.cache.get('923765429518884895');
+      setTimeout( function(){
 
-      callback(null,"done");
+        //connecting to rankup channels
+        adminchannel = bot.channels.cache.get('596168285477666832');
+        playerrankupchannel= bot.channels.cache.get('530616617571319809');
+        trialrankupchannel= bot.channels.cache.get('556390024938258433');
+        rankupsroyalechannel= bot.channels.cache.get('923765429518884895');
 
-    
-}, 1000);
+        resolve("done");
+
+        
+    }, 1000);
+});
+
 
 };
 
@@ -775,25 +779,34 @@ function getNumberOfApprovedFormsWithType(callback){
 
       setTimeout( function(){
 
-        var getQuery = "select pm.post_id as 'post_id', (SELECT pm3.meta_value from wp_kikf_postmeta pm3 where pm3.meta_key='state' and pm3.meta_value='approved' and pm.post_id=pm3.post_id) as 'approvalvalue',(SELECT fm.title from wp_kikf_postmeta pm2, wp_kikf_nf3_forms fm where pm2.meta_key='_form_id' and pm.post_id=pm2.post_id and pm2.meta_value=fm.id) as 'formtype' from wp_kikf_postmeta pm where pm.meta_key='state' and pm.meta_value='approved'";
+
+        if (isDebug)
+        {
+          resolve(1);
+        }
+        else
+        {
+            var getQuery = "select pm.post_id as 'post_id', (SELECT pm3.meta_value from wp_kikf_postmeta pm3 where pm3.meta_key='state' and pm3.meta_value='approved' and pm.post_id=pm3.post_id) as 'approvalvalue',(SELECT fm.title from wp_kikf_postmeta pm2, wp_kikf_nf3_forms fm where pm2.meta_key='_form_id' and pm.post_id=pm2.post_id and pm2.meta_value=fm.id) as 'formtype' from wp_kikf_postmeta pm where pm.meta_key='state' and pm.meta_value='approved'";
 
 
-        connection.query(getQuery, function (error, results) {
-          if (error) throw error;
-          var count=0;
-          for (var i=0;i<results.length;i++)
-          {
-            if (results[i].formtype=="Placement" || results[i].formtype=="Comprehensive Placement" || results[i].formtype=="Trial Submission" || results[i].formtype=="Rankup" || results[i].formtype=="Submit Scores!")
-            {
-              count+=1;
-            }
-          }
+            connection.query(getQuery, function (error, results) {
+              if (error) throw error;
+              var count=0;
+              for (var i=0;i<results.length;i++)
+              {
+                if (results[i].formtype=="Placement" || results[i].formtype=="Comprehensive Placement" || results[i].formtype=="Trial Submission" || results[i].formtype=="Rankup" || results[i].formtype=="Submit Scores!")
+                {
+                  count+=1;
+                }
+              }
 
-          console.log(count);
-          resolve(count);
-          //callback(null,count)
+              console.log(count);
+              resolve(count);
+              //callback(null,count)
 
-        });
+            });
+
+      }
         
     }, 250);
 
@@ -805,28 +818,40 @@ function getNumberOfApprovedFormsWithType(callback){
 
 //gets only latest post
 //use form_id to retrieve the form type from the form meta table
-function getNextApprovedQueue(callback){
+function getNextApprovedQueue(){
 
   setTimeout( function(){
 
-    var getQuery = "select pm.post_id as 'post_id',(SELECT fm.title from wp_kikf_postmeta pm2, wp_kikf_nf3_forms fm where pm2.meta_key='_form_id' and pm.post_id=pm2.post_id and pm2.meta_value=fm.id) as 'formtype' from wp_kikf_postmeta pm where pm.meta_key='state' and pm.meta_value='approved'";
-    var nextselected;
+      return new Promise((resolve) => {
 
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      for (var i=0;i<results.length;i++)
-      {
-        if (nextselected==undefined && (results[i].formtype=="Placement" || results[i].formtype=="Comprehensive Placement" || results[i].formtype=="Trial Submission" || results[i].formtype=="Rankup" || results[i].formtype=="Submit Scores!"))
-        {
-          nextselected=results[i];
-        }
-      }      
-      console.log(nextselected);
-      callback(null,nextselected)
+          if (isDebug)
+          {
+            resolve("debug found a next record!");
+          }
+          else
+          {
+            var getQuery = "select pm.post_id as 'post_id',(SELECT fm.title from wp_kikf_postmeta pm2, wp_kikf_nf3_forms fm where pm2.meta_key='_form_id' and pm.post_id=pm2.post_id and pm2.meta_value=fm.id) as 'formtype' from wp_kikf_postmeta pm where pm.meta_key='state' and pm.meta_value='approved'";
+            var nextselected;
 
-    });
-    
-}, 25);
+            connection.query(getQuery, function (error, results) {
+              if (error) throw error;
+              for (var i=0;i<results.length;i++)
+              {
+                if (nextselected==undefined && (results[i].formtype=="Placement" || results[i].formtype=="Comprehensive Placement" || results[i].formtype=="Trial Submission" || results[i].formtype=="Rankup" || results[i].formtype=="Submit Scores!"))
+                {
+                  nextselected=results[i];
+                }
+              }      
+              console.log(nextselected);
+              //callback(null,nextselected)
+              resolve(nextselected);
+
+            });
+          }
+        
+        }, 500);
+      });
+
 
 };
 
@@ -1867,25 +1892,33 @@ function LIFE4sequence()
     //var queuecount=wait.for(getNumberOfApprovedForms);
 
     //test
+    /*
     var queuecount=wait.for(getNumberOfApprovedFormsWithType);
     console.log(queuecount + " records found");
+    */
 
     //check for UTC window
     if (queuecount>0)// && (hoursdude > 13 || hoursdude < 4))
     {
       //connect to rankup channels
+      /*
       var channelsdone=wait.for(connectToRankupChannels);
       console.log("connected to channels!");
+      */
 
       //get new record
+      /*
       console.log("Starting check for new records!");
       var nextapprovedvalues=wait.for(getNextApprovedQueue);
+      */
 
       //sort into vars
+      /*
       var post_id = nextapprovedvalues.post_id;
       var queuetype = nextapprovedvalues.formtype;
 
       console.log("post_id:" + post_id + " and queuetype: "+queuetype+"");
+      */
 
       //Player Rankup
       if (queuetype=="Rankup")
@@ -2269,8 +2302,55 @@ async function MainLIFE4Sequence()
       var queue_count = await getNumberOfApprovedFormsWithType();
       console.log(queue_count + " records found");
 
+      //if more than 0 records are found, identify what to do next and announce!
+      if (queue_count > 0)
+      {
+
+        //connect to rankup channels and get next record
+        const rankup_channel_connect = await connectToRankupChannels();
+        console.log("Connected to channnels! Checking for next new record...");
+        var next_approved_record = await getNextApprovedQueue();
+        
+        //sort results into variables
+        var post_id = next_approved_record.post_id;
+        var queue_type = next_approved_record.formtype;
+        console.log("post_id:" + post_id + " and queuetype: "+queue_type+"");
+
+        //Player Rankup
+        if (queue_type == "Rankup")
+        {
+
+        }
+        //Trial Submission
+        else if (queue_type == "Trial Submission")
+        {
+
+        }
+        //Placement
+        else if (queue_type == "Placement")
+        {
+
+        }
+        //Comprehensive Placement
+        else if (queue_type == "Comprehensive Placement")
+        {
+
+        }
+        //RR - Submit Score
+        else if (queue_type == "Submit Scores!")
+        {
+
+        }
+
+      }
+      else 
+      {
+        console.log("Queue count is 0! Nothing will run right now");
+      }
 
     }
+
+  //TODO: Close Connection
 
 }
 
