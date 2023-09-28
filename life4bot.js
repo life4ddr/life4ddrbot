@@ -860,39 +860,48 @@ function getNextApprovedQueue(){
 
 //get player name
 //meta value 42 = name
-function getPostPlayerName(postid,callback){
+function getPostPlayerName(postid){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_42'";
+        setTimeout( function(){
 
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      //console.log(results);
-      callback(null,results[0].meta_value)
+          var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_42'";
 
-    });
-    
-}, 25);
+          connection.query(getQuery, function (error, results) {
+            if (error) throw error;
+            //console.log(results);
+            //callback(null,results[0].meta_value)
+            resolve(results[0].meta_value);
+          });
+          
+      }, 250);
+
+  });
 
 };
 
 //get player rank
 //meta value 5 = rank
-function getPostPlayerRank(postid,callback){
+function getPostPlayerRank(postid){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_5'";
+      setTimeout( function(){
 
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      //console.log(results);
-      callback(null,results[0].meta_value)
+        var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_5'";
 
-    });
-    
-}, 25);
+        connection.query(getQuery, function (error, results) {
+          if (error) throw error;
+          //console.log(results);
+          //callback(null,results[0].meta_value)
+          resolve(results[0].meta_value);
+
+        });
+        
+    }, 250);
+
+});
 
 };
 
@@ -917,20 +926,25 @@ function getPostPlayerSubRank(postid,callback){
 
 //get player player_id
 //meta value 41 = user_fk
-function getPostPlayerID(postid,callback){
+function getPostPlayerID(postid){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_41'";
+        setTimeout( function(){
 
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      //console.log(results);
-      callback(null,results[0].meta_value)
+          var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_41'";
 
-    });
-    
-}, 25);
+          connection.query(getQuery, function (error, results) {
+            if (error) throw error;
+            //console.log(results);
+            //callback(null,results[0].meta_value)
+            resolve(results[0].meta_value)
+
+          });
+          
+      }, 250);
+
+  });
 
 };
 
@@ -1925,14 +1939,14 @@ function LIFE4sequence()
       {
             console.log("Player Rankup!");
             //get player player_id
-            var playerid=wait.for(getPostPlayerID,post_id);
-            console.log("Player ID: " + playerid);
+            //var playerid=wait.for(getPostPlayerID,post_id);
+            //console.log("Player ID: " + playerid);
             //get player name
-            var playername=wait.for(getPostPlayerName,post_id);
-            console.log("Player Name: " + playername);
+            //var playername=wait.for(getPostPlayerName,post_id);
+            //console.log("Player Name: " + playername);
             //get player rank
-            var playerrank=wait.for(getPostPlayerRank,post_id);
-            console.log("Player Rank: " + playerrank);
+            //var playerrank=wait.for(getPostPlayerRank,post_id);
+            //console.log("Player Rank: " + playerrank);
             //get player subrank
             var playersubrank=wait.for(getPostPlayerSubRank,post_id);
             console.log("Player Rank Number: " + playersubrank);
@@ -2319,6 +2333,15 @@ async function MainLIFE4Sequence()
         //Player Rankup
         if (queue_type == "Rankup")
         {
+          console.log("Starting player rankup flow...");
+          var player_id = await getPostPlayerID(post_id);
+          console.log("Player ID: " + player_id);
+          var player_name = await getPostPlayerName(post_id);
+          console.log("Player Name: " + player_name);
+          var player_rank = await getPostPlayerRank(post_id);
+          console.log("Player Rank" + player_rank);
+
+
 
         }
         //Trial Submission
