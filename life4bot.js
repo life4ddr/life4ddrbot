@@ -866,14 +866,21 @@ function getPostPlayerName(postid){
 
         setTimeout( function(){
 
-          var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_42'";
+          if (isDebug)
+          {
+              resolve("cool guy!");
+          }
+          else
+          {
+              var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_42'";
 
-          connection.query(getQuery, function (error, results) {
-            if (error) throw error;
-            //console.log(results);
-            //callback(null,results[0].meta_value)
-            resolve(results[0].meta_value);
-          });
+              connection.query(getQuery, function (error, results) {
+                if (error) throw error;
+                //console.log(results);
+                //callback(null,results[0].meta_value)
+                resolve(results[0].meta_value);
+              });
+          }
           
       }, 250);
 
@@ -889,15 +896,23 @@ function getPostPlayerRank(postid){
 
       setTimeout( function(){
 
-        var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_5'";
+        if (isDebug)
+        {
+            resolve("Gold V");
+        }
+        else
+        {
 
-        connection.query(getQuery, function (error, results) {
-          if (error) throw error;
-          //console.log(results);
-          //callback(null,results[0].meta_value)
-          resolve(results[0].meta_value);
+          var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_5'";
 
-        });
+          connection.query(getQuery, function (error, results) {
+            if (error) throw error;
+            //console.log(results);
+            //callback(null,results[0].meta_value)
+            resolve(results[0].meta_value);
+
+          });
+        }
         
     }, 250);
 
@@ -907,20 +922,31 @@ function getPostPlayerRank(postid){
 
 //get player subrank
 //meta value 6 = subrank
-function getPostPlayerSubRank(postid,callback){
+function getPostPlayerSubRank(postid){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_6'";
+      setTimeout( function(){
 
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      //console.log(results);
-      callback(null,results[0].meta_value)
+        if (isDebug)
+        {
+            resolve("69");
+        }
+        else
+        {
+            var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_6'";
 
-    });
-    
-}, 25);
+            connection.query(getQuery, function (error, results) {
+              if (error) throw error;
+              //console.log(results);
+              //callback(null,results[0].meta_value)
+              resolve(results[0].meta_value);
+
+            });
+        }
+        
+    }, 250);
+  });
 
 };
 
@@ -932,15 +958,22 @@ function getPostPlayerID(postid){
 
         setTimeout( function(){
 
-          var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_41'";
+          if (isDebug)
+          {
+            resolve("69");
+          }
+          else
+          {
+              var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_41'";
 
-          connection.query(getQuery, function (error, results) {
-            if (error) throw error;
-            //console.log(results);
-            //callback(null,results[0].meta_value)
-            resolve(results[0].meta_value)
+              connection.query(getQuery, function (error, results) {
+                if (error) throw error;
+                //console.log(results);
+                //callback(null,results[0].meta_value)
+                resolve(results[0].meta_value)
 
-          });
+              });
+        }
           
       }, 250);
 
@@ -1410,37 +1443,59 @@ function getTrialRank(postid,callback){
 
 
 //get player twitter handle
-function getProfileTwitterHandle(playerid,callback){
+function getProfileTwitterHandle(playerid){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    var getQuery = "SELECT meta_value FROM wp_kikf_usermeta where meta_key='twitter_handle' and user_id="+playerid+"";
+      setTimeout( function(){
 
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      //console.log(results);
-      callback(null,results[0].meta_value)
+        if (isDebug)
+        {
+            resolve("@coolguy");
+        }
+        else
+        {
+            var getQuery = "SELECT meta_value FROM wp_kikf_usermeta where meta_key='twitter_handle' and user_id="+playerid+"";
 
-    });
-    
-}, 25);
+            connection.query(getQuery, function (error, results) {
+              if (error) throw error;
+              //console.log(results);
+              //callback(null,results[0].meta_value)
+              resolve(results[0].meta_value);
+
+            });
+        }
+        
+    }, 250);
+});
 
 };
 
 //get player discord handle
-function getProfileDiscordHandle(playerid,callback){
+function getProfileDiscordHandle(playerid){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    var getQuery = "SELECT meta_value FROM wp_kikf_usermeta where meta_key='discord_handle' and user_id="+playerid+"";
+        setTimeout( function(){
 
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      callback(null,results[0].meta_value)
+          if (isDebug)
+          {
+            resolve("a discord handle!");
+          }
+          else
+          {
+          var getQuery = "SELECT meta_value FROM wp_kikf_usermeta where meta_key='discord_handle' and user_id="+playerid+"";
 
-    });
-    
-}, 25);
+          connection.query(getQuery, function (error, results) {
+            if (error) throw error;
+            //callback(null,results[0].meta_value)
+            resolve(results[0].meta_value);
+          });
+        }
+          
+      }, 250);
+
+  });
 
 };
 
@@ -1948,14 +2003,14 @@ function LIFE4sequence()
             //var playerrank=wait.for(getPostPlayerRank,post_id);
             //console.log("Player Rank: " + playerrank);
             //get player subrank
-            var playersubrank=wait.for(getPostPlayerSubRank,post_id);
-            console.log("Player Rank Number: " + playersubrank);
+            //var playersubrank=wait.for(getPostPlayerSubRank,post_id);
+            //console.log("Player Rank Number: " + playersubrank);
             //get player twitter handle
-            var playertwitter=wait.for(getProfileTwitterHandle,playerid);
-            console.log("Player Twitter Handle: " + playertwitter);
+            //var playertwitter=wait.for(getProfileTwitterHandle,playerid);
+            //console.log("Player Twitter Handle: " + playertwitter);
             //get player discord handle
-            var playerdiscord=wait.for(getProfileDiscordHandle,playerid);
-            console.log("Player Discord Handle: " + playerdiscord);
+            //var playerdiscord=wait.for(getProfileDiscordHandle,playerid);
+            //console.log("Player Discord Handle: " + playerdiscord);
 
             //messaging
             //Twitter Message
@@ -2333,6 +2388,7 @@ async function MainLIFE4Sequence()
         //Player Rankup
         if (queue_type == "Rankup")
         {
+          //Get Player information for rankup
           console.log("Starting player rankup flow...");
           var player_id = await getPostPlayerID(post_id);
           console.log("Player ID: " + player_id);
@@ -2340,8 +2396,18 @@ async function MainLIFE4Sequence()
           console.log("Player Name: " + player_name);
           var player_rank = await getPostPlayerRank(post_id);
           console.log("Player Rank" + player_rank);
+          var player_sub_rank = await getPostPlayerSubRank(post_id);
+          console.log("Player Rank Number: " + player_sub_rank);
+          var player_twitter = await getProfileTwitterHandle(player_id);
+          console.log("Player Twitter Handle: " + player_twitter);
+          var player_discord = await getProfileDiscordHandle(player_id);
+          console.log("Player Discord Handle: " + player_discord);
 
+          //Perform MEssaging
 
+          //Update Record
+
+          //Wait...?
 
         }
         //Trial Submission
