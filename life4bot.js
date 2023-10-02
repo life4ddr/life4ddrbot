@@ -94,12 +94,16 @@ function connectToRankupChannels(){
 };
 
 //wait function
-function waitASec(ms,callback){
-  setTimeout( function(){
+function waitASec(ms){
+  return new Promise((resolve) => {
 
-      callback(null,"done");
+        setTimeout( function(){
 
-}, ms);
+            resolve("done!");
+
+      }, ms);
+
+  });
 
 }
 
@@ -1704,93 +1708,128 @@ function updateRRSubmissionsToBotAnnounced(postlist,callback){
 
 }
 
-function updatedSubmissionToBotAnnounced(post_id,callback){
+function updatedSubmissionToBotAnnounced(post_id){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    console.log("updating");
-    var updateall = "update wp_kikf_postmeta set meta_value='bot_announced' where meta_key='state' and meta_value='approved' and post_id ="+post_id+"";
-    console.log(updateall);
+      setTimeout( function(){
 
-    connection.query(updateall, function (error, results) {
-      if (error) throw error;
-      callback(null,results)
-    });
-    
-}, 25);
+        if (isDebug)
+        {
+            resolve("submission was announced! just kidding.");
+        }
+        else
+        {
+            console.log("updating");
+            var updateall = "update wp_kikf_postmeta set meta_value='bot_announced' where meta_key='state' and meta_value='approved' and post_id ="+post_id+"";
+            console.log(updateall);
+
+            connection.query(updateall, function (error, results) {
+              if (error) throw error;
+              //callback(null,results)
+              resolve(results);
+            });
+        }
+        
+    }, 25);
+
+});
 
 }
 
 
-function announcePlayerRankupTwitter(playerName, playerRank,playerTwitterHandle,callback)
+function announcePlayerRankupTwitter(playerName, playerRank,playerTwitterHandle)
 {
-  setTimeout( function(){
 
-    var twitterpost ="";
-    if (playerTwitterHandle != "" && playerTwitterHandle != "undefined")
-    {
-      twitterpost = "Player " + playerName + " (" + playerTwitterHandle + ") has earned a new rank! They are now " + playerRank +"! Congratulations! ";
-    }
-    else
-    {
-      twitterpost = "Player " + playerName + " has earned a new rank! They are now " + playerRank +"! Congratulations! ";
-    }
+  return new Promise((resolve) => {
 
-    console.log(twitterpost);
+        setTimeout( function(){
 
-    //old
-    //var b64content = fs.readFileSync(getTwitterImageURL(playerRank), { encoding: 'base64' })
-    //new
-    var b64content = fs.readFileSync(twitterImageFunction.getTwitterImageURL(playerRank), { encoding: 'base64' });       
-    
-    
-    // get the new image media on twitter!
-    
+          if (isDebug)
+          {
+            resolve("I assure you, a posting was made");
+          }
+          else
+          {
 
-    Twitter.post('media/upload', { media_data: b64content }, function (err, data, response) {
-      var mediaIdStr = data.media_id_string
-      var altText = "LIFE4 Player Rank"
-      var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
-    
-      Twitter.post('media/metadata/create', meta_params, function (err, data, response) {
-        if (!err) {
-          // post the tweet!
-          var params = { status: twitterpost.toString(), media_ids: [mediaIdStr] }
-    
-          Twitter.post('statuses/update', params, function (err, data, response) {
-            console.log(data)
-          })
+              var twitterpost ="";
+              if (playerTwitterHandle != "" && playerTwitterHandle != "undefined")
+              {
+                twitterpost = "Player " + playerName + " (" + playerTwitterHandle + ") has earned a new rank! They are now " + playerRank +"! Congratulations! ";
+              }
+              else
+              {
+                twitterpost = "Player " + playerName + " has earned a new rank! They are now " + playerRank +"! Congratulations! ";
+              }
+
+              console.log(twitterpost);
+
+              //old
+              //var b64content = fs.readFileSync(getTwitterImageURL(playerRank), { encoding: 'base64' })
+              //new
+              var b64content = fs.readFileSync(twitterImageFunction.getTwitterImageURL(playerRank), { encoding: 'base64' });       
+              
+              
+              // get the new image media on twitter!
+              
+
+              Twitter.post('media/upload', { media_data: b64content }, function (err, data, response) {
+                var mediaIdStr = data.media_id_string
+                var altText = "LIFE4 Player Rank"
+                var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
+              
+                Twitter.post('media/metadata/create', meta_params, function (err, data, response) {
+                  if (!err) {
+                    // post the tweet!
+                    var params = { status: twitterpost.toString(), media_ids: [mediaIdStr] }
+              
+                    Twitter.post('statuses/update', params, function (err, data, response) {
+                      console.log(data)
+                    })
+                  }
+                })
+              })
+              
+
+              resolve("done!");
         }
-      })
-    })
-    
 
-    callback(null,"done");
+    }, 10000);
 
-
-}, 10000);
+  });
 
 }
 
 
 
 //TODO: Add Discord Handle
-function announcePlayerRankupDiscord(playerName, playerRank,callback)
+function announcePlayerRankupDiscord(playerName, playerRank)
 {
-  setTimeout( function(){
 
-    var discordpost = "Player " + playerName + " has earned a new rank! They are now " + playerRank +"! Congratulations! "  + discordIconFunction.getDiscordIcon(playerRank);
+  return new Promise((resolve) => {
 
-    console.log(discordpost);
-    
-    playerrankupchannel.send(discordpost)
-    .then(msg => { msg.react(discordIconFunction.getDiscordIcon(playerRank))})
-    .catch(console.error);
+        setTimeout( function(){
+          
+          if (isDebug)
+          {
+                resolve("discord was announced");
+          }
+          else
+          {
+                var discordpost = "Player " + playerName + " has earned a new rank! They are now " + playerRank +"! Congratulations! "  + discordIconFunction.getDiscordIcon(playerRank);
 
-    callback(null,"done");
+                console.log(discordpost);
+                
+                playerrankupchannel.send(discordpost)
+                .then(msg => { msg.react(discordIconFunction.getDiscordIcon(playerRank))})
+                .catch(console.error);
+                resolve("done");
+                //callback(null,"done");
+          }
 
+      }, 750);
 
-}, 750);
+  });
 
 }
 
@@ -2014,22 +2053,22 @@ function LIFE4sequence()
 
             //messaging
             //Twitter Message
-            var twitterannounce = wait.for(announcePlayerRankupTwitter, playername, playerrank + " " + playersubrank, playertwitter);
-            console.log("Twitter announcement complete!");
+            //var twitterannounce = wait.for(announcePlayerRankupTwitter, playername, playerrank + " " + playersubrank, playertwitter);
+            //console.log("Twitter announcement complete!");
             //Discord Message
-            var discordannounce = wait.for(announcePlayerRankupDiscord, playername, playerrank + " " + playersubrank);
-            console.log("Discord announcement complete!");
+            //var discordannounce = wait.for(announcePlayerRankupDiscord, playername, playerrank + " " + playersubrank);
+            //console.log("Discord announcement complete!");
           
             //Update record to "bot_announced"
-            var botannounceupdate = wait.for(updatedSubmissionToBotAnnounced, post_id);
-            console.log("post completed!");
+            //var botannounceupdate = wait.for(updatedSubmissionToBotAnnounced, post_id);
+            //console.log("post completed!");
 
             //wait a sec
-            console.log("waiting...");
-            var secwaited = wait.for(waitASec, 10000);
-            console.log("wait completed");
+            //console.log("waiting...");
+            //var secwaited = wait.for(waitASec, 10000);
+            //console.log("wait completed");
 
-            console.log("Done retrieving record!\n\n");
+            //console.log("Done retrieving record!\n\n");
       }
       //Placement (New Player)
       else if (queuetype == "Placement")
@@ -2402,12 +2441,21 @@ async function MainLIFE4Sequence()
           console.log("Player Twitter Handle: " + player_twitter);
           var player_discord = await getProfileDiscordHandle(player_id);
           console.log("Player Discord Handle: " + player_discord);
-
-          //Perform MEssaging
+          
+          //Perform Messaging
+          var twitter_announce = await announcePlayerRankupTwitter(player_name, playerrank + " " + playersubrank, player_twitter);
+          console.log("Twitter announcement complete!");
+          var discord_announce = await announcePlayerRankupDiscord(player_name, playerrank + " " + playersubrank)
+          console.log("Discord announcement complete!");
 
           //Update Record
+          var bot_announce_update = await updatedSubmissionToBotAnnounced(post_id);
+          console.log("Post completed!");
 
           //Wait...?
+          console.log("Waiting for a minute to let the twitter/discord callbacks finish up...");
+          var second_is_waited = await (waitASec,10000);
+          console.log("\n\nDone retrieving record!\n\n");
 
         }
         //Trial Submission
