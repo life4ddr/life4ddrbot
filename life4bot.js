@@ -145,15 +145,26 @@ function getDiscordLampIcon(lampname,callback){
 
 }; 
 
-function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
+
+//TODO - move this to function folder
+function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel)
 {
   //name_ex = ex score
   //name_minus = minus ex score
   //level = trial level
   //rankingview = view mapping for overall ranking
 
+  return new Promise((resolve) => {
+
   setTimeout( function(){
 
+
+    if (isDebug)
+    {
+      resolve("ex minus value returned");
+    }
+    else
+    {
     var returnedvalue;
 
 
@@ -733,12 +744,12 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel,callback)
     }
     
     
+    resolve(returnedvalue);
+  }
 
+}, 250);
 
-
-    callback(null,returnedvalue)
-
-}, 25);
+  });
 
 };
 
@@ -1371,20 +1382,32 @@ function getPlacementPostPlayerRank(userid,callback){
 
 //get player player_id
 //meta value 53 = user_fk
-function getTrialPostPlayerID(postid,callback){
+function getTrialPostPlayerID(postid){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_53'";
+      setTimeout( function(){
 
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      //console.log(results);
-      callback(null,results[0].meta_value)
+        if (isDebug)
+        {
+            resolve("Trial Player Post Returned successfully!");
+        }
+        else
+        {
+            var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_53'";
 
-    });
-    
-}, 25);
+            connection.query(getQuery, function (error, results) {
+              if (error) throw error;
+              //console.log(results);
+              resolve(results[0].meta_value);
+              //callback(null,results[0].meta_value)
+
+            });
+      }
+        
+    }, 250);
+
+});
 
 };
 
@@ -1409,20 +1432,31 @@ function getTrialPostName(postid,callback){
 
 //get trial title
 //meta value 46 = trial title
-function getTrialTitle(postid,callback){
+function getTrialTitle(postid){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_46'";
+      setTimeout( function(){
 
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      //console.log(results);
-      callback(null,results[0].meta_value)
+        if (isDebug)
+        {
+          resolve("Trial Title");
+        }
+        else
+        {
+        var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_46'";
 
-    });
-    
-}, 25);
+        connection.query(getQuery, function (error, results) {
+          if (error) throw error;
+          //console.log(results);
+          //callback(null,results[0].meta_value)
+          resolve(results[0].meta_value);
+
+        });
+      }
+        
+      }, 250);
+  });
 
 };
 
@@ -1504,37 +1538,59 @@ function getProfileDiscordHandle(playerid){
 };
 
 
-function getTrialEXMinusfromMapping(user_id,mappingvalue,callback){
+function getTrialEXMinusfromMapping(user_id,mappingvalue){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    var trialquery = "select meta_value from wp_kikf_usermeta where meta_key='"+mappingvalue+"' and user_id="+user_id+"";
+        setTimeout( function(){
+
+          if (isDebug)
+          {
+            resolve("EX Value returned!");
+          }
+          else
+          {
+              var trialquery = "select meta_value from wp_kikf_usermeta where meta_key='"+mappingvalue+"' and user_id="+user_id+"";
 
 
-    connection.query(trialquery, function (error, results) {
-      if (error) throw error;
-      callback(null,results[0].meta_value)
+              connection.query(trialquery, function (error, results) {
+                if (error) throw error;
+                //callback(null,results[0].meta_value)
+                resolve(results[0].meta_value);
 
-    });
-    
-}, 25);
+              });
+          }
+          
+      }, 250);
+
+  });
 
 }
 
-function getTrialEXfromMapping(user_id,mappingvalue,callback){
+function getTrialEXfromMapping(user_id,mappingvalue){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    var trialquery = "select meta_value from wp_kikf_usermeta where meta_key='"+mappingvalue+"' and user_id="+user_id+"";
+      setTimeout( function(){
+
+        if (isDebug)
+        {
+          resolve("EX Value! is returned");
+        }
+        else
+        {
+            var trialquery = "select meta_value from wp_kikf_usermeta where meta_key='"+mappingvalue+"' and user_id="+user_id+"";
 
 
-    connection.query(trialquery, function (error, results) {
-      if (error) throw error;
-      callback(null,results[0].meta_value)
+            connection.query(trialquery, function (error, results) {
+              if (error) throw error;
+              resolve(results[0].meta_value)
+            });
+        }
+        
+    }, 250);
 
-    });
-    
-}, 25);
+  });
 
 }
 
@@ -2227,25 +2283,25 @@ function LIFE4sequence()
       {
         console.log("Trial Submission!");
         //get player player_id
-        var playerid=wait.for(getTrialPostPlayerID,post_id);
-        console.log("Player ID: " + playerid);
+        //var playerid=wait.for(getTrialPostPlayerID,post_id);
+        //console.log("Player ID: " + playerid);
         //get Trial Title
-        var trialtitle=wait.for(getTrialTitle,post_id);
-        console.log("Trial Title: " + trialtitle);
+        //var trialtitle=wait.for(getTrialTitle,post_id);
+        //console.log("Trial Title: " + trialtitle);
 
         // Get trial ex minus mapping
-        var trialexscoreexminusmapping=wait.for(getTrialMetaKeyFieldNameOrLevel,trialtitle,"name_minus");
-        console.log("Ex Minus Mapping: " + trialexscoreexminusmapping);
+        //var trialexscoreexminusmapping=wait.for(getTrialMetaKeyFieldNameOrLevel,trialtitle,"name_minus");
+        //console.log("Ex Minus Mapping: " + trialexscoreexminusmapping);
         //Get EX from Mapping
-        var trialExMinusScore=wait.for(getTrialEXMinusfromMapping,playerid,trialexscoreexminusmapping);
-        console.log("Actual Minus EX: " + trialExMinusScore);
+        //var trialExMinusScore=wait.for(getTrialEXMinusfromMapping,playerid,trialexscoreexminusmapping);
+        //console.log("Actual Minus EX: " + trialExMinusScore);
 
         // Get trial ex score mapping
-        var trialexscoreexmapping=wait.for(getTrialMetaKeyFieldNameOrLevel,trialtitle,"name_ex");
-        console.log("Ex  Mapping: " + trialexscoreexmapping);
+        //var trialexscoreexmapping=wait.for(getTrialMetaKeyFieldNameOrLevel,trialtitle,"name_ex");
+        //console.log("Ex  Mapping: " + trialexscoreexmapping);
         //Get EX from Mapping
-        var trialExScore=wait.for(getTrialEXfromMapping,playerid,trialexscoreexmapping);
-        console.log("Actual EX: " + trialExScore);
+        //var trialExScore=wait.for(getTrialEXfromMapping,playerid,trialexscoreexmapping);
+        //console.log("Actual EX: " + trialExScore);
 
         //Get trial level
         var trialscorelevel=wait.for(getTrialMetaKeyFieldNameOrLevel,trialtitle,"level");
@@ -2461,7 +2517,21 @@ async function MainLIFE4Sequence()
         //Trial Submission
         else if (queue_type == "Trial Submission")
         {
+          //Get player information for trial submission
+          var player_id = await getTrialPostPlayerID(post_id);
+          console.log("Player ID: " + player_id);
 
+          //Get trial information related to trial submission
+          var trial_title = await getTrialTitle(post_id);
+          console.log("Trial Title: " + trial_title);
+          var trial_ex_score_minus_mapping = await getTrialMetaKeyFieldNameOrLevel(trial_title,"name_minus");
+          console.log("EX Minus Mapping: " + trial_ex_score_minus_mapping);
+          var trial_ex_minus_score = await getTrialEXMinusfromMapping(player_id,trial_ex_score_minus_mapping);
+          console.log("Minus EX: " + trial_ex_minus_score);
+          var trial_ex_score_ex_mapping = await getTrialMetaKeyFieldNameOrLevel(trial_title,"name_ex");
+          console.log("EX Mapping: " + trial_ex_score_ex_mapping);
+          var trial_ex_score = await getTrialEXfromMapping(player_id,trial_ex_score_ex_mapping);
+          console.log("Actual EX: " + trial_ex_score);
         }
         //Placement
         else if (queue_type == "Placement")
