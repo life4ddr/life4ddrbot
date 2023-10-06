@@ -1413,20 +1413,32 @@ function getTrialPostPlayerID(postid){
 
 //get player name
 //meta value 54 = name
-function getTrialPostName(postid,callback){
+function getTrialPostName(postid){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_54'";
+        setTimeout( function(){
 
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      //console.log(results);
-      callback(null,results[0].meta_value)
 
-    });
-    
-}, 25);
+          if (isDebug)
+          {
+            resolve("Test Name");
+          }
+          else
+          {
+
+              var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_54'";
+
+              connection.query(getQuery, function (error, results) {
+                if (error) throw error;
+                resolve(results[0].meta_value);
+
+              });
+          }
+          
+      }, 250);
+
+  });
 
 };
 
@@ -2304,12 +2316,12 @@ function LIFE4sequence()
         //console.log("Actual EX: " + trialExScore);
 
         //Get trial level
-        var trialscorelevel=wait.for(getTrialMetaKeyFieldNameOrLevel,trialtitle,"level");
-        console.log("Level Mapping: " + trialscorelevel);
+        //var trialscorelevel=wait.for(getTrialMetaKeyFieldNameOrLevel,trialtitle,"level");
+        //console.log("Level Mapping: " + trialscorelevel);
 
         //get player name
-        var playername=wait.for(getTrialPostName,post_id);
-        console.log("Player Name: " + playername);
+        //var playername=wait.for(getTrialPostName,post_id);
+        //console.log("Player Name: " + playername);
 
         //get Trial Rank
         var trialrank=wait.for(getTrialRank,post_id);
@@ -2520,6 +2532,8 @@ async function MainLIFE4Sequence()
           //Get player information for trial submission
           var player_id = await getTrialPostPlayerID(post_id);
           console.log("Player ID: " + player_id);
+          var player_name = await getTrialPostName(post_id);
+          console.log("Player name: " + player_name);
 
           //Get trial information related to trial submission
           var trial_title = await getTrialTitle(post_id);
@@ -2532,6 +2546,11 @@ async function MainLIFE4Sequence()
           console.log("EX Mapping: " + trial_ex_score_ex_mapping);
           var trial_ex_score = await getTrialEXfromMapping(player_id,trial_ex_score_ex_mapping);
           console.log("Actual EX: " + trial_ex_score);
+          var trial_score_level = await getTrialMetaKeyFieldNameOrLevel(trial_title,"level");
+          console.log("Trial Level: " + trial_score_level);
+
+
+
         }
         //Placement
         else if (queue_type == "Placement")
