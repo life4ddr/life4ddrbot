@@ -1474,20 +1474,31 @@ function getTrialTitle(postid){
 
 //get trial title
 //meta value 46 = trial title
-function getTrialRank(postid,callback){
+function getTrialRank(postid){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_49'";
+      setTimeout( function(){
 
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      //console.log(results);
-      callback(null,results[0].meta_value)
+        if (isDebug)
+        {
+            resolve("Diamond");
+        }
+        else
+        {
 
-    });
-    
-}, 25);
+            var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_49'";
+
+            connection.query(getQuery, function (error, results) {
+              if (error) throw error;
+              resolve(results[0].meta_value);
+
+            });
+        }
+        
+    }, 250);
+
+  });
 
 };
 
@@ -1607,37 +1618,60 @@ function getTrialEXfromMapping(user_id,mappingvalue){
 }
 
 
-function setRankingVariable(callback){
+function setRankingVariable(){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    var trialquery = "set @ranking=0;";
+      setTimeout( function(){
+
+        if (isDebug)
+        {
+          resolve("sure!");
+        }
+        else
+        {
+          var trialquery = "set @ranking=0;";
 
 
-    connection.query(trialquery, function (error, results) {
-      if (error) throw error;
-      callback(null,results)
+          connection.query(trialquery, function (error, results) {
+            if (error) throw error;
+            resolve(results);
 
-    });
-    
-}, 25);
+          });
+
+        }
+        
+    }, 100);
+
+});
 
 }
 
-function getTrialUserRanking(user_id,viewmapping,callback){
+function getTrialUserRanking(user_id,viewmapping){
 
-  setTimeout( function(){
+  
+  return new Promise((resolve) => {
 
-    var trialquery = "select * from ( select @ranking:=@ranking+1 as 'ranking', username,user_id,trial_ex from "+viewmapping+" order by trial_ex desc ) as rankings where user_id="+user_id+"";
+      setTimeout( function(){
 
+        if (isDebug)
+        {
+          resolve("test! a #1");
+        }
+        else
+        {
+          var trialquery = "select * from ( select @ranking:=@ranking+1 as 'ranking', username,user_id,trial_ex from "+viewmapping+" order by trial_ex desc ) as rankings where user_id="+user_id+"";
 
-    connection.query(trialquery, function (error, results) {
-      if (error) throw error;
-      callback(null,results[0].ranking)
+          connection.query(trialquery, function (error, results) {
+            if (error) throw error;
+            resolve(results[0].ranking);
 
-    });
-    
-}, 25);
+          });
+        }
+        
+    }, 250);
+
+  });
 
 }
 
@@ -2324,26 +2358,26 @@ function LIFE4sequence()
         //console.log("Player Name: " + playername);
 
         //get Trial Rank
-        var trialrank=wait.for(getTrialRank,post_id);
-        console.log("Trial Rank: " + trialrank);
+        //var trialrank=wait.for(getTrialRank,post_id);
+        //console.log("Trial Rank: " + trialrank);
 
         //Get Trial # Ranking
         // Get mapping for ranking view
-        var mappingview=wait.for(getTrialMetaKeyFieldNameOrLevel,trialtitle,"rankingview");
-        console.log("Mapping View: " + mappingview);
+        //var mappingview=wait.for(getTrialMetaKeyFieldNameOrLevel,trialtitle,"rankingview");
+        //console.log("Mapping View: " + mappingview);
         //set var to 0 for rankings
-        var setvar=wait.for(setRankingVariable);
+        //var setvar=wait.for(setRankingVariable);
         //get rank # from list of ranked players
-        var trialnumberrankings=wait.for(getTrialUserRanking,playerid,mappingview);
-        console.log("# rank: " +trialnumberrankings);
+        //var trialnumberrankings=wait.for(getTrialUserRanking,playerid,mappingview);
+        //console.log("# rank: " +trialnumberrankings);
 
         //get player twitter handle
-        var playertwitter=wait.for(getProfileTwitterHandle,playerid);
-        console.log("Player Twitter Handle: " + playertwitter);
+        //var playertwitter=wait.for(getProfileTwitterHandle,playerid);
+        //console.log("Player Twitter Handle: " + playertwitter);
 
         //get player discord handle
-        var playerdiscord=wait.for(getProfileDiscordHandle,playerid);
-        console.log("Player Discord Handle: " + playerdiscord);
+        //var playerdiscord=wait.for(getProfileDiscordHandle,playerid);
+        //console.log("Player Discord Handle: " + playerdiscord);
 
         var twitterannounce = wait.for(announceUpdatePlayerTrialTwitter, playername, trialrank,trialExScore,"("+trialExMinusScore+")", playertwitter, trialtitle.toUpperCase() + " ("+trialscorelevel+")",trialnumberrankings);
         console.log("Twitter announcement complete!");
@@ -2353,15 +2387,15 @@ function LIFE4sequence()
 
 
         //Update record to "bot_announced"
-        var botannounceupdate = wait.for(updatedSubmissionToBotAnnounced, post_id);
-        console.log("post completed!");
+        //var botannounceupdate = wait.for(updatedSubmissionToBotAnnounced, post_id);
+        //console.log("post completed!");
 
         //wait a sec
-        console.log("waiting...");
-        var secwaited = wait.for(waitASec, 10000);
-        console.log("wait completed");
+        //console.log("waiting...");
+        //var secwaited = wait.for(waitASec, 10000);
+        //console.log("wait completed");
 
-        console.log("Done retrieving record!\n\n");
+        //console.log("Done retrieving record!\n\n");
 
       }
       //TODO: Badge Earned
@@ -2520,7 +2554,7 @@ async function MainLIFE4Sequence()
           var bot_announce_update = await updatedSubmissionToBotAnnounced(post_id);
           console.log("Post completed!");
 
-          //Wait...?
+          //Wait for processes to finish up
           console.log("Waiting for a minute to let the twitter/discord callbacks finish up...");
           var second_is_waited = await (waitASec,10000);
           console.log("\n\nDone retrieving record!\n\n");
@@ -2534,6 +2568,10 @@ async function MainLIFE4Sequence()
           console.log("Player ID: " + player_id);
           var player_name = await getTrialPostName(post_id);
           console.log("Player name: " + player_name);
+          var player_twitter = await getProfileTwitterHandle(player_id);
+          console.log("Player Twitter Handle: " + player_twitter);
+          var player_discord = await getProfileDiscordHandle(player_id);
+          console.log("Player Discord Handle: " + player_discord);
 
           //Get trial information related to trial submission
           var trial_title = await getTrialTitle(post_id);
@@ -2548,8 +2586,24 @@ async function MainLIFE4Sequence()
           console.log("Actual EX: " + trial_ex_score);
           var trial_score_level = await getTrialMetaKeyFieldNameOrLevel(trial_title,"level");
           console.log("Trial Level: " + trial_score_level);
+          var trial_rank = await getTrialRank(post_id);
+          console.log("Trial Rank: " + trial_rank)
 
+          //Get Trial # Ranking
+          var mapping_view = await getTrialMetaKeyFieldNameOrLevel(trial_title,"rankingview");
+          console.log("Mapping View: " + mapping_view);
+          var set_var = await setRankingVariable();
+          var trial_number_ranking = await getTrialUserRanking(player_id,mapping_view);
+          console.log("# rank: " + trial_number_ranking);
 
+          //Update Record
+          var bot_announce_update = await updatedSubmissionToBotAnnounced(post_id);
+          console.log("Post completed!");
+
+          //Wait for processes to finish up
+          console.log("Waiting for a minute to let the twitter/discord callbacks finish up...");
+          var second_is_waited = await (waitASec,10000);
+          console.log("\n\nDone retrieving record!\n\n");
 
         }
         //Placement
