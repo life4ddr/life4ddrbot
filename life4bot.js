@@ -1676,10 +1676,21 @@ function getTrialUserRanking(user_id,viewmapping){
 }
 
 
-function announceUpdatePlayerTrialTwitter(playerName, playerRank,playerScore,playerDiff,playerTwitterHandle,trialName,numberRank,callback)
+function announceUpdatePlayerTrialTwitter(playerName, playerRank,playerScore,playerDiff,playerTwitterHandle,trialName,numberRank)
 {
+
+  return new Promise((resolve) => {
+
   setTimeout( function(){
 
+
+    if (isDebug)
+    {
+      resolve("debug twitter announce done");
+
+    }
+    else
+    {
     var post = "";
     var isEvent = false;
     if (trialName == "HALLOWED (13)")
@@ -1737,10 +1748,13 @@ function announceUpdatePlayerTrialTwitter(playerName, playerRank,playerScore,pla
     });
 
 
-    callback(null,"done");
+    resolve("done!");
+  }
 
 
 }, 10000);
+
+  });
 
 }
 
@@ -2019,21 +2033,33 @@ function announceRRDiscordScore(playerName, playerscorecount,playerteam,playerso
 //TODO: Add Discord Handle
 function announceUpdatePlayerTrialDiscord(playerName, playerRank,playerScore,playerDiff,trialName, numberRank,callback)
 {
+
+  return new Promise((resolve) => {
+
   setTimeout( function(){
 
-    var discordpost = "";
-    
-    discordpost = playerName + "\n" + trialName + " - " + playerRank + " " + discordTrialIconFunction.getTrialDiscordIcon(playerRank) +"\nScore: " + playerScore + " EX " + playerDiff + "\nTrial Rank: #"+numberRank;
+    if (isDebug)
+    {
+      resolve("debug done!");
+    }
+    else
+    {
+        var discordpost = "";
+        
+        discordpost = playerName + "\n" + trialName + " - " + playerRank + " " + discordTrialIconFunction.getTrialDiscordIcon(playerRank) +"\nScore: " + playerScore + " EX " + playerDiff + "\nTrial Rank: #"+numberRank;
 
-    trialrankupchannel.send(discordpost)
-    //.then(message => console.log(discordpost))
-    .then(msg => { msg.react(discordTrialIconFunction.getTrialDiscordIcon(playerRank)) })
-    .catch(console.error);
+        trialrankupchannel.send(discordpost)
+        //.then(message => console.log(discordpost))
+        .then(msg => { msg.react(discordTrialIconFunction.getTrialDiscordIcon(playerRank)) })
+        .catch(console.error);
 
-    callback(null,"done");
+        resolve("done!");
+    }
 
 
 }, 750);
+
+  });
 
 }
 
@@ -2327,7 +2353,7 @@ function LIFE4sequence()
       //Trial Submission
       else if (queuetype == "Trial Submission")
       {
-        console.log("Trial Submission!");
+        //console.log("Trial Submission!");
         //get player player_id
         //var playerid=wait.for(getTrialPostPlayerID,post_id);
         //console.log("Player ID: " + playerid);
@@ -2379,11 +2405,11 @@ function LIFE4sequence()
         //var playerdiscord=wait.for(getProfileDiscordHandle,playerid);
         //console.log("Player Discord Handle: " + playerdiscord);
 
-        var twitterannounce = wait.for(announceUpdatePlayerTrialTwitter, playername, trialrank,trialExScore,"("+trialExMinusScore+")", playertwitter, trialtitle.toUpperCase() + " ("+trialscorelevel+")",trialnumberrankings);
-        console.log("Twitter announcement complete!");
+        //var twitterannounce = wait.for(announceUpdatePlayerTrialTwitter, playername, trialrank,trialExScore,"("+trialExMinusScore+")", playertwitter, trialtitle.toUpperCase() + " ("+trialscorelevel+")",trialnumberrankings);
+        //console.log("Twitter announcement complete!");
         //TODO: Add discord handle
-        var discordannounce = wait.for(announceUpdatePlayerTrialDiscord, playername, trialrank,trialExScore,trialExMinusScore, trialtitle.toUpperCase() + " ("+trialscorelevel+")",trialnumberrankings);
-        console.log("Discord announcement complete!");
+        //var discordannounce = wait.for(announceUpdatePlayerTrialDiscord, playername, trialrank,trialExScore,trialExMinusScore, trialtitle.toUpperCase() + " ("+trialscorelevel+")",trialnumberrankings);
+        //console.log("Discord announcement complete!");
 
 
         //Update record to "bot_announced"
@@ -2563,6 +2589,8 @@ async function MainLIFE4Sequence()
         //Trial Submission
         else if (queue_type == "Trial Submission")
         {
+          console.log("Starting trial submission flow...");
+
           //Get player information for trial submission
           var player_id = await getTrialPostPlayerID(post_id);
           console.log("Player ID: " + player_id);
@@ -2596,6 +2624,11 @@ async function MainLIFE4Sequence()
           var trial_number_ranking = await getTrialUserRanking(player_id,mapping_view);
           console.log("# rank: " + trial_number_ranking);
 
+          //Announcements
+          var twitter_announce = await announceUpdatePlayerTrialTwitter(player_name, trial_rank,trial_ex_score,"("+trial_ex_minus_score+")", player_twitter, trial_title.toUpperCase() + " ("+trial_score_level+")",trial_number_ranking)
+          var discord_announce = await announceUpdatePlayerTrialDiscord(player_name, trial_rank,trial_ex_score,trial_ex_minus_score, trial_title.toUpperCase() + " ("+trial_score_level+")",trial_number_ranking)
+          console.log("Announcements done!");
+
           //Update Record
           var bot_announce_update = await updatedSubmissionToBotAnnounced(post_id);
           console.log("Post completed!");
@@ -2609,7 +2642,11 @@ async function MainLIFE4Sequence()
         //Placement
         else if (queue_type == "Placement")
         {
+          console.log("Starting placement flow...");
 
+
+
+          
         }
         //Comprehensive Placement
         else if (queue_type == "Comprehensive Placement")
