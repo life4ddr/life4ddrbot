@@ -999,19 +999,31 @@ function getPostPlayerID(postid){
 
 //get placement player_id
 //meta value 58 = user_fk
-function getPlacementPostPlayerID(postid,callback){
+function getPlacementPostPlayerID(postid){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_58'";
+      setTimeout( function(){
 
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      callback(null,results[0].meta_value)
 
-    });
-    
-}, 25);
+        if (isDebug)
+        {
+          resolve("Debug player id");
+        }
+        else
+        {
+            var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_58'";
+
+            connection.query(getQuery, function (error, results) {
+              if (error) throw error;
+              resolve(results[0].meta_value);
+
+            });
+      }
+        
+    }, 25);
+
+  });
 
 };
 
@@ -1328,19 +1340,30 @@ function getCompPlacementPostPlayerID(postid,callback){
 
 //get placement player_id
 //meta value 59 = player name
-function getPlacementPostPlayerName(postid,callback){
+function getPlacementPostPlayerName(postid){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_59'";
+      setTimeout( function(){
 
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      callback(null,results[0].meta_value)
+        if (isDebug)
+        {
+            resolve("Debug Player Name");
+        }
+        else
+        {
+            var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_59'";
 
-    });
-    
-}, 25);
+            connection.query(getQuery, function (error, results) {
+              if (error) throw error;
+              resolve(results[0].meta_value);
+
+            });
+        }
+        
+    }, 25);
+
+  });
 
 };
 
@@ -1364,19 +1387,30 @@ function getCompPlacementPostPlayerName(postid,callback){
 
 //get placement player rank
 //use player profile as that is what got approved
-function getPlacementPostPlayerRank(userid,callback){
+function getPlacementPostPlayerRank(userid){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    var getQuery = "SELECT meta_value FROM wp_kikf_usermeta where user_id="+userid+" && meta_key='rank'";
+      setTimeout( function(){
 
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      callback(null,results[0].meta_value)
+        if (isDebug)
+        {
+          resolve("Debug player rank");
+        }
+        else
+        {
+            var getQuery = "SELECT meta_value FROM wp_kikf_usermeta where user_id="+userid+" && meta_key='rank'";
 
-    });
-    
-}, 25);
+            connection.query(getQuery, function (error, results) {
+              if (error) throw error;
+              resolve(results[0].meta_value);
+
+            });
+        }
+        
+    }, 25);
+
+  });
 
 };
 
@@ -1760,50 +1794,59 @@ function announceUpdatePlayerTrialTwitter(playerName, playerRank,playerScore,pla
 
 
 
-function announceNewPlayerTwitter(playerName, playerRank,playerTwitterHandle,callback)
+function announceNewPlayerTwitter(playerName, playerRank,playerTwitterHandle)
 {
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    var twitterpost ="";
-    if (playerTwitterHandle != "" && playerTwitterHandle != "undefined")
-    {
-      twitterpost = "Player " + playerName + " (" + playerTwitterHandle + ") has joined LIFE4! Their current rank is " + playerRank + "!";
-    }
-    else
-    {
-      twitterpost = "Player " + playerName + " has joined LIFE4! Their current rank is " + playerRank + "!";
-    }
+      setTimeout( function(){
 
-    //old
-    //var b64content = fs.readFileSync(getTwitterImageURL(playerRank), { encoding: 'base64' })
-    //new
-    var b64content = fs.readFileSync(twitterImageFunction.getTwitterImageURL(playerRank), { encoding: 'base64' });
-
-    
-
-    // get the new image media on twitter!
-    Twitter.post('media/upload', { media_data: b64content }, function (err, data, response) {
-      var mediaIdStr = data.media_id_string
-      var altText = "LIFE4 Player Rank"
-      var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
-    
-      Twitter.post('media/metadata/create', meta_params, function (err, data, response) {
-        if (!err) {
-          // post the tweet!
-          var params = { status: twitterpost.toString(), media_ids: [mediaIdStr] }
-    
-          Twitter.post('statuses/update', params, function (err, data, response) {
-            console.log(data)
-          })
+        if (isDebug)
+        {
+          resolve("debug done");
         }
-      })
-    })
+        else
+        {
+            var twitterpost ="";
+            if (playerTwitterHandle != "" && playerTwitterHandle != "undefined")
+            {
+              twitterpost = "Player " + playerName + " (" + playerTwitterHandle + ") has joined LIFE4! Their current rank is " + playerRank + "!";
+            }
+            else
+            {
+              twitterpost = "Player " + playerName + " has joined LIFE4! Their current rank is " + playerRank + "!";
+            }
+
+            //old
+            //var b64content = fs.readFileSync(getTwitterImageURL(playerRank), { encoding: 'base64' })
+            //new
+            var b64content = fs.readFileSync(twitterImageFunction.getTwitterImageURL(playerRank), { encoding: 'base64' });
+
+            
+
+            // get the new image media on twitter!
+            Twitter.post('media/upload', { media_data: b64content }, function (err, data, response) {
+              var mediaIdStr = data.media_id_string
+              var altText = "LIFE4 Player Rank"
+              var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
+            
+              Twitter.post('media/metadata/create', meta_params, function (err, data, response) {
+                if (!err) {
+                  // post the tweet!
+                  var params = { status: twitterpost.toString(), media_ids: [mediaIdStr] }
+            
+                  Twitter.post('statuses/update', params, function (err, data, response) {
+                    console.log(data)
+                  })
+                }
+              })
+            })
+
+            resolve("done");
+      }
 
 
-    callback(null,"done");
-
-
-}, 10000);
+    }, 10000);
+  });
 
 }
 
@@ -1952,50 +1995,35 @@ function announcePlayerRankupDiscord(playerName, playerRank)
 
 //TODO: Test discord announce
 //TODO: Re-enable twitter
-function announceNewPlayerDiscord(playerName, playerRank,playerDiscordHandle,callback)
+function announceNewPlayerDiscord(playerName, playerRank,playerDiscordHandle)
 {
-  setTimeout( function(){
 
-    /*
-    //test new
-    var discordpost="";
-    
-    if (playerDiscordHandle != "" && playerDiscordHandle != "undefined")
-    {
-      var userid = bot.users.find(u => u.tag === playerDiscordHandle).id;
-      var id = "<@" + userid + ">";
+  return new Promise((resolve) => {
 
-      discordpost = "Player " + playerName + " (" + id + ") has joined LIFE4! Their current rank is " + playerRank + "! Welcome! "+ getDiscordIcon(playerRank);
-    }
-    else
-    {
-      discordpost = "Player " + playerName + " has joined LIFE4! Their current rank is " + playerRank + "! Welcome! " + getDiscordIcon(playerRank);
-    }
+      setTimeout( function(){
 
-    const channel = bot.channels.find('name', 'rankups')
-    channel.send(discordpost)
-    .then(message => console.log(discordpost))
-    .catch(console.error);
+        if (isDebug)
+        {
+          resolve("debug done");
+        }
+        else
+        {
+          var discordpost = "Player " + playerName + " has joined LIFE4! Their current rank is " + playerRank + "! Welcome! " + discordIconFunction.getDiscordIcon(playerRank);
 
-    callback(null,"done");
-*/
+          
+          playerrankupchannel.send(discordpost)
+          //.then(message => console.log(discordpost))
+          .then(msg => { msg.react(discordIconFunction.getDiscordIcon(playerRank)) })
+          .catch(console.error);
+          
 
+          resolve("done");
 
-    //old
-    var discordpost = "Player " + playerName + " has joined LIFE4! Their current rank is " + playerRank + "! Welcome! " + discordIconFunction.getDiscordIcon(playerRank);
+        }
 
-    
-    playerrankupchannel.send(discordpost)
-    //.then(message => console.log(discordpost))
-    .then(msg => { msg.react(discordIconFunction.getDiscordIcon(playerRank)) })
-    .catch(console.error);
-    
+    }, 750); 
 
-    callback(null,"done");
-
-    
-
-}, 750);
+  });
 
 }
 
@@ -2201,42 +2229,42 @@ function LIFE4sequence()
       //Placement (New Player)
       else if (queuetype == "Placement")
       {
-        console.log("New Player - Placement!");
+        //console.log("New Player - Placement!");
         //get player id
-        var playerid=wait.for(getPlacementPostPlayerID,post_id);
-        console.log("Player ID: " + playerid);
+        //var playerid=wait.for(getPlacementPostPlayerID,post_id);
+        //console.log("Player ID: " + playerid);
 
         //get player name
-        var playername=wait.for(getPlacementPostPlayerName,post_id);
-        console.log("Player Name: " + playername);
+        //var playername=wait.for(getPlacementPostPlayerName,post_id);
+        //console.log("Player Name: " + playername);
 
         //get player rank
-        var playerrank=wait.for(getPlacementPostPlayerRank,playerid);
-        console.log("Player Rank: " + playerrank);
+        //var playerrank=wait.for(getPlacementPostPlayerRank,playerid);
+        //console.log("Player Rank: " + playerrank);
 
         //get player twitter handle
-        var playertwitter=wait.for(getProfileTwitterHandle,playerid);
-        console.log("Player Twitter Handle: " + playertwitter);        
+        //var playertwitter=wait.for(getProfileTwitterHandle,playerid);
+        //console.log("Player Twitter Handle: " + playertwitter);        
         //get player discord handle
-        var playerdiscord=wait.for(getProfileDiscordHandle,playerid);
-        console.log("Player Discord Handle: " + playerdiscord);
+        //var playerdiscord=wait.for(getProfileDiscordHandle,playerid);
+        //console.log("Player Discord Handle: " + playerdiscord);
 
 
-        var twitterannounce = wait.for(announceNewPlayerTwitter, playername, playerrank, playertwitter);
-        console.log("Twitter announcement complete!");
-        var discordannounce = wait.for(announceNewPlayerDiscord, playername, playerrank, playertwitter);
-        console.log("Discord announcement complete!");
+        //var twitterannounce = wait.for(announceNewPlayerTwitter, playername, playerrank, playertwitter);
+        //console.log("Twitter announcement complete!");
+        //var discordannounce = wait.for(announceNewPlayerDiscord, playername, playerrank, playertwitter);
+        //console.log("Discord announcement complete!");
 
         //Update record to "bot_announced"
-        var botannounceupdate = wait.for(updatedSubmissionToBotAnnounced, post_id);
-        console.log("post completed!");
+        //var botannounceupdate = wait.for(updatedSubmissionToBotAnnounced, post_id);
+        //console.log("post completed!");
 
         //wait a sec
-        console.log("waiting...");
-        var secwaited = wait.for(waitASec, 10000);
-        console.log("wait completed");
+        //console.log("waiting...");
+        //var secwaited = wait.for(waitASec, 10000);
+        //console.log("wait completed");
 
-        console.log("Done retrieving record!\n\n");
+        //console.log("Done retrieving record!\n\n");
 
       }
       else if (queuetype == "Comprehensive Placement")
@@ -2644,9 +2672,33 @@ async function MainLIFE4Sequence()
         {
           console.log("Starting placement flow...");
 
+          //Get player information
+          var player_id = await getPlacementPostPlayerID(post_id);
+          console.log("Player ID: " + player_id);
+          var player_name = await getPlacementPostPlayerName(post_id);
+          console.log("Player Name: " + player_name);
+          var player_rank = await getPlacementPostPlayerRank(player_id);
+          console.log("Player Rank: " + player_rank);
+          var player_twitter = await getProfileTwitterHandle(player_id);
+          console.log("Player Twitter Handle: " + player_twitter);
+          var player_discord = await getProfileDiscordHandle(player_id);
+          console.log("Player Discord Handle: " + player_discord);
 
+          //Announce on socials
+          var twitter_announce = await announceNewPlayerTwitter(player_name,player_rank,player_twitter);
+          console.log("Twitter announcement complete!");
+          var discord_announce = await announceNewPlayerDiscord(player_name,player_rank,player_discord);
+          console.log("Discord announcement complete!");
 
-          
+          //Update Record
+          var bot_announce_update = await updatedSubmissionToBotAnnounced(post_id);
+          console.log("Post completed!");
+
+          //Wait for processes to finish up
+          console.log("Waiting for a minute to let the twitter/discord callbacks finish up...");
+          var second_is_waited = await (waitASec,10000);
+          console.log("\n\nDone retrieving record!\n\n");
+
         }
         //Comprehensive Placement
         else if (queue_type == "Comprehensive Placement")
