@@ -1321,19 +1321,30 @@ function getRRSubmissionLamp(postid,callback){
 
 //get comp placement player_id
 //meta value 67 = user_fk
-function getCompPlacementPostPlayerID(postid,callback){
+function getCompPlacementPostPlayerID(postid){
 
-  setTimeout( function(){
 
-    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_67'";
+  return new Promise((resolve) => {
 
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      callback(null,results[0].meta_value)
+      setTimeout( function(){
 
-    });
-    
-}, 25);
+        if (isDebug)
+        {
+            resolve("Debug Player ID");
+        }
+        else
+        {
+            var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_67'";
+
+            connection.query(getQuery, function (error, results) {
+              if (error) throw error;
+              resolve(results[0].meta_value);
+            });
+      }
+        
+    }, 250);
+
+  });
 
 };
 
@@ -1369,19 +1380,30 @@ function getPlacementPostPlayerName(postid){
 
 //get comp placement player_id
 //meta value 68 = player name
-function getCompPlacementPostPlayerName(postid,callback){
+function getCompPlacementPostPlayerName(postid){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_68'";
+      setTimeout( function(){
 
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      callback(null,results[0].meta_value)
+        if (isDebug)
+        {
+          resolve("Debug Player Name");
+        }
+        else
+        {
+        var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_68'";
 
-    });
-    
-}, 25);
+        connection.query(getQuery, function (error, results) {
+          if (error) throw error;
+          resolve(results[0].meta_value);
+
+        });
+        }
+        
+    }, 250);
+
+  });
 
 };
 
@@ -2272,12 +2294,12 @@ function LIFE4sequence()
         console.log("New Player - Comprehensive Placement!");
 
         //get player id
-        var playerid=wait.for(getCompPlacementPostPlayerID,post_id);
-        console.log("Player ID: " + playerid);
+        //var playerid=wait.for(getCompPlacementPostPlayerID,post_id);
+        //console.log("Player ID: " + playerid);
 
         //get player name
-        var playername=wait.for(getCompPlacementPostPlayerName,post_id);
-        console.log("Player Name: " + playername);
+        //var playername=wait.for(getCompPlacementPostPlayerName,post_id);
+        //console.log("Player Name: " + playername);
 
         //get player rank
         var playerrank=wait.for(getPlacementPostPlayerRank,playerid);
@@ -2296,13 +2318,13 @@ function LIFE4sequence()
         console.log("Discord announcement complete!");
 
         //Update record to "bot_announced"
-        var botannounceupdate = wait.for(updatedSubmissionToBotAnnounced, post_id);
-        console.log("post completed!");
+        //var botannounceupdate = wait.for(updatedSubmissionToBotAnnounced, post_id);
+        //console.log("post completed!");
 
         //wait a sec
-        console.log("waiting...");
-        var secwaited = wait.for(waitASec, 10000);
-        console.log("wait completed");
+        //console.log("waiting...");
+        //var secwaited = wait.for(waitASec, 10000);
+        //console.log("wait completed");
 
         console.log("Done retrieving record!\n\n");
 
@@ -2703,6 +2725,24 @@ async function MainLIFE4Sequence()
         //Comprehensive Placement
         else if (queue_type == "Comprehensive Placement")
         {
+          console.log("Starting Comprehensive Placement flow...");
+
+          //Get player information
+          var player_id = await getCompPlacementPostPlayerID(post_id);
+          console.log("Player ID: " + player_id);
+          var player_name = await getCompPlacementPostPlayerName(post_id);
+          console.log("Player Name: " + player_name);
+
+
+
+          //Update Record
+          var bot_announce_update = await updatedSubmissionToBotAnnounced(post_id);
+          console.log("Post completed!");
+
+          //Wait for processes to finish up
+          console.log("Waiting for a minute to let the twitter/discord callbacks finish up...");
+          var second_is_waited = await (waitASec,10000);
+          console.log("\n\nDone retrieving record!\n\n");
 
         }
         //RR - Submit Score
