@@ -2114,391 +2114,6 @@ function announceUpdatePlayerTrialDiscord(playerName, playerRank,playerScore,pla
 }
 
 
-
-
-function LIFE4sequence()
-{
-  //connecting to DB
-  /*
-  connection = mysql.createConnection({
-    host     : process.env.MYSQLHOST,
-    user     : process.env.MYSQLUSER,
-    password : process.env.MYSQLPW,
-    database : process.env.MYSQLPLAYERDB
-  });
-
-  connection.connect();
-  */
-
-  //GET BOT STATUS
-  /*
-  var botStatus = "ON";
-  botStatus = wait.for(getBotStatus);
-  botStatus = botStatus[0].varValue;
-  */
-
-  //OFF
-  //
-  //
-  /*
-  if (botStatus =="OFF")
-  {
-    console.log("Bot is off! Nothing will run!");
-
-  }
-  //ERROR
-  //
-  //
-  else if (botStatus == "ERROR")
-  {
-    console.log("Bot is having issues! Bot will not run!");
-  }
-  */
-  //ON
-  //
-  //
-  if (botStatus == "ON")
-  {
-
-
-    /*
-    //get current time
-    var timedude = Date.now();
-    var timedude_supreme = new Date(timedude);
-    //get hours
-    var hoursdude = timedude_supreme.getHours();
-    console.log("TIME! It is " + hoursdude+ " UTC right now");
-
-    console.log("Bot is checking the new postID queue");
-
-    */
-
-    //pull count of approved records
-    //console.log("checking for new approved records")
-    //var queuecount=wait.for(getNumberOfApprovedForms);
-
-    //test
-    /*
-    var queuecount=wait.for(getNumberOfApprovedFormsWithType);
-    console.log(queuecount + " records found");
-    */
-
-    //check for UTC window
-    if (queuecount>0)// && (hoursdude > 13 || hoursdude < 4))
-    {
-      //connect to rankup channels
-      /*
-      var channelsdone=wait.for(connectToRankupChannels);
-      console.log("connected to channels!");
-      */
-
-      //get new record
-      /*
-      console.log("Starting check for new records!");
-      var nextapprovedvalues=wait.for(getNextApprovedQueue);
-      */
-
-      //sort into vars
-      /*
-      var post_id = nextapprovedvalues.post_id;
-      var queuetype = nextapprovedvalues.formtype;
-
-      console.log("post_id:" + post_id + " and queuetype: "+queuetype+"");
-      */
-
-      //Player Rankup
-      if (queuetype=="Rankup")
-      {
-            console.log("Player Rankup!");
-            //get player player_id
-            //var playerid=wait.for(getPostPlayerID,post_id);
-            //console.log("Player ID: " + playerid);
-            //get player name
-            //var playername=wait.for(getPostPlayerName,post_id);
-            //console.log("Player Name: " + playername);
-            //get player rank
-            //var playerrank=wait.for(getPostPlayerRank,post_id);
-            //console.log("Player Rank: " + playerrank);
-            //get player subrank
-            //var playersubrank=wait.for(getPostPlayerSubRank,post_id);
-            //console.log("Player Rank Number: " + playersubrank);
-            //get player twitter handle
-            //var playertwitter=wait.for(getProfileTwitterHandle,playerid);
-            //console.log("Player Twitter Handle: " + playertwitter);
-            //get player discord handle
-            //var playerdiscord=wait.for(getProfileDiscordHandle,playerid);
-            //console.log("Player Discord Handle: " + playerdiscord);
-
-            //messaging
-            //Twitter Message
-            //var twitterannounce = wait.for(announcePlayerRankupTwitter, playername, playerrank + " " + playersubrank, playertwitter);
-            //console.log("Twitter announcement complete!");
-            //Discord Message
-            //var discordannounce = wait.for(announcePlayerRankupDiscord, playername, playerrank + " " + playersubrank);
-            //console.log("Discord announcement complete!");
-          
-            //Update record to "bot_announced"
-            //var botannounceupdate = wait.for(updatedSubmissionToBotAnnounced, post_id);
-            //console.log("post completed!");
-
-            //wait a sec
-            //console.log("waiting...");
-            //var secwaited = wait.for(waitASec, 10000);
-            //console.log("wait completed");
-
-            //console.log("Done retrieving record!\n\n");
-      }
-      //Placement (New Player)
-      else if (queuetype == "Placement")
-      {
-        //console.log("New Player - Placement!");
-        //get player id
-        //var playerid=wait.for(getPlacementPostPlayerID,post_id);
-        //console.log("Player ID: " + playerid);
-
-        //get player name
-        //var playername=wait.for(getPlacementPostPlayerName,post_id);
-        //console.log("Player Name: " + playername);
-
-        //get player rank
-        //var playerrank=wait.for(getPlacementPostPlayerRank,playerid);
-        //console.log("Player Rank: " + playerrank);
-
-        //get player twitter handle
-        //var playertwitter=wait.for(getProfileTwitterHandle,playerid);
-        //console.log("Player Twitter Handle: " + playertwitter);        
-        //get player discord handle
-        //var playerdiscord=wait.for(getProfileDiscordHandle,playerid);
-        //console.log("Player Discord Handle: " + playerdiscord);
-
-
-        //var twitterannounce = wait.for(announceNewPlayerTwitter, playername, playerrank, playertwitter);
-        //console.log("Twitter announcement complete!");
-        //var discordannounce = wait.for(announceNewPlayerDiscord, playername, playerrank, playertwitter);
-        //console.log("Discord announcement complete!");
-
-        //Update record to "bot_announced"
-        //var botannounceupdate = wait.for(updatedSubmissionToBotAnnounced, post_id);
-        //console.log("post completed!");
-
-        //wait a sec
-        //console.log("waiting...");
-        //var secwaited = wait.for(waitASec, 10000);
-        //console.log("wait completed");
-
-        //console.log("Done retrieving record!\n\n");
-
-      }
-      else if (queuetype == "Comprehensive Placement")
-      {
-        console.log("New Player - Comprehensive Placement!");
-
-        //get player id
-        //var playerid=wait.for(getCompPlacementPostPlayerID,post_id);
-        //console.log("Player ID: " + playerid);
-
-        //get player name
-        //var playername=wait.for(getCompPlacementPostPlayerName,post_id);
-        //console.log("Player Name: " + playername);
-
-        //get player rank
-        var playerrank=wait.for(getPlacementPostPlayerRank,playerid);
-        console.log("Player Rank: " + playerrank);
-
-        //get player twitter handle
-        var playertwitter=wait.for(getProfileTwitterHandle,playerid);
-        console.log("Player Twitter Handle: " + playertwitter);      
-        //get player discord handle
-        var playerdiscord=wait.for(getProfileDiscordHandle,playerid);
-        console.log("Player Discord Handle: " + playerdiscord);
-
-        var twitterannounce = wait.for(announceNewPlayerTwitter, playername, playerrank, playertwitter);
-        console.log("Twitter announcement complete!");
-        var discordannounce = wait.for(announceNewPlayerDiscord, playername, playerrank, playertwitter);
-        console.log("Discord announcement complete!");
-
-        //Update record to "bot_announced"
-        //var botannounceupdate = wait.for(updatedSubmissionToBotAnnounced, post_id);
-        //console.log("post completed!");
-
-        //wait a sec
-        //console.log("waiting...");
-        //var secwaited = wait.for(waitASec, 10000);
-        //console.log("wait completed");
-
-        console.log("Done retrieving record!\n\n");
-
-      }
-      //RR Score Submission
-      else if (queuetype == "Submit Scores!")
-      {
-        console.log("RR Score submission!");
-
-        //commented out, uncomment for future RR events!
-
-        /*
-        //get player id
-        var playerid=wait.for(getRRsubmissionPlayerID,post_id);
-        console.log("Player ID: " + playerid);
-
-        //get player name
-        var playername=wait.for(getRRsubmissionPlayerName,post_id);
-        console.log("Player Name: " + playername);
-
-        //get rr song name
-        var songname=wait.for(getRRsubmissionTourneySongName,post_id);
-        console.log("Song Name: " + songname);
-
-        //get rr ex value
-        var songexvalue=wait.for(getRRSubmissionEXScore,post_id);
-        console.log("EX Value: " + songexvalue);
-
-        //get rr ex minus value
-        var songexminusvalue=wait.for(getRRMinusEXAmount,songexvalue,songname);
-        console.log("EX Minus Value: " + songexminusvalue);
-
-        //clean up ex string
-        var songexfinalvalues=wait.for(RRAddEXString,songexvalue,songexminusvalue);
-        console.log("Cleaned up EX String: " + songexfinalvalues);
-
-        //get rr letter grade
-        var songlettergrade=wait.for(getRRSubmissionLetterScore,post_id);
-        console.log("Letter Grade: " + songlettergrade);
-
-        //get rr lamp
-        var songlamp=wait.for(getRRSubmissionLamp,post_id);
-        console.log("Lamp: " + songlamp);
-        var lampdiscordicon=wait.for(getDiscordLampIcon,songlamp);
-        console.log(lampdiscordicon);
-
-        //get pb best
-        var pbbesttext=wait.for(getRRSubmissionPersonalBestText,post_id);
-        console.log("PB Best?: " + pbbesttext);
-
-        //get rr player team
-        var playerteamname=wait.for(getRRSubmissionPlayerTeamID,playerid);
-        console.log("Team Name: " + playerteamname);
-
-        //get rr player division
-        var playerdivision=wait.for(getRRSubmissionPlayerDivision,playerid);
-        console.log("Player Division: " + playerdivision);
-
-        //get all submissions
-        var postcount=wait.for(getRRAllPlayerSubmissions,playerid);
-        console.log("all posts:" + postcount);
-
-        //discord announce
-        var discordannounce = wait.for(announceRRDiscordScore, playername, postcount.length,playerteamname,songname,songexfinalvalues,songlettergrade,lampdiscordicon,pbbesttext,playerdivision);
-        console.log("Discord announcement complete!");
-        */
-
-
-        //update ALL records to "bot announced"
-        var botannounceupdate = wait.for(updateRRSubmissionsToBotAnnounced, post_id);//change to postcount
-        console.log("post completed!");
-
-        console.log("Done retrieving record!\n\n");
-
-      }
-      //Trial Submission
-      else if (queuetype == "Trial Submission")
-      {
-        //console.log("Trial Submission!");
-        //get player player_id
-        //var playerid=wait.for(getTrialPostPlayerID,post_id);
-        //console.log("Player ID: " + playerid);
-        //get Trial Title
-        //var trialtitle=wait.for(getTrialTitle,post_id);
-        //console.log("Trial Title: " + trialtitle);
-
-        // Get trial ex minus mapping
-        //var trialexscoreexminusmapping=wait.for(getTrialMetaKeyFieldNameOrLevel,trialtitle,"name_minus");
-        //console.log("Ex Minus Mapping: " + trialexscoreexminusmapping);
-        //Get EX from Mapping
-        //var trialExMinusScore=wait.for(getTrialEXMinusfromMapping,playerid,trialexscoreexminusmapping);
-        //console.log("Actual Minus EX: " + trialExMinusScore);
-
-        // Get trial ex score mapping
-        //var trialexscoreexmapping=wait.for(getTrialMetaKeyFieldNameOrLevel,trialtitle,"name_ex");
-        //console.log("Ex  Mapping: " + trialexscoreexmapping);
-        //Get EX from Mapping
-        //var trialExScore=wait.for(getTrialEXfromMapping,playerid,trialexscoreexmapping);
-        //console.log("Actual EX: " + trialExScore);
-
-        //Get trial level
-        //var trialscorelevel=wait.for(getTrialMetaKeyFieldNameOrLevel,trialtitle,"level");
-        //console.log("Level Mapping: " + trialscorelevel);
-
-        //get player name
-        //var playername=wait.for(getTrialPostName,post_id);
-        //console.log("Player Name: " + playername);
-
-        //get Trial Rank
-        //var trialrank=wait.for(getTrialRank,post_id);
-        //console.log("Trial Rank: " + trialrank);
-
-        //Get Trial # Ranking
-        // Get mapping for ranking view
-        //var mappingview=wait.for(getTrialMetaKeyFieldNameOrLevel,trialtitle,"rankingview");
-        //console.log("Mapping View: " + mappingview);
-        //set var to 0 for rankings
-        //var setvar=wait.for(setRankingVariable);
-        //get rank # from list of ranked players
-        //var trialnumberrankings=wait.for(getTrialUserRanking,playerid,mappingview);
-        //console.log("# rank: " +trialnumberrankings);
-
-        //get player twitter handle
-        //var playertwitter=wait.for(getProfileTwitterHandle,playerid);
-        //console.log("Player Twitter Handle: " + playertwitter);
-
-        //get player discord handle
-        //var playerdiscord=wait.for(getProfileDiscordHandle,playerid);
-        //console.log("Player Discord Handle: " + playerdiscord);
-
-        //var twitterannounce = wait.for(announceUpdatePlayerTrialTwitter, playername, trialrank,trialExScore,"("+trialExMinusScore+")", playertwitter, trialtitle.toUpperCase() + " ("+trialscorelevel+")",trialnumberrankings);
-        //console.log("Twitter announcement complete!");
-        //TODO: Add discord handle
-        //var discordannounce = wait.for(announceUpdatePlayerTrialDiscord, playername, trialrank,trialExScore,trialExMinusScore, trialtitle.toUpperCase() + " ("+trialscorelevel+")",trialnumberrankings);
-        //console.log("Discord announcement complete!");
-
-
-        //Update record to "bot_announced"
-        //var botannounceupdate = wait.for(updatedSubmissionToBotAnnounced, post_id);
-        //console.log("post completed!");
-
-        //wait a sec
-        //console.log("waiting...");
-        //var secwaited = wait.for(waitASec, 10000);
-        //console.log("wait completed");
-
-        //console.log("Done retrieving record!\n\n");
-
-      }
-      //TODO: Badge Earned
-      else if (queuetype == "Badge Earned")
-      {
-
-      }
-      //TODO: RR Score Improved
-      else if (queuetype == "RR Score Improved")
-      {
-
-      }
-
-
-
-    }
-
-
-  }
-  
-  
-connection.end();
-process.exit(0);
-}
-
-
-
 //Make a database connection
 function GetConnection(){
   return new Promise((resolve) => {
@@ -2732,8 +2347,18 @@ async function MainLIFE4Sequence()
           console.log("Player ID: " + player_id);
           var player_name = await getCompPlacementPostPlayerName(post_id);
           console.log("Player Name: " + player_name);
+          var player_twitter = await getProfileTwitterHandle(player_id);
+          console.log("Player Twitter Handle: " + player_twitter);
+          var player_discord = await getProfileDiscordHandle(player_id);
+          console.log("Player Discord Handle: " + player_discord);
+          var player_rank = await getPlacementPostPlayerRank(player_id);
+          console.log("Player Rank: " + player_rank);
 
-
+          //Announce on socials
+          var twitter_announce = await announceNewPlayerTwitter(player_name,player_rank,player_twitter);
+          console.log("Twitter announcement complete!");
+          var discord_announce = await announceNewPlayerDiscord(player_name,player_rank,player_discord);
+          console.log("Discord announcement complete!");
 
           //Update Record
           var bot_announce_update = await updatedSubmissionToBotAnnounced(post_id);
@@ -2748,6 +2373,76 @@ async function MainLIFE4Sequence()
         //RR - Submit Score
         else if (queue_type == "Submit Scores!")
         {
+          //carryover this over, this all needs to be updated if we reintroduce RR
+
+
+
+          //console.log("RR Score submission!");
+
+              //commented out, uncomment for future RR events!
+
+              /*
+              //get player id
+              var playerid=wait.for(getRRsubmissionPlayerID,post_id);
+              console.log("Player ID: " + playerid);
+
+              //get player name
+              var playername=wait.for(getRRsubmissionPlayerName,post_id);
+              console.log("Player Name: " + playername);
+
+              //get rr song name
+              var songname=wait.for(getRRsubmissionTourneySongName,post_id);
+              console.log("Song Name: " + songname);
+
+              //get rr ex value
+              var songexvalue=wait.for(getRRSubmissionEXScore,post_id);
+              console.log("EX Value: " + songexvalue);
+
+              //get rr ex minus value
+              var songexminusvalue=wait.for(getRRMinusEXAmount,songexvalue,songname);
+              console.log("EX Minus Value: " + songexminusvalue);
+
+              //clean up ex string
+              var songexfinalvalues=wait.for(RRAddEXString,songexvalue,songexminusvalue);
+              console.log("Cleaned up EX String: " + songexfinalvalues);
+
+              //get rr letter grade
+              var songlettergrade=wait.for(getRRSubmissionLetterScore,post_id);
+              console.log("Letter Grade: " + songlettergrade);
+
+              //get rr lamp
+              var songlamp=wait.for(getRRSubmissionLamp,post_id);
+              console.log("Lamp: " + songlamp);
+              var lampdiscordicon=wait.for(getDiscordLampIcon,songlamp);
+              console.log(lampdiscordicon);
+
+              //get pb best
+              var pbbesttext=wait.for(getRRSubmissionPersonalBestText,post_id);
+              console.log("PB Best?: " + pbbesttext);
+
+              //get rr player team
+              var playerteamname=wait.for(getRRSubmissionPlayerTeamID,playerid);
+              console.log("Team Name: " + playerteamname);
+
+              //get rr player division
+              var playerdivision=wait.for(getRRSubmissionPlayerDivision,playerid);
+              console.log("Player Division: " + playerdivision);
+
+              //get all submissions
+              var postcount=wait.for(getRRAllPlayerSubmissions,playerid);
+              console.log("all posts:" + postcount);
+
+              //discord announce
+              var discordannounce = wait.for(announceRRDiscordScore, playername, postcount.length,playerteamname,songname,songexfinalvalues,songlettergrade,lampdiscordicon,pbbesttext,playerdivision);
+              console.log("Discord announcement complete!");
+              */
+
+
+              //update ALL records to "bot announced"
+              //var botannounceupdate = wait.for(updateRRSubmissionsToBotAnnounced, post_id);//change to postcount
+              //console.log("post completed!");
+
+              //console.log("Done retrieving record!\n\n");
 
         }
 
@@ -2760,7 +2455,8 @@ async function MainLIFE4Sequence()
     }
 
   //TODO: Close Connection
-
+  connection.end();
+  process.exit(0);
 }
 
 
