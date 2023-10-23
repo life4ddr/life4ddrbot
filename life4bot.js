@@ -33,6 +33,7 @@ var twitterImageFunction = require('./image_icon_functions/getTwitterImageURL.js
 var twitterImageFunction = require('./image_icon_functions/getTwitterImageURL.js');
 var discordIconFunction = require('./image_icon_functions/getDiscordIcon.js');
 var discordTrialIconFunction = require('./image_icon_functions/getTrialDiscordIcon.js');
+var discordLampIconFunction = require('./image_icon_functions/getDiscordLampIcon.js');
 
 //twitter
 var twit = require('twit');
@@ -106,44 +107,6 @@ function waitASec(ms){
   });
 
 }
-
-
-function getDiscordLampIcon(lampname,callback){
-  setTimeout( function(){
-
-    var discordemoji="";
-    if (lampname == "Great Full Combo")
-    {
-      discordemoji = "<:GreatLamp:530924491522441217>, ";
-    }
-    else if (lampname == "LIFE4 Clear")
-    {
-      discordemoji = "<:RedLamp:530924491971493928>, ";
-    }
-    else if (lampname == "Perfect Full Combo")
-    {
-      discordemoji = "<:PerfectLamp:530924491870830592>, ";
-    }
-    else if (lampname == "Good Full Combo")
-    {
-      discordemoji = "<:GoodLamp:530924491824431113>, ";
-    }
-    else if (lampname == "Marvelous Full Combo")
-    {
-      discordemoji = "<:MarvelousLamp:530924491853791251>, ";
-    }
-    else
-    {
-      discordemoji="";
-    }
-    
-      callback(null,discordemoji);
-
-      
-    
-}, 25);
-
-}; 
 
 
 //TODO - move this to function folder
@@ -753,7 +716,7 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel)
 
 };
 
-function getBotStatus(callback){
+function getBotStatus(){
 
   return new Promise((resolve) => {
  
@@ -771,7 +734,6 @@ function getBotStatus(callback){
 
               connection.query(appStatus, function (error, results) {
                 if (error) throw error;
-                //callback(null,results)
                 resolve(results);
 
               });
@@ -787,7 +749,7 @@ function getBotStatus(callback){
 
 
 //gets COUNT of approved forms with type
-function getNumberOfApprovedFormsWithType(callback){
+function getNumberOfApprovedFormsWithType(){
 
 
   return new Promise((resolve) => {
@@ -817,7 +779,6 @@ function getNumberOfApprovedFormsWithType(callback){
 
               console.log(count);
               resolve(count);
-              //callback(null,count)
 
             });
 
@@ -835,9 +796,11 @@ function getNumberOfApprovedFormsWithType(callback){
 //use form_id to retrieve the form type from the form meta table
 function getNextApprovedQueue(){
 
-  setTimeout( function(){
 
-      return new Promise((resolve) => {
+  return new Promise((resolve) => {
+
+    setTimeout( function(){
+
 
           if (isDebug)
           {
@@ -891,8 +854,6 @@ function getPostPlayerName(postid){
 
               connection.query(getQuery, function (error, results) {
                 if (error) throw error;
-                //console.log(results);
-                //callback(null,results[0].meta_value)
                 resolve(results[0].meta_value);
               });
           }
@@ -922,8 +883,6 @@ function getPostPlayerRank(postid){
 
           connection.query(getQuery, function (error, results) {
             if (error) throw error;
-            //console.log(results);
-            //callback(null,results[0].meta_value)
             resolve(results[0].meta_value);
 
           });
@@ -953,8 +912,6 @@ function getPostPlayerSubRank(postid){
 
             connection.query(getQuery, function (error, results) {
               if (error) throw error;
-              //console.log(results);
-              //callback(null,results[0].meta_value)
               resolve(results[0].meta_value);
 
             });
@@ -983,8 +940,6 @@ function getPostPlayerID(postid){
 
               connection.query(getQuery, function (error, results) {
                 if (error) throw error;
-                //console.log(results);
-                //callback(null,results[0].meta_value)
                 resolve(results[0].meta_value)
 
               });
@@ -2413,7 +2368,7 @@ async function MainLIFE4Sequence()
               //get rr lamp
               var songlamp=wait.for(getRRSubmissionLamp,post_id);
               console.log("Lamp: " + songlamp);
-              var lampdiscordicon=wait.for(getDiscordLampIcon,songlamp);
+              var lampdiscordicon=wait.for(discordLampIconFunction.getDiscordLampIcon(songlamp));
               console.log(lampdiscordicon);
 
               //get pb best
