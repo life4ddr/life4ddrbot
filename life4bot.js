@@ -984,7 +984,9 @@ function getPlacementPostPlayerID(postid){
 
 //get RR submission player_id
 //meta value 185 = user_fk
-function getRRsubmissionPlayerID(postid,callback){
+function getRRsubmissionPlayerID(postid){
+
+  return new Promise((resolve) => {
 
   setTimeout( function(){
 
@@ -992,16 +994,20 @@ function getRRsubmissionPlayerID(postid,callback){
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
-      callback(null,results[0].meta_value)
+      resolve(results[0].meta_value)
 
     });
     
 }, 25);
 
+  });
+
 };
 
 //get RR all submissions for that player
-function getRRAllPlayerSubmissions(playerid,callback){
+function getRRAllPlayerSubmissions(playerid){
+
+  return new Promise((resolve) => {
 
   setTimeout( function(){
 
@@ -1017,18 +1023,22 @@ function getRRAllPlayerSubmissions(playerid,callback){
           postcount.push(results[i].post_id);
         }
       }      
-      
-      callback(null,postcount);
+      resolve(postcount);
 
     });
     
 }, 25);
 
+  });
+
 };
 
 //get RR submission player name
 //meta value 187 = user_fk
-function getRRsubmissionPlayerName(postid,callback){
+function getRRsubmissionPlayerName(postid){
+
+
+  return new Promise((resolve) => {
 
   setTimeout( function(){
 
@@ -1036,17 +1046,21 @@ function getRRsubmissionPlayerName(postid,callback){
 
     connection.query(getQuery, function (error, results) {
       if (error) throw error;
-      callback(null,results[0].meta_value)
+      resolve(results[0].meta_value);
 
     });
     
 }, 25);
 
+  });
+
 };
 
 //get RR song name
 //meta value 181 = rr song name
-function getRRsubmissionTourneySongName(postid,callback){
+function getRRsubmissionTourneySongName(postid){
+
+  return new Promise((resolve) => {
 
   setTimeout( function(){
 
@@ -1063,48 +1077,58 @@ function getRRsubmissionTourneySongName(postid,callback){
       {
         songcorrect = "Reach The Sky, Without You";
       } 
-      callback(null,songcorrect)
+      resolve(songcorrect);
 
     });
     
 }, 25);
+
+  });
 
 };
 
 //get RR song ex
 //meta value 190 = ex song value
-function getRRSubmissionEXScore(postid,callback){
+function getRRSubmissionEXScore(postid){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_190'";
+      setTimeout( function(){
 
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      callback(null,results[0].meta_value)
+        var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_190'";
 
-    });
-    
-}, 25);
+        connection.query(getQuery, function (error, results) {
+          if (error) throw error;
+          resolve(results[0].meta_value);
+
+        });
+        
+    }, 25);
+
+  });
 
 };
 
 //RR Add string to end of ex score
-function RRAddEXString(exvalue,minusexvalue,callback){
+function RRAddEXString(exvalue,minusexvalue){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-      var newstring = exvalue + " EX " + "(" + minusexvalue + ") ";
-      callback(null,newstring)
+        setTimeout( function(){
 
-    
-}, 25);
+            var newstring = exvalue + " EX " + "(" + minusexvalue + ") ";
+            resolve(newstring);
+      }, 25);
+
+  });
 
 };
 
 //get RR pb best
 //meta value 191 = song letter score
-function getRRSubmissionPersonalBestText(postid,callback){
+function getRRSubmissionPersonalBestText(postid){
+
+  return new Promise((resolve) => {
 
   setTimeout( function(){
 
@@ -1121,17 +1145,21 @@ function getRRSubmissionPersonalBestText(postid,callback){
       {
         returnedString="";
       }
-      callback(null,returnedString)
+      resolve(returnedString);
 
     });
     
 }, 25);
 
+  });
+
 };
 
 //get RR song letter score
 //meta value 189 = song letter score
-function getRRSubmissionLetterScore(postid,callback){
+function getRRSubmissionLetterScore(postid){
+
+  return new Promise((resolve) => {
 
   setTimeout( function(){
 
@@ -1154,17 +1182,22 @@ function getRRSubmissionLetterScore(postid,callback){
         lettervalue=results[0].meta_value+", ";
       }
 
-      
-      callback(null,lettervalue)
+      resolve(lettervalue);
 
     });
     
 }, 25);
 
+  });
+
 };
 
+//TODO: Add this to its own function
 //get RR -EX
-function getRRMinusEXAmount(examount,songname,callback){
+function getRRMinusEXAmount(examount,songname){
+
+
+  return new Promise((resolve) => {
 
   setTimeout( function(){
 
@@ -1213,64 +1246,78 @@ function getRRMinusEXAmount(examount,songname,callback){
       console.log(totalexforsong);
       console.log(minusexamount);
 
-      callback(null,minusexamount)
+      resolve(minusexamount);
 
     
 }, 25);
+
+  });
 
 };
 
 //get RR player team
-function getRRSubmissionPlayerTeamID(playerid,callback){
+function getRRSubmissionPlayerTeamID(playerid){
+
+  return new Promise((resolve) => {
 
   setTimeout( function(){
 
-    var getQuery = "select rank_royale_team from wp_rr_rankings where user_id="+playerid+" limit 1";
+        var getQuery = "select rank_royale_team from wp_rr_rankings where user_id="+playerid+" limit 1";
 
 
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      callback(null,results[0].rank_royale_team)
+        connection.query(getQuery, function (error, results) {
+          if (error) throw error;
+          resolve(results[0].rank_royale_team);
 
-    });
-    
-}, 25);
+        });
+        
+    }, 25);
+
+  });
 
 };
 
 //get RR player division
-function getRRSubmissionPlayerDivision(playerid,callback){
+function getRRSubmissionPlayerDivision(playerid){
+
+  return new Promise((resolve) => {
 
   setTimeout( function(){
 
-    var getQuery = "select rank_royale_division from wp_rr_rankings where user_id="+playerid+" limit 1";
+        var getQuery = "select rank_royale_division from wp_rr_rankings where user_id="+playerid+" limit 1";
 
 
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      callback(null,results[0].rank_royale_division)
+        connection.query(getQuery, function (error, results) {
+          if (error) throw error;
+          resolve(results[0].rank_royale_division);
 
-    });
-    
-}, 25);
+        });
+        
+    }, 25);
+
+  });
 
 };
 
 //get RR player team id
 //meta value 188 = song letter score
-function getRRSubmissionLamp(postid,callback){
+function getRRSubmissionLamp(postid){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_188'";
+      setTimeout( function(){
 
-    connection.query(getQuery, function (error, results) {
-      if (error) throw error;
-      callback(null,results[0].meta_value)
+        var getQuery = "select meta_value from wp_kikf_postmeta where post_id="+postid+" and meta_key='_field_188'";
 
-    });
-    
-}, 25);
+        connection.query(getQuery, function (error, results) {
+          if (error) throw error;
+          resolve(results[0].meta_value);
+
+        });
+        
+    }, 25);
+
+  });
 
 };
 
@@ -1828,19 +1875,23 @@ function announceNewPlayerTwitter(playerName, playerRank,playerTwitterHandle)
 }
 
 
-function updateRRSubmissionsToBotAnnounced(postlist,callback){
+function updateRRSubmissionsToBotAnnounced(postlist){
 
-  setTimeout( function(){
+  return new Promise((resolve) => {
 
-    console.log("updating");
-    var updateall = "update wp_kikf_postmeta set meta_value='bot_announced' where meta_key='state' and meta_value='approved' and post_id in ("+postlist+")";
+      setTimeout( function(){
 
-    connection.query(updateall, function (error, results) {
-      if (error) throw error;
-      callback(null,results)
-    });
-    
-}, 25);
+        console.log("updating");
+        var updateall = "update wp_kikf_postmeta set meta_value='bot_announced' where meta_key='state' and meta_value='approved' and post_id in ("+postlist+")";
+
+        connection.query(updateall, function (error, results) {
+          if (error) throw error;
+          resolve(results);
+        });
+        
+    }, 25);
+
+  });
 
 }
 
@@ -2005,32 +2056,36 @@ function announceNewPlayerDiscord(playerName, playerRank,playerDiscordHandle)
 }
 
 
-function announceRRDiscordScore(playerName, playerscorecount,playerteam,playersong,playerexscore,playerlettergrade,playerlamp,pbbest,division,callback)
+function announceRRDiscordScore(playerName, playerscorecount,playerteam,playersong,playerexscore,playerlettergrade,playerlamp,pbbest,division)
 {
-  setTimeout( function(){
 
-    var discordpost;
+  return new Promise((resolve) => {
 
-    //if (playerscorecount==1)
-    //{
-      discordpost = playerName + " - " + playerteam + "\n"+playersong+" - Division "+ division+"\nScore: "+playerexscore + "\nBonuses: " + playerlettergrade  + playerlamp  + pbbest + "";
-    //}
-    //else
-    //{
-    //  discordpost = playerName + " has " + playerscorecount + " new rank royale scores!";
-    //}
+        setTimeout( function(){
+
+          var discordpost;
+
+          //if (playerscorecount==1)
+          //{
+            discordpost = playerName + " - " + playerteam + "\n"+playersong+" - Division "+ division+"\nScore: "+playerexscore + "\nBonuses: " + playerlettergrade  + playerlamp  + pbbest + "";
+          //}
+          //else
+          //{
+          //  discordpost = playerName + " has " + playerscorecount + " new rank royale scores!";
+          //}
 
 
-    
-    rankupsroyalechannel.send(discordpost)
-    .catch(console.error);
-    
+          
+          rankupsroyalechannel.send(discordpost)
+          .catch(console.error);
+          
+          resolve("done");
 
-    callback(null,"done");
+          
 
-    
+      }, 750);
 
-}, 750);
+  });
 
 }
 
