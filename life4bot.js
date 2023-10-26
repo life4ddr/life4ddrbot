@@ -2225,10 +2225,12 @@ async function MainLIFE4Sequence()
         //sort results into variables
         var post_id = next_approved_record.post_id;
         var queue_type = next_approved_record.formtype;
+        console.log("queue type: " + queue_type);
         console.log("post_id:" + post_id + " and queuetype: "+queue_type+"");
 
         //Player Rankup
         if (queue_type == "Rankup")
+        //if (isDebug)
         {
           //Get Player information for rankup
           console.log("Starting player rankup flow...");
@@ -2246,9 +2248,9 @@ async function MainLIFE4Sequence()
           console.log("Player Discord Handle: " + player_discord);
           
           //Perform Messaging
-          var twitter_announce = await announcePlayerRankupTwitter(player_name, playerrank + " " + playersubrank, player_twitter);
+          var twitter_announce = await announcePlayerRankupTwitter(player_name, player_rank + " " + player_sub_rank, player_twitter);
           console.log("Twitter announcement complete!");
-          var discord_announce = await announcePlayerRankupDiscord(player_name, playerrank + " " + playersubrank)
+          var discord_announce = await announcePlayerRankupDiscord(player_name, player_rank + " " + player_sub_rank)
           console.log("Discord announcement complete!");
 
           //Update Record
@@ -2465,8 +2467,8 @@ async function MainLIFE4Sequence()
     }
 
   //TODO: Close Connection
-  connection.end();
-  process.exit(0);
+  //connection.end();
+  //process.exit(0);
 }
 
 
