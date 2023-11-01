@@ -2239,7 +2239,7 @@ async function MainLIFE4Sequence()
           var player_name = await getPostPlayerName(post_id);
           console.log("Player Name: " + player_name);
           var player_rank = await getPostPlayerRank(post_id);
-          console.log("Player Rank" + player_rank);
+          console.log("Player Rank: " + player_rank);
           var player_sub_rank = await getPostPlayerSubRank(post_id);
           console.log("Player Rank Number: " + player_sub_rank);
           var player_twitter = await getProfileTwitterHandle(player_id);
