@@ -56,7 +56,7 @@ var mysql = require('mysql');
 var connection;
 
 //debug flag
-var isDebug = true;
+var isDebug = false;
 
 
 
@@ -2248,8 +2248,8 @@ async function MainLIFE4Sequence()
           console.log("Player Discord Handle: " + player_discord);
           
           //Perform Messaging
-          var twitter_announce = await announcePlayerRankupTwitter(player_name, player_rank + " " + player_sub_rank, player_twitter);
-          console.log("Twitter announcement complete!");
+          //var twitter_announce = await announcePlayerRankupTwitter(player_name, player_rank + " " + player_sub_rank, player_twitter);
+          //console.log("Twitter announcement complete!");
           var discord_announce = await announcePlayerRankupDiscord(player_name, player_rank + " " + player_sub_rank)
           console.log("Discord announcement complete!");
 
@@ -2265,6 +2265,7 @@ async function MainLIFE4Sequence()
         }
         //Trial Submission
         else if (queue_type == "Trial Submission")
+        //else if (isDebug)
         {
           console.log("Starting trial submission flow...");
 
@@ -2302,7 +2303,7 @@ async function MainLIFE4Sequence()
           console.log("# rank: " + trial_number_ranking);
 
           //Announcements
-          var twitter_announce = await announceUpdatePlayerTrialTwitter(player_name, trial_rank,trial_ex_score,"("+trial_ex_minus_score+")", player_twitter, trial_title.toUpperCase() + " ("+trial_score_level+")",trial_number_ranking)
+          //var twitter_announce = await announceUpdatePlayerTrialTwitter(player_name, trial_rank,trial_ex_score,"("+trial_ex_minus_score+")", player_twitter, trial_title.toUpperCase() + " ("+trial_score_level+")",trial_number_ranking)
           var discord_announce = await announceUpdatePlayerTrialDiscord(player_name, trial_rank,trial_ex_score,trial_ex_minus_score, trial_title.toUpperCase() + " ("+trial_score_level+")",trial_number_ranking)
           console.log("Announcements done!");
 
@@ -2318,6 +2319,7 @@ async function MainLIFE4Sequence()
         }
         //Placement
         else if (queue_type == "Placement")
+        //else if (isDebug)
         {
           console.log("Starting placement flow...");
 
@@ -2334,8 +2336,8 @@ async function MainLIFE4Sequence()
           console.log("Player Discord Handle: " + player_discord);
 
           //Announce on socials
-          var twitter_announce = await announceNewPlayerTwitter(player_name,player_rank,player_twitter);
-          console.log("Twitter announcement complete!");
+          //var twitter_announce = await announceNewPlayerTwitter(player_name,player_rank,player_twitter);
+          //console.log("Twitter announcement complete!");
           var discord_announce = await announceNewPlayerDiscord(player_name,player_rank,player_discord);
           console.log("Discord announcement complete!");
 
@@ -2351,6 +2353,7 @@ async function MainLIFE4Sequence()
         }
         //Comprehensive Placement
         else if (queue_type == "Comprehensive Placement")
+        //else if (isDebug)
         {
           console.log("Starting Comprehensive Placement flow...");
 
@@ -2367,8 +2370,8 @@ async function MainLIFE4Sequence()
           console.log("Player Rank: " + player_rank);
 
           //Announce on socials
-          var twitter_announce = await announceNewPlayerTwitter(player_name,player_rank,player_twitter);
-          console.log("Twitter announcement complete!");
+          //var twitter_announce = await announceNewPlayerTwitter(player_name,player_rank,player_twitter);
+          //console.log("Twitter announcement complete!");
           var discord_announce = await announceNewPlayerDiscord(player_name,player_rank,player_discord);
           console.log("Discord announcement complete!");
 
