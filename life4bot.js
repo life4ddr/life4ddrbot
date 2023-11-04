@@ -734,6 +734,7 @@ function getBotStatus(){
 
               connection.query(appStatus, function (error, results) {
                 if (error) throw error;
+                console.log(results);
                 resolve(results);
 
               });
