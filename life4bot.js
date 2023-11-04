@@ -2137,6 +2137,7 @@ function GetConnection(){
       }
       else
       {
+        console.log("Starting connection...");
         connection = mysql.createConnection({
           host     : process.env.MYSQLHOST,
           user     : process.env.MYSQLUSER,
@@ -2144,6 +2145,7 @@ function GetConnection(){
           database : process.env.MYSQLPLAYERDB
         });
         connection.connect();
+        console.log("Connection get!");
         resolve(connection);
       }
 
@@ -2184,9 +2186,13 @@ function GetCurrentHour(base_time){
 //
 async function MainLIFE4Sequence()
 {
+
+    console.log("Starting main sequence");
+
     //make connection
     connection = await GetConnection();
     //get bot status
+    console.log("Getting bot status..");
     const botStatus = await getBotStatus();
 
     //Bot error - end!
