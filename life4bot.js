@@ -66,7 +66,7 @@ var mysql = require('mysql');
 var connection;
 
 //debug flag
-var isDebug = true;
+var isDebug = false;
 
 
 
@@ -2168,17 +2168,6 @@ async function MainLIFE4Sequence()
         console.log("queue type: " + queue_type);
         console.log("post_id:" + post_id + " and queuetype: "+queue_type+"");
 
-        if (isDebug)
-        {
-          console.log("twitter?");
-          var image_url = await twitterTrialImageFunction.getTwitterTrialImageURL("CONFECTIONARY (12)","Silver")
-          var media_id = await twitterClient.v1.uploadMedia(image_url);
-          var twitter_post = await twitterClient.v2.tweet({
-            text: 'test',
-            media: { media_ids: [media_id] }
-          });
-          //await announceUpdatePlayerTrialTwitter("test","test","test","test","test","test","test");
-        }
 
         //Player Rankup
         if (queue_type == "Rankup")
