@@ -36,9 +36,19 @@ var discordTrialIconFunction = require('./image_icon_functions/getTrialDiscordIc
 var discordLampIconFunction = require('./image_icon_functions/getDiscordLampIcon.js');
 
 //twitter
-var twit = require('twit');
-var config = require('./config.js');
-var Twitter = new twit(config);
+//TODO: Remove library
+//var twit = require('twit');
+//var config = require('./config.js');
+//var Twitter = new twit(config);
+
+//twitter v2
+const {TwitterApi} = require('twitter-api-v2');
+const twitterClient = new TwitterApi({
+  appKey: process.env.CONSUMER_KEY,
+  appSecret: process.env.CONSUMER_SECRET,
+  accessToken: process.env.ACCESS_TOKEN,
+  accessSecret: process.env.ACCESS_TOKEN_SECRET
+});
 
 //discord
 var Discord = require('discord.js');
@@ -56,7 +66,7 @@ var mysql = require('mysql');
 var connection;
 
 //debug flag
-var isDebug = false;
+var isDebug = true;
 
 
 
@@ -1734,7 +1744,7 @@ function getTrialUserRanking(user_id,viewmapping){
 }
 
 
-function announceUpdatePlayerTrialTwitter(playerName, playerRank,playerScore,playerDiff,playerTwitterHandle,trialName,numberRank)
+function playerTrialTwitterPost(playerName, playerRank,playerScore,playerDiff,playerTwitterHandle,trialName,numberRank)
 {
 
   return new Promise((resolve) => {
@@ -1744,6 +1754,7 @@ function announceUpdatePlayerTrialTwitter(playerName, playerRank,playerScore,pla
 
     if (isDebug)
     {
+
       resolve("debug twitter announce done");
 
     }
@@ -1780,33 +1791,7 @@ function announceUpdatePlayerTrialTwitter(playerName, playerRank,playerScore,pla
     }
     console.log(trialName + "||" + playerRank);
     
-    //old
-    //var b64content = fs.readFileSync(getTwitterTrialImageURL(trialName,playerRank), { encoding: 'base64' })
-    //new
-    var b64content = fs.readFileSync(twitterTrialImageFunction.getTwitterTrialImageURL(trialName,playerRank), { encoding: 'base64' });
-    
-
-    // get the new image media on twitter!
-    
-    Twitter.post('media/upload', { media_data: b64content }, function (err, data, response) {
-      var mediaIdStr = data.media_id_string
-      var altText = "LIFE4 Trial rankup"
-      var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
-    
-      Twitter.post('media/metadata/create', meta_params, function (err, data, response) {
-        if (!err) {
-          // post the tweet!
-          var params = { status: post.toString(), media_ids: [mediaIdStr] }
-    
-          Twitter.post('statuses/update', params, function (err, data, response) {
-            console.log(data)
-          })
-        }
-      })
-    });
-
-
-    resolve("done!");
+    resolve(post);
   }
 
 
@@ -1818,7 +1803,7 @@ function announceUpdatePlayerTrialTwitter(playerName, playerRank,playerScore,pla
 
 
 
-function announceNewPlayerTwitter(playerName, playerRank,playerTwitterHandle)
+function newPlayerTwitterPost(playerName, playerRank,playerTwitterHandle)
 {
   return new Promise((resolve) => {
 
@@ -1840,30 +1825,6 @@ function announceNewPlayerTwitter(playerName, playerRank,playerTwitterHandle)
               twitterpost = "Player " + playerName + " has joined LIFE4! Their current rank is " + playerRank + "!";
             }
 
-            //old
-            //var b64content = fs.readFileSync(getTwitterImageURL(playerRank), { encoding: 'base64' })
-            //new
-            var b64content = fs.readFileSync(twitterImageFunction.getTwitterImageURL(playerRank), { encoding: 'base64' });
-
-            
-
-            // get the new image media on twitter!
-            Twitter.post('media/upload', { media_data: b64content }, function (err, data, response) {
-              var mediaIdStr = data.media_id_string
-              var altText = "LIFE4 Player Rank"
-              var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
-            
-              Twitter.post('media/metadata/create', meta_params, function (err, data, response) {
-                if (!err) {
-                  // post the tweet!
-                  var params = { status: twitterpost.toString(), media_ids: [mediaIdStr] }
-            
-                  Twitter.post('statuses/update', params, function (err, data, response) {
-                    console.log(data)
-                  })
-                }
-              })
-            })
 
             resolve("done");
       }
@@ -1925,7 +1886,7 @@ function updatedSubmissionToBotAnnounced(post_id){
 }
 
 
-function announcePlayerRankupTwitter(playerName, playerRank,playerTwitterHandle)
+function playerRankupTwitterPost(playerName, playerRank,playerTwitterHandle)
 {
 
   return new Promise((resolve) => {
@@ -1951,34 +1912,7 @@ function announcePlayerRankupTwitter(playerName, playerRank,playerTwitterHandle)
 
               console.log(twitterpost);
 
-              //old
-              //var b64content = fs.readFileSync(getTwitterImageURL(playerRank), { encoding: 'base64' })
-              //new
-              var b64content = fs.readFileSync(twitterImageFunction.getTwitterImageURL(playerRank), { encoding: 'base64' });       
-              
-              
-              // get the new image media on twitter!
-              
-
-              Twitter.post('media/upload', { media_data: b64content }, function (err, data, response) {
-                var mediaIdStr = data.media_id_string
-                var altText = "LIFE4 Player Rank"
-                var meta_params = { media_id: mediaIdStr, alt_text: { text: altText } }
-              
-                Twitter.post('media/metadata/create', meta_params, function (err, data, response) {
-                  if (!err) {
-                    // post the tweet!
-                    var params = { status: twitterpost.toString(), media_ids: [mediaIdStr] }
-              
-                    Twitter.post('statuses/update', params, function (err, data, response) {
-                      console.log(data)
-                    })
-                  }
-                })
-              })
-              
-
-              resolve("done!");
+              resolve(twitterpost);
         }
 
     }, 10000);
@@ -2234,6 +2168,18 @@ async function MainLIFE4Sequence()
         console.log("queue type: " + queue_type);
         console.log("post_id:" + post_id + " and queuetype: "+queue_type+"");
 
+        if (isDebug)
+        {
+          console.log("twitter?");
+          var image_url = await twitterTrialImageFunction.getTwitterTrialImageURL("CONFECTIONARY (12)","Silver")
+          var media_id = await twitterClient.v1.uploadMedia(image_url);
+          var twitter_post = await twitterClient.v2.tweet({
+            text: 'test',
+            media: { media_ids: [media_id] }
+          });
+          //await announceUpdatePlayerTrialTwitter("test","test","test","test","test","test","test");
+        }
+
         //Player Rankup
         if (queue_type == "Rankup")
         //if (isDebug)
@@ -2254,8 +2200,12 @@ async function MainLIFE4Sequence()
           console.log("Player Discord Handle: " + player_discord);
           
           //Perform Messaging
-          //var twitter_announce = await announcePlayerRankupTwitter(player_name, player_rank + " " + player_sub_rank, player_twitter);
-          //console.log("Twitter announcement complete!");
+          var twitter_message = await playerRankupTwitterPost(player_name,player_rank + " " + player_sub_rank,player_twitter);
+          var twitter_image = await twitterImageFunction.getTwitterImageURL(player_rank + " " + player_sub_rank);
+          var twitter_post = await twitterClient.v2.tweet({
+            text: twitter_message,
+            media: { media_ids: [twitter_image]}
+          });
           var discord_announce = await announcePlayerRankupDiscord(player_name, player_rank + " " + player_sub_rank)
           console.log("Discord announcement complete!");
 
@@ -2309,7 +2259,12 @@ async function MainLIFE4Sequence()
           console.log("# rank: " + trial_number_ranking);
 
           //Announcements
-          //var twitter_announce = await announceUpdatePlayerTrialTwitter(player_name, trial_rank,trial_ex_score,"("+trial_ex_minus_score+")", player_twitter, trial_title.toUpperCase() + " ("+trial_score_level+")",trial_number_ranking)
+          var twitter_message = await playerTrialTwitterPost(player_name,player_rank + " " + player_sub_rank,player_twitter);
+          var twitter_image = await twitterImageFunction.getTwitterTrialImageURL(trial_title,trial_rank);
+          var twitter_post = await twitterClient.v2.tweet({
+            text: twitter_message,
+            media: { media_ids: [twitter_image]}
+          });
           var discord_announce = await announceUpdatePlayerTrialDiscord(player_name, trial_rank,trial_ex_score,trial_ex_minus_score, trial_title.toUpperCase() + " ("+trial_score_level+")",trial_number_ranking)
           console.log("Announcements done!");
 
@@ -2342,8 +2297,12 @@ async function MainLIFE4Sequence()
           console.log("Player Discord Handle: " + player_discord);
 
           //Announce on socials
-          //var twitter_announce = await announceNewPlayerTwitter(player_name,player_rank,player_twitter);
-          //console.log("Twitter announcement complete!");
+          var twitter_message = await newPlayerTwitterPost(player_name,player_rank,player_twitter);
+          var twitter_image = await twitterImageFunction.getTwitterImageURL(player_rank);
+          var twitter_post = await twitterClient.v2.tweet({
+            text: twitter_message,
+            media: { media_ids: [twitter_image]}
+          });
           var discord_announce = await announceNewPlayerDiscord(player_name,player_rank,player_discord);
           console.log("Discord announcement complete!");
 
@@ -2376,8 +2335,12 @@ async function MainLIFE4Sequence()
           console.log("Player Rank: " + player_rank);
 
           //Announce on socials
-          //var twitter_announce = await announceNewPlayerTwitter(player_name,player_rank,player_twitter);
-          //console.log("Twitter announcement complete!");
+          var twitter_message = await newPlayerTwitterPost(player_name,player_rank,player_twitter);
+          var twitter_image = await twitterImageFunction.getTwitterImageURL(player_rank);
+          var twitter_post = await twitterClient.v2.tweet({
+            text: twitter_message,
+            media: { media_ids: [twitter_image]}
+          });
           var discord_announce = await announceNewPlayerDiscord(player_name,player_rank,player_discord);
           console.log("Discord announcement complete!");
 
