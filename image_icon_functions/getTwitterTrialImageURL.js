@@ -5,6 +5,7 @@ module.exports = {
        
         var twitterImageURL = "";
 
+        console.log("Get image for " + trial + " " + rank);
         //CONFECTIONARY (12)
       if (rank == "Silver" && trial == "CONFECTIONARY (12)")
       {
