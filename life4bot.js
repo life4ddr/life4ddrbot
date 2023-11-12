@@ -30,7 +30,6 @@ require('dotenv').config();
 //image/icon functions
 var twitterTrialImageFunction = require('./image_icon_functions/getTwitterTrialImageURL.js');
 var twitterImageFunction = require('./image_icon_functions/getTwitterImageURL.js');
-var twitterImageFunction = require('./image_icon_functions/getTwitterImageURL.js');
 var discordIconFunction = require('./image_icon_functions/getDiscordIcon.js');
 var discordTrialIconFunction = require('./image_icon_functions/getTrialDiscordIcon.js');
 var discordLampIconFunction = require('./image_icon_functions/getDiscordLampIcon.js');
@@ -2250,7 +2249,7 @@ async function MainLIFE4Sequence()
 
           //Announcements
           var twitter_message = await playerTrialTwitterPost(player_name,player_rank + " " + player_sub_rank,player_twitter);
-          var twitter_image = await twitterImageFunction.getTwitterTrialImageURL(trial_title,trial_rank);
+          var twitter_image = await twitterTrialImageFunction.getTwitterTrialImageURL(trial_title,trial_rank);
           var twitter_image_posted = await twitterClient.v1.uploadMedia(twitter_image);
           var twitter_post = await twitterClient.v2.tweet({
             text: twitter_message,
