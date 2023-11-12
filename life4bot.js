@@ -1770,22 +1770,22 @@ function playerTrialTwitterPost(playerName, playerRank,playerScore,playerDiff,pl
     {
       if (playerTwitterHandle != "" && playerTwitterHandle != "undefined")
       {
-        post = "Player " + playerName + " (" + playerTwitterHandle + ") scored " + playerScore + " EX " + playerDiff + " on the Limited Edition Trial " + trialName + " for a " + playerRank + " division rank of #"+numberRank+"!";
+        post = "Player " + playerName + " (" + playerTwitterHandle + ") scored " + playerScore + " EX (" + playerDiff + ") on the Limited Edition Trial " + trialName + " for a " + playerRank + " division rank of #"+numberRank+"!";
       }
       else
       {
-        post = "Player " + playerName + " scored " + playerScore + " EX " + playerDiff + " on the Limited Edition Trial " + trialName + " for a " + playerRank + " division rank of #"+numberRank+"!";
+        post = "Player " + playerName + " scored " + playerScore + " EX (" + playerDiff + ") on the Limited Edition Trial " + trialName + " for a " + playerRank + " division rank of #"+numberRank+"!";
       }
     }
     else if (isEvent == false)
     {
       if (playerTwitterHandle != "" && playerTwitterHandle != "undefined")
       {
-        post = "Player " + playerName + " (" + playerTwitterHandle + ") has earned the " + playerRank + " Trial Rank for " + trialName + " with " + playerScore + " EX " + playerDiff + " for a Trial Ranking of #"+numberRank+"!";
+        post = "Player " + playerName + " (" + playerTwitterHandle + ") has earned the " + playerRank + " Trial Rank for " + trialName + " with " + playerScore + " EX (" + playerDiff + ") for a Trial Ranking of #"+numberRank+"!";
       }
       else
       {
-        post = "Player " + playerName + " has earned the " + playerRank + " Trial Rank for " + trialName + " with " + playerScore + " EX " + playerDiff + " for a Trial Ranking of #"+numberRank+"!";
+        post = "Player " + playerName + " has earned the " + playerRank + " Trial Rank for " + trialName + " with " + playerScore + " EX (" + playerDiff + ") for a Trial Ranking of #"+numberRank+"!";
       }
     }
     console.log(trialName + "||" + playerRank);
