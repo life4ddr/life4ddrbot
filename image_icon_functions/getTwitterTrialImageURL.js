@@ -8,39 +8,39 @@ module.exports = {
         console.log("Get image for " + trial + " " + rank);
         
         //CONFECTIONARY (12)
-      if (rank == "Silver" && trial == "CONFECTIONARY (12)")
+      if (rank == "Silver" && (trial == "CONFECTIONARY (12)" || trial == "Confectionary"))
       {
         twitterImageURL = './trial_images/CONFECTIONARY/LIFE4_BotGraphic_Confectionary_Silver.webp';
       }
-      else if (rank == "Gold" && trial == "CONFECTIONARY (12)")
+      else if (rank == "Gold" && (trial == "CONFECTIONARY (12)" || trial == "Confectionary"))
       {
         twitterImageURL = './trial_images/CONFECTIONARY/LIFE4_BotGraphic_Confectionary_Gold.webp';
       }
-      else if (rank == "Diamond" && trial == "CONFECTIONARY (12)")
+      else if (rank == "Diamond" && (trial == "CONFECTIONARY (12)" || trial == "Confectionary"))
       {
         twitterImageURL = './trial_images/CONFECTIONARY/LIFE4_BotGraphic_Confectionary_Diamond.webp';
       }
-      else if (rank == "Cobalt" && trial == "CONFECTIONARY (12)")
+      else if (rank == "Cobalt" && (trial == "CONFECTIONARY (12)" || trial == "Confectionary"))
       {
         twitterImageURL = './trial_images/CONFECTIONARY/LIFE4_BotGraphic_Confectionary_Cobalt.webp';
       }
-      else if (rank == "Amethyst" && trial == "CONFECTIONARY (12)")
+      else if (rank == "Amethyst" && (trial == "CONFECTIONARY (12)" || trial == "Confectionary"))
       {
         twitterImageURL = './trial_images/CONFECTIONARY/LIFE4_BotGraphic_Confectionary_Amethyst.webp';
       }
-      else if (rank == "Emerald" && trial == "CONFECTIONARY (12)")
+      else if (rank == "Emerald" && (trial == "CONFECTIONARY (12)" || trial == "Confectionary"))
       {
         twitterImageURL = './trial_images/CONFECTIONARY/LIFE4_BotGraphic_Confectionary_Emerald.webp';
       }
-      else if (rank == "Platinum" && trial == "CONFECTIONARY (12)")
+      else if (rank == "Platinum" && (trial == "CONFECTIONARY (12)" || trial == "Confectionary"))
       {
         twitterImageURL = './trial_images/CONFECTIONARY/LIFE4_BotGraphic_Confectionary_Platinum.webp';
       }
-      else if (rank == "Onyx" && trial == "CONFECTIONARY (12)")
+      else if (rank == "Onyx" && (trial == "CONFECTIONARY (12)" || trial == "Confectionary"))
       {
         twitterImageURL = './trial_images/CONFECTIONARY/LIFE4_BotGraphic_Confectionary_Onyx.webp';
       }
-      else if (rank == "Pearl" && trial == "CONFECTIONARY (12)")
+      else if (rank == "Pearl" && (trial == "CONFECTIONARY (12)" || trial == "Confectionary"))
       {
         twitterImageURL = './trial_images/CONFECTIONARY/Confectionary Pearl.webp';
       }
