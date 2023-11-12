@@ -2248,7 +2248,7 @@ async function MainLIFE4Sequence()
           console.log("# rank: " + trial_number_ranking);
 
           //Announcements
-          var twitter_message = await playerTrialTwitterPost(player_name,player_rank + " " + player_sub_rank,player_twitter);
+          var twitter_message = await playerTrialTwitterPost(player_name,trial_rank,trial_ex_score,trial_ex_minus_score,player_twitter,trial_title,trial_number_ranking);
           var twitter_image = await twitterTrialImageFunction.getTwitterTrialImageURL(trial_title,trial_rank);
           var twitter_image_posted = await twitterClient.v1.uploadMedia(twitter_image);
           var twitter_post = await twitterClient.v2.tweet({
