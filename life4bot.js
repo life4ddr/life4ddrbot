@@ -1826,7 +1826,7 @@ function newPlayerTwitterPost(playerName, playerRank,playerTwitterHandle)
             }
 
 
-            resolve("done");
+            resolve(twitterpost);
       }
 
 
