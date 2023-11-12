@@ -2191,7 +2191,7 @@ async function MainLIFE4Sequence()
           //Perform Messaging
           var twitter_message = await playerRankupTwitterPost(player_name,player_rank + " " + player_sub_rank,player_twitter);
           var twitter_image = await twitterImageFunction.getTwitterImageURL(player_rank + " " + player_sub_rank);
-          var twitter_image_posted = twitterClient.v1.uploadMedia(twitter_image);
+          var twitter_image_posted = await twitterClient.v1.uploadMedia(twitter_image);
           var twitter_post = await twitterClient.v2.tweet({
             text: twitter_message,
             media: { media_ids: [twitter_image_posted]}
@@ -2251,7 +2251,7 @@ async function MainLIFE4Sequence()
           //Announcements
           var twitter_message = await playerTrialTwitterPost(player_name,player_rank + " " + player_sub_rank,player_twitter);
           var twitter_image = await twitterImageFunction.getTwitterTrialImageURL(trial_title,trial_rank);
-          var twitter_image_posted = twitterClient.v1.uploadMedia(twitter_image);
+          var twitter_image_posted = await twitterClient.v1.uploadMedia(twitter_image);
           var twitter_post = await twitterClient.v2.tweet({
             text: twitter_message,
             media: { media_ids: [twitter_image_posted]}
@@ -2290,7 +2290,7 @@ async function MainLIFE4Sequence()
           //Announce on socials
           var twitter_message = await newPlayerTwitterPost(player_name,player_rank,player_twitter);
           var twitter_image = await twitterImageFunction.getTwitterImageURL(player_rank);
-          var twitter_image_posted = twitterClient.v1.uploadMedia(twitter_image);
+          var twitter_image_posted = await twitterClient.v1.uploadMedia(twitter_image);
           var twitter_post = await twitterClient.v2.tweet({
             text: twitter_message,
             media: { media_ids: [twitter_image_posted]}
