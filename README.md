@@ -4,10 +4,9 @@ The purpose of this application is to announce rank up's, trial scores, and othe
 
 ## Roadmap/Wishlist
 
-### Welcome Messaging
-Update the logic so that the bot is listening to relevant channels and sending a welcome message when a new user joins the discord server
-### "Role Me" Logic
-Allow for a command that manually updates and syncs user roles based on a number of factors. This could include (but not limited to):
-- Roles related to a user's LIFE4 rank
-- Patreon roles
-- Rank Royale or specific event roles 
+### Discord mentions
+Mention a user in the discord announcement channels if they have a valid discord username
+
+### Auto role assignments
+Automatically update a user's discord role if their username matches
+

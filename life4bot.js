@@ -725,6 +725,22 @@ function getTrialMetaKeyFieldNameOrLevel(trialname,nameorlevel)
 
 };
 
+
+
+//Gets a player's discord "ID" from their handle (username)
+function GetDiscordUserID()
+{
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const user = bot.users.cache.find(u => u.username === 'stevesef')
+      console.log(user.id);
+      resolve(bot.users.cache.get("stevesef"));
+    });
+  });
+
+};
+
+
 function getBotStatus(){
 
   return new Promise((resolve) => {
@@ -2328,11 +2344,12 @@ async function MainLIFE4Sequence()
           //Announce on socials
           var twitter_message = await newPlayerTwitterPost(player_name,player_rank,player_twitter);
           var twitter_image = await twitterImageFunction.getTwitterImageURL(player_rank);
-          var twitter_image_posted = twitterClient.v1.uploadMedia(twitter_image);
+          var twitter_image_posted = await twitterClient.v1.uploadMedia(twitter_image);
           var twitter_post = await twitterClient.v2.tweet({
             text: twitter_message,
             media: { media_ids: [twitter_image_posted]}
           });
+          console.log("Twitter announcement complete!");
           var discord_announce = await announceNewPlayerDiscord(player_name,player_rank,player_discord);
           console.log("Discord announcement complete!");
 
