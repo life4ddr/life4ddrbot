@@ -3,6 +3,7 @@
 
 #dotenv
 .env
+./env
 
 #workspace
 life4workspace.code-workspace

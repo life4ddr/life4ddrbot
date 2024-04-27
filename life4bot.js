@@ -35,8 +35,7 @@ var discordTrialIconFunction = require('./image_icon_functions/getTrialDiscordIc
 var discordLampIconFunction = require('./image_icon_functions/getDiscordLampIcon.js');
 
 //twitter v2
-//re-add
-/*
+
 const {TwitterApi} = require('twitter-api-v2');
 const twitterClient = new TwitterApi({
   appKey: process.env.CONSUMER_KEY,
@@ -44,7 +43,7 @@ const twitterClient = new TwitterApi({
   accessToken: process.env.ACCESS_TOKEN,
   accessSecret: process.env.ACCESS_TOKEN_SECRET
 });
-*/
+
 
 //discord
 var Discord = require('discord.js');
@@ -2201,7 +2200,6 @@ async function MainLIFE4Sequence()
           console.log("Player Discord Handle: " + player_discord);
           
           //Perform Messaging
-          /*
           var twitter_message = await playerRankupTwitterPost(player_name,player_rank + " " + player_sub_rank,player_twitter);
           var twitter_image = await twitterImageFunction.getTwitterImageURL(player_rank + " " + player_sub_rank);
           var twitter_image_posted = await twitterClient.v1.uploadMedia(twitter_image);
@@ -2209,7 +2207,7 @@ async function MainLIFE4Sequence()
             text: twitter_message,
             media: { media_ids: [twitter_image_posted]}
           });
-          */
+
           var discord_announce = await announcePlayerRankupDiscord(player_name, player_rank + " " + player_sub_rank)
           console.log("Discord announcement complete!");
 
@@ -2263,7 +2261,6 @@ async function MainLIFE4Sequence()
           console.log("# rank: " + trial_number_ranking);
 
           //Announcements
-          /*
           var twitter_message = await playerTrialTwitterPost(player_name,trial_rank,trial_ex_score,trial_ex_minus_score,player_twitter,trial_title,trial_number_ranking);
           var twitter_image = await twitterTrialImageFunction.getTwitterTrialImageURL(trial_title,trial_rank);
           var twitter_image_posted = await twitterClient.v1.uploadMedia(twitter_image);
@@ -2272,7 +2269,7 @@ async function MainLIFE4Sequence()
             media: { media_ids: [twitter_image_posted]}
           });
           console.log("Twitter announcement complete!");
-          */
+
 
           var discord_announce = await announceUpdatePlayerTrialDiscord(player_name, trial_rank,trial_ex_score,trial_ex_minus_score, trial_title.toUpperCase() + " ("+trial_score_level+")",trial_number_ranking)
           console.log("Announcements done!");
@@ -2306,7 +2303,6 @@ async function MainLIFE4Sequence()
           console.log("Player Discord Handle: " + player_discord);
 
           //Announce on socials
-          /*
           var twitter_message = await newPlayerTwitterPost(player_name,player_rank,player_twitter);
           var twitter_image = await twitterImageFunction.getTwitterImageURL(player_rank);
           var twitter_image_posted = await twitterClient.v1.uploadMedia(twitter_image);
@@ -2315,7 +2311,6 @@ async function MainLIFE4Sequence()
             media: { media_ids: [twitter_image_posted]}
           });
           console.log("Twitter announcement complete!");
-          */
 
           var discord_announce = await announceNewPlayerDiscord(player_name,player_rank,player_discord);
           console.log("Discord announcement complete!");
