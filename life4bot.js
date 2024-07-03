@@ -17,8 +17,6 @@
 //TODO: ^ Auto disable bot
 //TODO: ^ Discord error messaging
 
-//TODO: Remove old trial folders - Heartbreak, Primal, Countdown, Origin
-
 //fs used for file loading / trial images
 const fs = require('fs');
 const readline = require('readline');
