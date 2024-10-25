@@ -33,7 +33,6 @@ var discordTrialIconFunction = require('./image_icon_functions/getTrialDiscordIc
 var discordLampIconFunction = require('./image_icon_functions/getDiscordLampIcon.js');
 
 //twitter v2
-
 const {TwitterApi} = require('twitter-api-v2');
 const twitterClient = new TwitterApi({
   appKey: process.env.CONSUMER_KEY,
@@ -54,9 +53,26 @@ var playerrankupchannel;
 var trialrankupchannel;
 var rankupsroyalechannel;
 
+async function blueskytest() {
+  const {Bot} = await import("@skyware/bot");
+  var bsky_bot = new Bot();
+  await bsky_bot.login({
+    identifier: process.env.BSKY_USERNAME,
+    password: process.env.BSKY_PASSWORD,
+  });
+  const post = await bsky_bot.post({
+    text:"test!"
+  });
+
+}
+
+blueskytest();
+
+
 //mysql
 var mysql = require('mysql');
 var connection;
+
 
 //debug flag
 var isDebug = false;
