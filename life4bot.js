@@ -53,6 +53,8 @@ var playerrankupchannel;
 var trialrankupchannel;
 var rankupsroyalechannel;
 
+
+/*
 async function blueskytest() {
   const {Bot} = await import("@skyware/bot");
   var bsky_bot = new Bot();
@@ -67,6 +69,8 @@ async function blueskytest() {
 }
 
 blueskytest();
+*/
+
 
 
 //mysql
@@ -1975,6 +1979,41 @@ function playerRankupTwitterPost(playerName, playerRank,playerTwitterHandle)
 
 }
 
+function playerRankupBlueskyPost(playerName, playerRank,playerBlueskyHandle)
+{
+
+  return new Promise((resolve) => {
+
+        setTimeout( function(){
+
+          if (isDebug)
+          {
+            resolve("I assure you, a posting was made");
+          }
+          else
+          {
+
+              var bskypost ="";
+              if (playerBlueskyHandle != "" && playerBlueskyHandle != "undefined")
+              {
+                bskypost = "Player " + playerName + " (" + playerBlueskyHandle + ") has earned a new rank! They are now " + playerRank +"! Congratulations! ";
+              }
+              else
+              {
+                bskypost = "Player " + playerName + " has earned a new rank! They are now " + playerRank +"! Congratulations! ";
+              }
+
+              console.log(bskypost);
+
+              resolve(bskypost);
+        }
+
+    }, 10000);
+
+  });
+
+}
+
 
 
 //TODO: Add Discord Handle
@@ -2256,9 +2295,16 @@ async function MainLIFE4Sequence()
           var discord_announce = await announcePlayerRankupDiscord(player_name, player_rank + " " + player_sub_rank)
           console.log("Discord announcement complete!");
 
-          //bsky get message
-          //bsky login
-          //bsky post
+          var bsky_message = await playerRankupBlueskyPost(player_name,player_rank + " " + player_sub_rank,player_bluesky);
+          const {Bot} = await import("@skyware/bot");
+          var bsky_bot = new Bot();
+          await bsky_bot.login({
+            identifier: process.env.BSKY_USERNAME,
+            password: process.env.BSKY_PASSWORD,
+          });
+          const bsky_post = await bsky_bot.post({
+            text:bsky_message
+          });
 
 
           //Update Record
@@ -2326,6 +2372,19 @@ async function MainLIFE4Sequence()
           var discord_announce = await announceUpdatePlayerTrialDiscord(player_name, trial_rank,trial_ex_score,trial_ex_minus_score, trial_title.toUpperCase() + " ("+trial_score_level+")",trial_number_ranking)
           console.log("Announcements done!");
 
+          /*
+          var bsky_message = await playerRankupBlueskyPost(player_name,player_rank + " " + player_sub_rank,player_bluesky);
+          const {Bot} = await import("@skyware/bot");
+          var bsky_bot = new Bot();
+          await bsky_bot.login({
+            identifier: process.env.BSKY_USERNAME,
+            password: process.env.BSKY_PASSWORD,
+          });
+          const bsky_post = await bsky_bot.post({
+            text:bsky_message
+          });
+          */
+
           //Update Record
           var bot_announce_update = await updatedSubmissionToBotAnnounced(post_id);
           console.log("Post completed!");
@@ -2369,6 +2428,19 @@ async function MainLIFE4Sequence()
           var discord_announce = await announceNewPlayerDiscord(player_name,player_rank,player_discord);
           console.log("Discord announcement complete!");
 
+          /*
+          var bsky_message = await playerRankupBlueskyPost(player_name,player_rank + " " + player_sub_rank,player_bluesky);
+          const {Bot} = await import("@skyware/bot");
+          var bsky_bot = new Bot();
+          await bsky_bot.login({
+            identifier: process.env.BSKY_USERNAME,
+            password: process.env.BSKY_PASSWORD,
+          });
+          const bsky_post = await bsky_bot.post({
+            text:bsky_message
+          });
+          */
+
           //Update Record
           var bot_announce_update = await updatedSubmissionToBotAnnounced(post_id);
           console.log("Post completed!");
@@ -2409,6 +2481,19 @@ async function MainLIFE4Sequence()
             media: { media_ids: [twitter_image_posted]}
           });
           console.log("Twitter announcement complete!");
+          */
+
+          /*
+          var bsky_message = await playerRankupBlueskyPost(player_name,player_rank + " " + player_sub_rank,player_bluesky);
+          const {Bot} = await import("@skyware/bot");
+          var bsky_bot = new Bot();
+          await bsky_bot.login({
+            identifier: process.env.BSKY_USERNAME,
+            password: process.env.BSKY_PASSWORD,
+          });
+          const bsky_post = await bsky_bot.post({
+            text:bsky_message
+          });
           */
           
           var discord_announce = await announceNewPlayerDiscord(player_name,player_rank,player_discord);
