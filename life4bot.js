@@ -2394,6 +2394,7 @@ async function MainLIFE4Sequence()
           const bsky_post = await bsky_bot.post({
             text:bsky_message
           });
+          console.log("Bluesky announcement complete!");
 
 
           //Update Record
@@ -2471,7 +2472,8 @@ async function MainLIFE4Sequence()
           const bsky_post = await bsky_bot.post({
             text:bsky_message
           });
-          
+          console.log("Bluesky announcement complete!");
+
 
           //Update Record
           var bot_announce_update = await updatedSubmissionToBotAnnounced(post_id);
@@ -2516,7 +2518,7 @@ async function MainLIFE4Sequence()
           var discord_announce = await announceNewPlayerDiscord(player_name,player_rank,player_discord);
           console.log("Discord announcement complete!");
 
-          var bsky_message = await newPlayerBlueskyPost(player_name,player_rank + " " + player_sub_rank,player_bluesky);
+          var bsky_message = await newPlayerBlueskyPost(player_name,player_rank,player_bluesky);
           const {Bot} = await import("@skyware/bot");
           var bsky_bot = new Bot();
           await bsky_bot.login({
@@ -2526,7 +2528,8 @@ async function MainLIFE4Sequence()
           const bsky_post = await bsky_bot.post({
             text:bsky_message
           });
-          
+          console.log("Bluesky announcement complete!");
+
 
           //Update Record
           var bot_announce_update = await updatedSubmissionToBotAnnounced(post_id);
@@ -2559,7 +2562,6 @@ async function MainLIFE4Sequence()
           console.log("Player Rank: " + player_rank);
 
           //Announce on socials
-          /*
           var twitter_message = await newPlayerTwitterPost(player_name,player_rank,player_twitter);
           var twitter_image = await twitterImageFunction.getTwitterImageURL(player_rank);
           var twitter_image_posted = await twitterClient.v1.uploadMedia(twitter_image);
@@ -2568,10 +2570,8 @@ async function MainLIFE4Sequence()
             media: { media_ids: [twitter_image_posted]}
           });
           console.log("Twitter announcement complete!");
-          */
 
-          /*
-          var bsky_message = await playerRankupBlueskyPost(player_name,player_rank + " " + player_sub_rank,player_bluesky);
+          var bsky_message = await newPlayerBlueskyPost(player_name,player_rank,player_bluesky);
           const {Bot} = await import("@skyware/bot");
           var bsky_bot = new Bot();
           await bsky_bot.login({
@@ -2581,7 +2581,8 @@ async function MainLIFE4Sequence()
           const bsky_post = await bsky_bot.post({
             text:bsky_message
           });
-          */
+          console.log("Bluesky announcement complete!");
+
           
           var discord_announce = await announceNewPlayerDiscord(player_name,player_rank,player_discord);
           console.log("Discord announcement complete!");
