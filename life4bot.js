@@ -1859,6 +1859,63 @@ function playerTrialTwitterPost(playerName, playerRank,playerScore,playerDiff,pl
 
 }
 
+function playerTrialBlueskyPost(playerName, playerRank,playerScore,playerDiff,playerBlueskyHandle,trialName,numberRank)
+{
+
+  return new Promise((resolve) => {
+
+  setTimeout( function(){
+
+
+    if (isDebug)
+    {
+
+      resolve("debug twitter announce done");
+
+    }
+    else
+    {
+    var post = "";
+    var isEvent = false;
+    if (trialName == "HALLOWED (13)")
+    {
+        isEvent = true;
+    }
+    
+    if (isEvent == true)
+    {
+      if (playerBlueskyHandle != "" && playerBlueskyHandle != "undefined")
+      {
+        post = "Player " + playerName + " (" + playerBlueskyHandle + ") scored " + playerScore + " EX (" + playerDiff + ") on the Limited Edition Trial " + trialName + " for a " + playerRank + " division rank of #"+numberRank+"!";
+      }
+      else
+      {
+        post = "Player " + playerName + " scored " + playerScore + " EX (" + playerDiff + ") on the Limited Edition Trial " + trialName + " for a " + playerRank + " division rank of #"+numberRank+"!";
+      }
+    }
+    else if (isEvent == false)
+    {
+      if (playerBlueskyHandle != "" && playerBlueskyHandle != "undefined")
+      {
+        post = "Player " + playerName + " (" + playerBlueskyHandle + ") has earned the " + playerRank + " Trial Rank for " + trialName + " with " + playerScore + " EX (" + playerDiff + ") for a Trial Ranking of #"+numberRank+"!";
+      }
+      else
+      {
+        post = "Player " + playerName + " has earned the " + playerRank + " Trial Rank for " + trialName + " with " + playerScore + " EX (" + playerDiff + ") for a Trial Ranking of #"+numberRank+"!";
+      }
+    }
+    console.log(trialName + "||" + playerRank);
+    
+    resolve(post);
+  }
+
+
+}, 10000);
+
+  });
+
+}
+
 
 
 function newPlayerTwitterPost(playerName, playerRank,playerTwitterHandle)
@@ -1877,6 +1934,38 @@ function newPlayerTwitterPost(playerName, playerRank,playerTwitterHandle)
             if (playerTwitterHandle != "" && playerTwitterHandle != "undefined")
             {
               twitterpost = "Player " + playerName + " (" + playerTwitterHandle + ") has joined LIFE4! Their current rank is " + playerRank + "!";
+            }
+            else
+            {
+              twitterpost = "Player " + playerName + " has joined LIFE4! Their current rank is " + playerRank + "!";
+            }
+
+
+            resolve(twitterpost);
+      }
+
+
+    }, 10000);
+  });
+
+}
+
+function newPlayerBlueskyPost(playerName, playerRank,playerBlueskyHandle)
+{
+  return new Promise((resolve) => {
+
+      setTimeout( function(){
+
+        if (isDebug)
+        {
+          resolve("debug done");
+        }
+        else
+        {
+            var twitterpost ="";
+            if (playerBlueskyHandle != "" && playerBlueskyHandle != "undefined")
+            {
+              twitterpost = "Player " + playerName + " (" + playerBlueskyHandle + ") has joined LIFE4! Their current rank is " + playerRank + "!";
             }
             else
             {
@@ -2372,8 +2461,7 @@ async function MainLIFE4Sequence()
           var discord_announce = await announceUpdatePlayerTrialDiscord(player_name, trial_rank,trial_ex_score,trial_ex_minus_score, trial_title.toUpperCase() + " ("+trial_score_level+")",trial_number_ranking)
           console.log("Announcements done!");
 
-          /*
-          var bsky_message = await playerRankupBlueskyPost(player_name,player_rank + " " + player_sub_rank,player_bluesky);
+          var bsky_message = await playerTrialBlueskyPost(player_name,trial_rank,trial_ex_score,trial_ex_minus_score,player_bluesky,trial_title,trial_number_ranking);
           const {Bot} = await import("@skyware/bot");
           var bsky_bot = new Bot();
           await bsky_bot.login({
@@ -2383,7 +2471,7 @@ async function MainLIFE4Sequence()
           const bsky_post = await bsky_bot.post({
             text:bsky_message
           });
-          */
+          
 
           //Update Record
           var bot_announce_update = await updatedSubmissionToBotAnnounced(post_id);
@@ -2428,8 +2516,7 @@ async function MainLIFE4Sequence()
           var discord_announce = await announceNewPlayerDiscord(player_name,player_rank,player_discord);
           console.log("Discord announcement complete!");
 
-          /*
-          var bsky_message = await playerRankupBlueskyPost(player_name,player_rank + " " + player_sub_rank,player_bluesky);
+          var bsky_message = await newPlayerBlueskyPost(player_name,player_rank + " " + player_sub_rank,player_bluesky);
           const {Bot} = await import("@skyware/bot");
           var bsky_bot = new Bot();
           await bsky_bot.login({
@@ -2439,7 +2526,7 @@ async function MainLIFE4Sequence()
           const bsky_post = await bsky_bot.post({
             text:bsky_message
           });
-          */
+          
 
           //Update Record
           var bot_announce_update = await updatedSubmissionToBotAnnounced(post_id);
