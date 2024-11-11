@@ -1629,7 +1629,7 @@ function getProfileTwitterHandle(playerid){
 
 };
 
-//get player twitter handle
+//get player bluesky handle
 function getProfileBlueskyHandle(playerid){
 
   return new Promise((resolve) => {
@@ -1648,8 +1648,14 @@ function getProfileBlueskyHandle(playerid){
               if (error) throw error;
               //console.log(results);
               //callback(null,results[0].meta_value)
-              resolve(results[0].meta_value);
-
+              if (results[0].meta_value==null)
+              {
+                resolve("");
+              }
+              else 
+              {
+                resolve(results[0].meta_value);
+              }
             });
         }
         
@@ -2374,8 +2380,8 @@ async function MainLIFE4Sequence()
           console.log("Player Rank Number: " + player_sub_rank);
           var player_twitter = await getProfileTwitterHandle(player_id);
           console.log("Player Twitter Handle: " + player_twitter);
-          //var player_bluesky = await getProfileBlueskyHandle(player_id);
-          //console.log("Player Bluesky Handle: " + player_bluesky);
+          var player_bluesky = await getProfileBlueskyHandle(player_id);
+          console.log("Player Bluesky Handle: " + player_bluesky);
           var player_discord = await getProfileDiscordHandle(player_id);
           console.log("Player Discord Handle: " + player_discord);
           
@@ -2427,8 +2433,8 @@ async function MainLIFE4Sequence()
           console.log("Player name: " + player_name);
           var player_twitter = await getProfileTwitterHandle(player_id);
           console.log("Player Twitter Handle: " + player_twitter);
-          //var player_bluesky = await getProfileBlueskyHandle(player_id);
-          //console.log("Player Bluesky Handle: " + player_bluesky);
+          var player_bluesky = await getProfileBlueskyHandle(player_id);
+          console.log("Player Bluesky Handle: " + player_bluesky);
           var player_discord = await getProfileDiscordHandle(player_id);
           console.log("Player Discord Handle: " + player_discord);
 
@@ -2507,8 +2513,8 @@ async function MainLIFE4Sequence()
           console.log("Player Rank: " + player_rank);
           var player_twitter = await getProfileTwitterHandle(player_id);
           console.log("Player Twitter Handle: " + player_twitter);
-          //var player_bluesky = await getProfileBlueskyHandle(player_id);
-          //console.log("Player Bluesky Handle: " + player_bluesky);
+          var player_bluesky = await getProfileBlueskyHandle(player_id);
+          console.log("Player Bluesky Handle: " + player_bluesky);
           var player_discord = await getProfileDiscordHandle(player_id);
           console.log("Player Discord Handle: " + player_discord);
 
