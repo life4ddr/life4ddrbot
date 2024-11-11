@@ -2374,9 +2374,9 @@ async function MainLIFE4Sequence()
           console.log("Player Rank Number: " + player_sub_rank);
           var player_twitter = await getProfileTwitterHandle(player_id);
           console.log("Player Twitter Handle: " + player_twitter);
-          var player_bluesky = await getProfileBlueskyHandle(player_id);
+          //var player_bluesky = await getProfileBlueskyHandle(player_id);
           //console.log("Player Bluesky Handle: " + player_bluesky);
-          //var player_discord = await getProfileDiscordHandle(player_id);
+          var player_discord = await getProfileDiscordHandle(player_id);
           console.log("Player Discord Handle: " + player_discord);
           
           //Perform Messaging
