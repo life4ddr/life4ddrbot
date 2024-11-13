@@ -1648,7 +1648,7 @@ function getProfileBlueskyHandle(playerid){
               if (error) throw error;
               //console.log(results);
               //callback(null,results[0].meta_value)
-              if (results[0].meta_value==null)
+              if (results[0]==undefined)
               {
                 resolve("");
               }
