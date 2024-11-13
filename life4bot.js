@@ -1865,7 +1865,7 @@ function playerTrialTwitterPost(playerName, playerRank,playerScore,playerDiff,pl
 
 }
 
-function playerTrialBlueskyPost(playerName, playerRank,playerScore,playerDiff,trialName,numberRank)
+function playerTrialBlueskyPost(playerName, playerRank,playerScore,playerDiff,trialName,numberRank,playerBlueskyHandle)
 {
 
   return new Promise((resolve) => {
@@ -1901,16 +1901,15 @@ function playerTrialBlueskyPost(playerName, playerRank,playerScore,playerDiff,tr
     }
     else if (isEvent == false)
     {
-      /*
+      
       if (playerBlueskyHandle != "" && playerBlueskyHandle != "undefined")
       {
         post = "Player " + playerName + " (" + playerBlueskyHandle + ") has earned the " + playerRank + " Trial Rank for " + trialName + " with " + playerScore + " EX (" + playerDiff + ") for a Trial Ranking of #"+numberRank+"!";
       }
       else
       {
-        */
         post = "Player " + playerName + " has earned the " + playerRank + " Trial Rank for " + trialName + " with " + playerScore + " EX (" + playerDiff + ") for a Trial Ranking of #"+numberRank+"!";
-      //}
+      }
     }
     console.log(trialName + "||" + playerRank);
     
@@ -1958,7 +1957,7 @@ function newPlayerTwitterPost(playerName, playerRank,playerTwitterHandle)
 
 }
 
-function newPlayerBlueskyPost(playerName, playerRank)
+function newPlayerBlueskyPost(playerName, playerRank,playerBlueskyHandle)
 {
   return new Promise((resolve) => {
 
@@ -1972,16 +1971,14 @@ function newPlayerBlueskyPost(playerName, playerRank)
         {
           var twitterpost ="";
 
-          /*
             if (playerBlueskyHandle != "" && playerBlueskyHandle != "undefined")
             {
               twitterpost = "Player " + playerName + " (" + playerBlueskyHandle + ") has joined LIFE4! Their current rank is " + playerRank + "!";
             }
             else
             {
-              */
               twitterpost = "Player " + playerName + " has joined LIFE4! Their current rank is " + playerRank + "!";
-            //}
+            }
 
 
             resolve(twitterpost);
@@ -2079,7 +2076,7 @@ function playerRankupTwitterPost(playerName, playerRank,playerTwitterHandle)
 
 }
 
-function playerRankupBlueskyPost(playerName, playerRank)
+function playerRankupBlueskyPost(playerName, playerRank,playerBlueskyHandle)
 {
 
   return new Promise((resolve) => {
@@ -2094,16 +2091,16 @@ function playerRankupBlueskyPost(playerName, playerRank)
           {
             var bskypost ="";
 
-            /*
+            
               if (playerBlueskyHandle != "" && playerBlueskyHandle != "undefined")
               {
                 bskypost = "Player " + playerName + " (" + playerBlueskyHandle + ") has earned a new rank! They are now " + playerRank +"! Congratulations! ";
               }
               else
               {
-                */
+                
                 bskypost = "Player " + playerName + " has earned a new rank! They are now " + playerRank +"! Congratulations! ";
-              //}
+              }
 
               console.log(bskypost);
 
@@ -2397,7 +2394,7 @@ async function MainLIFE4Sequence()
           var discord_announce = await announcePlayerRankupDiscord(player_name, player_rank + " " + player_sub_rank)
           console.log("Discord announcement complete!");
 
-          var bsky_message = await playerRankupBlueskyPost(player_name,player_rank + " " + player_sub_rank);
+          var bsky_message = await playerRankupBlueskyPost(player_name,player_rank + " " + player_sub_rank,player_bluesky);
           const {Bot} = await import("@skyware/bot");
           var bsky_bot = new Bot();
           await bsky_bot.login({
@@ -2475,7 +2472,7 @@ async function MainLIFE4Sequence()
           var discord_announce = await announceUpdatePlayerTrialDiscord(player_name, trial_rank,trial_ex_score,trial_ex_minus_score, trial_title.toUpperCase() + " ("+trial_score_level+")",trial_number_ranking)
           console.log("Announcements done!");
 
-          var bsky_message = await playerTrialBlueskyPost(player_name,trial_rank,trial_ex_score,trial_ex_minus_score,trial_title,trial_number_ranking);
+          var bsky_message = await playerTrialBlueskyPost(player_name,trial_rank,trial_ex_score,trial_ex_minus_score,trial_title,trial_number_ranking,player_bluesky);
           const {Bot} = await import("@skyware/bot");
           var bsky_bot = new Bot();
           await bsky_bot.login({
