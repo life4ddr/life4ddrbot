@@ -1145,6 +1145,8 @@ module.exports = {
         twitterImageURL = './trial_images/SUPERSTAR/Superstar Pearl.webp';
       }
 
+      //TODO ADD NEW RANKS
+
 
       return twitterImageURL;
 

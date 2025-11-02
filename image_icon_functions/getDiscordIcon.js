@@ -237,7 +237,48 @@ module.exports = {
   {
     discordemoji = "<:pe5:1088289686478397510>";
   }
-
+  //TODO
+  else if (rank == "Topaz I" || rank == "Topaz (P)")
+  {
+    discordemoji = "<:pe1:1088289649845350460>";
+  }
+  else if (rank == "Topaz II")
+  {
+    discordemoji = "<:pe2:1088289682133094433>";
+  }
+  else if (rank == "Topaz III")
+  {
+    discordemoji = "<:pe3:1088289684406407269>";
+  }
+  else if (rank == "Topaz IV")
+  {
+    discordemoji = "<:pe4:1088289685454991482>";
+  }
+  else if (rank == "Topaz V")
+  {
+    discordemoji = "<:pe5:1088289686478397510>";
+  }
+  //TODO
+  else if (rank == "Ruby I" || rank == "Ruby (P)")
+  {
+    discordemoji = "<:pe1:1088289649845350460>";
+  }
+  else if (rank == "Ruby II")
+  {
+    discordemoji = "<:pe2:1088289682133094433>";
+  }
+  else if (rank == "Ruby III")
+  {
+    discordemoji = "<:pe3:1088289684406407269>";
+  }
+  else if (rank == "Ruby IV")
+  {
+    discordemoji = "<:pe4:1088289685454991482>";
+  }
+  else if (rank == "Ruby V")
+  {
+    discordemoji = "<:pe5:1088289686478397510>";
+  }
 
   return discordemoji;
 

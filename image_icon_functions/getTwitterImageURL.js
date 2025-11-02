@@ -349,7 +349,56 @@ module.exports = {
   {
     twitterImageURL = './rankup_images/Pearl V.webp';
   }
-  
+  //TODO
+  else if (rank == "Topaz (P)")
+  {
+    twitterImageURL = './rankup_images/Pearl P.webp';
+  }
+  else if (rank == "Topaz I")
+  {
+    twitterImageURL = './rankup_images/Pearl I.webp';
+  }
+  else if (rank == "Topaz II")
+  {
+    twitterImageURL = './rankup_images/Pearl II.webp';
+  }
+  else if (rank == "Topaz III")
+  {
+    twitterImageURL = './rankup_images/Pearl III.webp';
+  }
+  else if (rank == "Topaz IV")
+  {
+    twitterImageURL = './rankup_images/Pearl IV.webp';
+  }
+  else if (rank == "Topaz V")
+  {
+    twitterImageURL = './rankup_images/Pearl V.webp';
+  }
+  //TODO
+  else if (rank == "Ruby (P)")
+  {
+    twitterImageURL = './rankup_images/Pearl P.webp';
+  }
+  else if (rank == "Ruby I")
+  {
+    twitterImageURL = './rankup_images/Pearl I.webp';
+  }
+  else if (rank == "Ruby II")
+  {
+    twitterImageURL = './rankup_images/Pearl II.webp';
+  }
+  else if (rank == "Ruby III")
+  {
+    twitterImageURL = './rankup_images/Pearl III.webp';
+  }
+  else if (rank == "Ruby IV")
+  {
+    twitterImageURL = './rankup_images/Pearl IV.webp';
+  }
+  else if (rank == "Ruby V")
+  {
+    twitterImageURL = './rankup_images/Pearl V.webp';
+  }
   return twitterImageURL;
 
        }

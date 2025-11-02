@@ -45,6 +45,15 @@ module.exports = {
   {
     discordemoji = "<:pe5:1088289686478397510>";
   }
+  //TODO
+  else if (rank == "Ruby")
+  {
+    discordemoji = "<:pe5:1088289686478397510>";
+  }
+  else if (rank == "Topaz")
+  {
+    discordemoji = "<:pe5:1088289686478397510>";
+  }
 
   return discordemoji;
 
