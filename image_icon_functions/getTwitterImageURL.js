@@ -352,52 +352,52 @@ module.exports = {
   //TODO
   else if (rank == "Topaz (P)")
   {
-    twitterImageURL = './rankup_images/Pearl P.webp';
+    twitterImageURL = './rankup_images/Topaz P Rankup.webp';
   }
   else if (rank == "Topaz I")
   {
-    twitterImageURL = './rankup_images/Pearl I.webp';
+    twitterImageURL = './rankup_images/Topaz I Rankup.webp';
   }
   else if (rank == "Topaz II")
   {
-    twitterImageURL = './rankup_images/Pearl II.webp';
+    twitterImageURL = './rankup_images/Topaz II Rankup.webp';
   }
   else if (rank == "Topaz III")
   {
-    twitterImageURL = './rankup_images/Pearl III.webp';
+    twitterImageURL = './rankup_images/Topaz III Rankup.webp';
   }
   else if (rank == "Topaz IV")
   {
-    twitterImageURL = './rankup_images/Pearl IV.webp';
+    twitterImageURL = './rankup_images/Topaz IV Rankup.webp';
   }
   else if (rank == "Topaz V")
   {
-    twitterImageURL = './rankup_images/Pearl V.webp';
+    twitterImageURL = './rankup_images/Topaz V Rankup.webp';
   }
   //TODO
   else if (rank == "Ruby (P)")
   {
-    twitterImageURL = './rankup_images/Pearl P.webp';
+    twitterImageURL = './rankup_images/Ruby P Rankup.webp';
   }
   else if (rank == "Ruby I")
   {
-    twitterImageURL = './rankup_images/Pearl I.webp';
+    twitterImageURL = './rankup_images/Ruby I Rankup.webp';
   }
   else if (rank == "Ruby II")
   {
-    twitterImageURL = './rankup_images/Pearl II.webp';
+    twitterImageURL = './rankup_images/Ruby II Rankup.webp';
   }
   else if (rank == "Ruby III")
   {
-    twitterImageURL = './rankup_images/Pearl III.webp';
+    twitterImageURL = './rankup_images/Ruby III Rankup.webp';
   }
   else if (rank == "Ruby IV")
   {
-    twitterImageURL = './rankup_images/Pearl IV.webp';
+    twitterImageURL = './rankup_images/Ruby IV Rankup.webp';
   }
   else if (rank == "Ruby V")
   {
-    twitterImageURL = './rankup_images/Pearl V.webp';
+    twitterImageURL = './rankup_images/Ruby V Rankup.webp';
   }
   return twitterImageURL;
 
