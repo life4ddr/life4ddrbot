@@ -1658,15 +1658,15 @@ function getProfileBlueskyHandle(playerid){
               else 
               {
                 //if first character=@
-                if (results[0].meta_value.substring(0,1)=="@")
-                {
+                //if (results[0].meta_value.substring(0,1)=="@")
+                //{
                   resolve(results[0].meta_value);
-                }
+                //}
                 //else, insert an @
-                else
-                {
-                  resolve("@" + results[0].meta_value);
-                }
+                //else
+                //{
+                //  resolve("@" + results[0].meta_value);
+                //}
 
                 //resolve(results[0].meta_value);
               }
