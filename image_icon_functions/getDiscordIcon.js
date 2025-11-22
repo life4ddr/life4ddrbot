@@ -237,47 +237,45 @@ module.exports = {
   {
     discordemoji = "<:pe5:1088289686478397510>";
   }
-  //TODO
   else if (rank == "Topaz I" || rank == "Topaz (P)")
   {
-    discordemoji = "<:pe1:1088289649845350460>";
+    discordemoji = "<:t1:1441909878946926653>";
   }
   else if (rank == "Topaz II")
   {
-    discordemoji = "<:pe2:1088289682133094433>";
+    discordemoji = "<:t2:1441909921858846891>";
   }
   else if (rank == "Topaz III")
   {
-    discordemoji = "<:pe3:1088289684406407269>";
+    discordemoji = "<:t3:1441909955061088296>";
   }
   else if (rank == "Topaz IV")
   {
-    discordemoji = "<:pe4:1088289685454991482>";
+    discordemoji = "<:t4:1441909985138442330>";
   }
   else if (rank == "Topaz V")
   {
-    discordemoji = "<:pe5:1088289686478397510>";
+    discordemoji = "<:t5:1441910030289993949>";
   }
-  //TODO
   else if (rank == "Ruby I" || rank == "Ruby (P)")
   {
-    discordemoji = "<:pe1:1088289649845350460>";
+    discordemoji = "<:r1:1441910126507327588>";
   }
   else if (rank == "Ruby II")
   {
-    discordemoji = "<:pe2:1088289682133094433>";
+    discordemoji = "<:r2:1441910162318299182>";
   }
   else if (rank == "Ruby III")
   {
-    discordemoji = "<:pe3:1088289684406407269>";
+    discordemoji = "<:r3:1441910200285003807>";
   }
   else if (rank == "Ruby IV")
   {
-    discordemoji = "<:pe4:1088289685454991482>";
+    discordemoji = "<:r4:1441910233357357190>";
   }
   else if (rank == "Ruby V")
   {
-    discordemoji = "<:pe5:1088289686478397510>";
+    discordemoji = "<:r5:1441910267213643946>";
   }
 
   return discordemoji;

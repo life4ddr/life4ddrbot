@@ -45,14 +45,13 @@ module.exports = {
   {
     discordemoji = "<:pe5:1088289686478397510>";
   }
-  //TODO
   else if (rank == "Ruby")
   {
-    discordemoji = "<:pe5:1088289686478397510>";
+    discordemoji = "<:r5:1441910267213643946>";
   }
   else if (rank == "Topaz")
   {
-    discordemoji = "<:pe5:1088289686478397510>";
+    discordemoji = "<:t5:1441910030289993949>";
   }
 
   return discordemoji;
