@@ -854,7 +854,10 @@ function getNextApprovedQueue(){
               if (error) throw error;
               for (var i=0;i<results.length;i++)
               {
-                if (nextselected==undefined && (results[i].formtype=="Placement" || results[i].formtype=="Comprehensive Placement" || results[i].formtype=="Trial Submission" || results[i].formtype=="Rankup" || results[i].formtype=="Submit Scores!"))
+                //UNCOMMENT THIS WHEN RE-ENABLING TRIALS
+                //if (nextselected==undefined && (results[i].formtype=="Placement" || results[i].formtype=="Comprehensive Placement" || results[i].formtype=="Trial Submission" || results[i].formtype=="Rankup" || results[i].formtype=="Submit Scores!"))
+                  
+                if (nextselected==undefined && (results[i].formtype=="Placement" || results[i].formtype=="Comprehensive Placement" || results[i].formtype=="Rankup" || results[i].formtype=="Submit Scores!"))
                 {
                   nextselected=results[i];
                 }
