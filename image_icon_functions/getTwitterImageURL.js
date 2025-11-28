@@ -13,6 +13,10 @@ module.exports = {
   {
     twitterImageURL = './rankup_images/GoldI_P.webp';
   }
+  else if (rank ==  "Gold (P)")
+    {
+      twitterImageURL = './rankup_images/GoldI_P.webp';
+  }
   else if (rank == "Gold II")
   {
     twitterImageURL = './rankup_images/Gold II.webp';
