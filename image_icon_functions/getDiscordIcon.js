@@ -5,7 +5,7 @@ module.exports = {
        
         var discordemoji="";
 
-  if (rank == "Gold I" || rank ==  "Gold I (P)")
+  if (rank == "Gold I" || rank ==  "Gold I (P)" || rank == "Gold (P)")
   {
     discordemoji = "<:g1:530666992189964309>";
   }
