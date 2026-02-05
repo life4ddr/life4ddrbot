@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@skyware/bot": "^0.3.5",
-    "axios": "^0.23.0",
+    "axios": "^0.28.0",
     "discord.io": "^2.5.3",
     "discord.js": "^12.5.3",
     "dotenv": "^6.2.0",
